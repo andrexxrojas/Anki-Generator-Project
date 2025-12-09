@@ -1,0 +1,90 @@
+.nav-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px;
+}
+
+.left-side {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+}
+
+.right-side {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    gap: 1.142rem;
+}
+
+.logo-txt {
+    font-family: "Geist Semibold", serif;
+    font-size: 1.33rem;
+    text-transform: uppercase;
+}
+
+.list-container {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    gap: 0.285rem;
+}
+
+.list-content {
+    display: inline-flex;
+}
+
+.content-txt {
+    text-decoration: none;
+    color: var(--neutral-950);
+    font-family: var(--font-regular), serif;
+    font-size: var(--fs-sm);
+    padding: 0.857rem 1rem;
+    border-radius: 0.428rem;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.content-txt:hover {
+    background-color: var(--neutral-100);
+}
+
+.button-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.57rem;
+}
+
+.btn {
+    padding: 0.8rem;
+    border: none;
+    outline: none;
+    border-radius: 0.4rem;
+    font-family: var(--font-regular), serif;
+    font-size: var(--fs-sm);
+    user-select: none;
+    cursor: pointer;
+}
+
+.btn.login {
+    background-color: transparent;
+    border: 1px solid var(--neutral-200);
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn.login:hover {
+    background-color: var(--neutral-100);
+}
+
+.btn.signup {
+    color: var(--neutral-50);
+    background-color: var(--neutral-800);
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn.signup:hover {
+    background-color: var(--neutral-700);
+}

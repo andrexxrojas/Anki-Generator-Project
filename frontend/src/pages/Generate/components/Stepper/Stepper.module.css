@@ -1,0 +1,94 @@
+.stepper {
+    user-select: none;
+}
+
+.stepper-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+    margin: 2rem auto;
+    position: relative;
+}
+
+.stepper-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    position: relative;
+}
+
+.step-info {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.714rem;
+}
+
+.circle {
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    background-color: var(--neutral-300);
+    position: relative;
+}
+
+.circle.active {
+    background-color: var(--neutral-950);
+}
+
+.circle.completed {
+    background-color: #15803D;
+}
+
+.circle::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    box-sizing: content-box;
+    border: 1.5px solid var(--neutral-200);
+}
+
+.circle.active::after {
+    border: 1.5px solid var(--neutral-800);
+}
+
+.circle.completed::after {
+    background-color: rgba(22, 163, 74, 0.2);
+    border: 1.5px solid #15803D;
+}
+
+.label {
+    font-family: var(--font-medium);
+    font-size: var(--fs-xs);
+    color: var(--neutral-150);
+}
+
+.label.active {
+    color: var(--neutral-950);
+}
+
+.label.completed {
+    color: #15803D;
+}
+
+.line {
+    position: absolute;
+    top: 3px; /* Center with circle (half of circle + label gap) */
+    left: calc(50% + 8px); /* Start after circle ring (8px radius + 1px border) */
+    width: calc(100% - 16px); /* Extend to edge of container */
+    height: 1.5px;
+    background-color: var(--neutral-200);
+    z-index: -1;
+}
+
+.line.line-completed {
+    background-color: #15803D;
+}

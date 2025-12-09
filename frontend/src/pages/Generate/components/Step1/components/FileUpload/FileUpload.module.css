@@ -1,0 +1,122 @@
+.file-upload-container {
+    border: 1px solid var(--neutral-200);
+    padding: 2.285rem;
+    border-radius: 0.857rem;
+    width: 100%;
+    max-width: 454px;
+    margin-top: 2.285rem;
+}
+
+.hidden-input {
+    display: none;
+}
+
+.drop-zone-container {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--neutral-100);
+    border: 1.5px dashed var(--neutral-200);
+    border-radius: 10px;
+}
+
+.drop-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+    padding-block: 3rem;
+    padding-inline: 2rem;
+    width: 100%;
+}
+
+.icon-container {
+    padding: 11px 10px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: 1px solid var(--neutral-200);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.drop-zone-text {
+    font-family: var(--font-medium);
+    font-size: var(--fs-md);
+    margin-top: 16px;
+    text-align: center;
+}
+
+.drop-zone-subtext {
+    font-family: var(--font-medium);
+    font-size: var(--fs-xs);
+    color: var(--neutral-500);
+    text-align: center;
+    margin-top: 0.428rem;
+}
+
+.selected-file {
+    /* opacity: 0;
+    visibility: hidden; */
+    border: 1px solid var(--neutral-200);
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    z-index: 1;
+}
+
+.file-icon {
+    width: 40px;
+    height: 40px;
+    font-family: var(--font-bold);
+    font-size: var(--fs-xxxs);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--neutral-100);
+    border: 1px solid var(--neutral-200);
+    color: var(--neutral-500);
+    border-radius: 6px;
+    margin-right: 10px;
+}
+
+.file-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.file-name {
+    display: block;
+    max-width: 14rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: var(--font-medium);
+    font-size: var(--fs-xs);
+    color: var(--neutral-950);
+}
+
+.file-meta {
+    font-family: var(--font-medium);
+    font-size: var(--fs-xs);
+    color: var(--neutral-500);
+}
+
+.delete-icon {
+    display: inline-flex;
+    margin-left: auto;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--neutral-200);
+    }
+
+    &:hover path {
+        fill: #ff3737;
+    }
+}

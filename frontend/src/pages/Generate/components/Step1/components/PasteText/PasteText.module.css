@@ -1,0 +1,30 @@
+.text-upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 16px;
+    border: 1px solid var(--neutral-200);
+    padding: 2.285rem;
+    border-radius: 0.857rem;
+    width: 100%;
+    max-width: 454px;
+    margin-top: 2.285rem;
+}
+
+.char-count {
+    font-family: var(--font-medium);
+    font-size: var(--fs-xs);
+}
+
+.text-area {
+    resize: none;
+    outline: none;
+    width: 100%;
+    min-height: 188px;
+    padding: 16px;
+    border-radius: 10px;
+    background-color: var(--neutral-50);
+    border: 1px solid var(--neutral-200);
+    font-family: var(--font-regular);
+    font-size: var(--fs-xs);
+}

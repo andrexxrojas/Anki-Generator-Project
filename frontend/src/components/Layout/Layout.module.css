@@ -1,0 +1,17 @@
+.main-wrapper {
+    padding: 24px;
+}
+
+/* Tablet */
+@media (max-width: 1023px) {
+    .main-wrapper {
+        padding: 20px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    .main-wrapper {
+        padding: 16px;
+    }
+}

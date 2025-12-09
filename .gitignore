@@ -1,0 +1,35 @@
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Ignore all env files
+.env
+*.env
+
+# Node backend
+backend/node_modules/
+backend/.env
+backend/.env.local
+backend/.cache/
+backend/dist/
+
+# Node frontend
+frontend/node_modules/
+frontend/.env
+frontend/.env.local
+frontend/dist/
+frontend/.vite/
+
+# Build artifacts
+dist/
+build/
+.next/
+out/
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*

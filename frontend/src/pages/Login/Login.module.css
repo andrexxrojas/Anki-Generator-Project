@@ -1,0 +1,118 @@
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 10rem);
+}
+
+.login-container {
+    width: 100%;
+    max-width: 337px;
+    height: fit-content;
+    padding-block: 5rem;
+    max-height: 100%;
+}
+
+.login-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    margin-bottom: 2rem;
+}
+
+.login-title {
+    font-family: var(--font-medium);
+    font-size: var(--fs-lg2);
+}
+
+.login-desc {
+    font-family: var(--font-regular);
+    font-size: var(--fs-md);
+    color: var(--neutral-150);
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form label {
+    font-family: var(--font-regular);
+    font-size: var(--fs-xxs);
+    margin-bottom: 0.357rem;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    font-family: var(--font-regular);
+    font-size: var(--fs-sm);
+    border: 1px solid var(--neutral-200);
+    border-radius: 0.428rem;
+    outline: none;
+    padding: 1.428rem;
+    margin-bottom: 1.142rem;
+}
+
+.forgot-password {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.forgot-password-txt {
+    font-family: var(--font-regular);
+    font-size: var(--fs-sm);
+    color: var(--neutral-950);
+    text-decoration: none;
+}
+
+.submit-btn {
+    font-family: var(--font-regular);
+    font-size: var(--fs-sm);
+    margin-top: 2.285rem;
+    border: none;
+    border-radius: 0.428rem;
+    outline: none;
+    padding: 1.428rem;
+    background-color: var(--neutral-800);
+    color: var(--neutral-50);
+    user-select: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.submit-btn:hover {
+    background-color: var(--neutral-700);
+}
+
+
+.signup-redirect {
+    margin-top: 1.142rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.2rem;
+}
+
+.signup-redirect-txt {
+    font-family: var(--font-regular);
+    font-size: var(--fs-sm);
+    color: var(--neutral-150);
+}
+
+.signup-redirect-link {
+    font-family: var(--font-regular);
+    font-size: var(--fs-sm);
+    color: var(--neutral-950);
+    text-decoration: none;
+}
+
+
+
+
+
+
+
+
+
+
+

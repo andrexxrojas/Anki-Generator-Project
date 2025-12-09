@@ -1,0 +1,162 @@
+.step-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.571rem;
+    margin-bottom: 1.714rem;
+}
+
+.header-title {
+    font-family: var(--font-medium);
+    font-size: var(--fs-xxl);
+    text-align: center;
+}
+
+.header-subtitle {
+    font-family: var(--font-regular);
+    font-size: var(--fs-xs);
+    text-align: center;
+    color: var(--neutral-150);
+}
+
+.form-container {
+    border: 1px solid var(--neutral-200);
+    padding: 2.285rem;
+    border-radius: 0.857rem;
+    width: 100%;
+    max-width: 454px;
+    margin-top: 2.285rem;
+}
+
+.labeled-input:not(:last-child) {
+    margin-bottom: 1.714rem;
+}
+
+.input-label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.142rem;
+    margin-bottom: 1.142rem;
+}
+
+.label-title {
+    font-family: var(--font-medium);
+    font-size: var(--fs-md);
+    font-weight: 400;
+    color: var(--neutral-950);
+}
+
+.label-subtitle {
+    font-family: var(--font-regular);
+    font-size: var(--fs-xxxs);
+    color: var(--neutral-150);
+}
+
+.input-text {
+    outline: none;
+    border: 1px solid var(--neutral-200);
+    background-color: var(--neutral-100);
+    font-family: var(--font-regular);
+    font-size: var(--fs-sm);
+    padding: 1.428rem;
+    max-height: 3.5rem;
+    width: 100%;
+    border-radius: 0.428rem;
+}
+
+.select-container {
+    border: 1px solid red;
+
+    width: fit-content;
+    padding: 10px;
+    border: 1px solid var(--neutral-200);
+    border-radius: 6px;
+    background-color: var(--neutral-100);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.select-option {
+    border: none;
+    outline: none;
+    display: inline-block;
+    background-color: var(--neutral-100);
+    font-family: var(--font-medium);
+    font-size: var(--fs-sm);
+    padding: 5px 8px;
+    border-radius: 6px;
+    color: var(--neutral-500);
+    border: 1px solid transparent;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--neutral-200);
+    }
+}
+
+.select-option.active {
+    background-color: #FFFFFF;
+    border: 1px solid var(--neutral-200);
+    color: var(--neutral-950);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.13);
+
+    &:hover {
+        background-color: var(--neutral-50);
+    }
+}
+
+.button-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.571rem;
+    margin-top: 2.285rem;
+}
+
+.button-wrapper .btn {
+    font-family: var(--font-regular);
+    font-size: var(--fs-sm);
+    border-radius: 0.4rem;
+    border: none;
+    outline: none;
+    padding: 0.857rem;
+    user-select: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.button-wrapper .btn.continue {
+    background-color: var(--neutral-950);
+    color: var(--neutral-50);
+}
+
+.button-wrapper .btn.continue:hover {
+    background-color: var(--neutral-800);
+}
+
+.button-wrapper .btn.continue:disabled {
+    background-color: var(--neutral-500);
+}
+
+.button-wrapper .btn.continue:disabled:hover {
+    background-color: var(--neutral-500);
+    cursor: default;
+}
+
+.button-wrapper .btn.go-back {
+    background-color: transparent;
+    border: 1px solid var(--neutral-200);
+}
+
+.button-wrapper .btn.go-back:hover {
+    background-color: var(--neutral-100);
+}

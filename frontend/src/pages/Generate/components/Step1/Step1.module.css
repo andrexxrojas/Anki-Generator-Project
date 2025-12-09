@@ -1,0 +1,86 @@
+.step-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.571rem;
+    margin-bottom: 1.714rem;
+}
+
+.header-title {
+    font-family: var(--font-medium);
+    font-size: var(--fs-xxl);
+    text-align: center;
+}
+
+.header-subtitle {
+    font-family: var(--font-regular);
+    font-size: var(--fs-xs);
+    text-align: center;
+    color: var(--neutral-150);
+}
+
+.tabs-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0.857rem 1.428rem;
+    background-color: var(--neutral-100);
+    border-radius: 1.142rem;
+    gap: 0.714rem;
+}
+
+.tab {
+    font-family: var(--font-medium);
+    font-size: var(--fs-xs);
+    padding: 0.714rem 0.857rem;
+    border-radius: 0.571rem;
+    user-select: none;
+    cursor: pointer;
+    color: var(--neutral-150);
+}
+
+.tab.active {
+    background-color: var(--neutral-800);
+    color: var(--neutral-50);
+}
+
+.button-wrapper {
+    margin-top: 2.285rem;
+}
+
+.button-wrapper .btn {
+    font-family: var(--font-regular);
+    font-size: var(--fs-sm);
+    border-radius: 0.4rem;
+    border: none;
+    outline: none;
+    padding: 0.857rem;
+    user-select: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.button-wrapper .btn.continue {
+    background-color: var(--neutral-950);
+    color: var(--neutral-50);
+}
+
+.button-wrapper .btn.continue:hover {
+    background-color: var(--neutral-800);
+}
+
+.button-wrapper .btn.continue:disabled {
+    background-color: var(--neutral-500);
+}
+
+.button-wrapper .btn.continue:disabled:hover {
+    background-color: var(--neutral-500);
+    cursor: default;
+}
