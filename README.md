@@ -44,13 +44,13 @@ cd anki-generator
 
 The roadmap shows the current progress and upcoming features for Anki Deck Generator:
 
-- [x]  **Initial flashcard generation from text** – Users can input text and generate flashcards automatically.
-- [x]  **Export decks to Anki** – Allow users to export decks directly to Anki.
-- [x]  **User authentication and accounts** – Enable users to create accounts.
-- [x]  **AI-generated flashcards** – Generate smart flashcards using AI.
-- [ ]  **Mobile-responsive design** – Make the app fully usable on mobile devices.
-- [ ]  **Dashboard creation** – Build a user dashboard to manage decks and flashcards.
-- [ ]  **Authentication context** – Add React context for managing user authentication state.
-- [ ]  **Edit flashcards** – Allow users to update and modify their flashcards.
-- [ ]  **Delete user profiles** – Allow users to permanently delete their accounts and data.
+:white_check_mark:  **Initial flashcard generation from text** – Users can input text and generate flashcards automatically.  
+:white_check_mark:  **Export decks to Anki** – Allow users to export decks directly to Anki.  
+:white_check_mark:  **User authentication and accounts** – Enable users to create accounts.  
+:white_check_mark:  **AI-generated flashcards** – Generate smart flashcards using AI.  
+🔲  **Mobile-responsive design** – Make the app fully usable on mobile devices.  
+🔲  **Dashboard creation** – Build a user dashboard to manage decks and flashcards.  
+🔲  **Authentication context** – Add React context for managing user authentication state.  
+🔲  **Edit flashcards** – Allow users to update and modify their flashcards.  
+🔲  **Delete user profiles** – Allow users to permanently delete their accounts and data.  
 
