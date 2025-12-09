@@ -27,7 +27,7 @@ Anki Deck Generator is a full-stack web application that allows users to create 
 
 - Node.js >= 18
 - npm or yarn
-- Database setup (MySQL or MongoDB)
+- Database setup (MySQL)
 
 ### Installation
 
