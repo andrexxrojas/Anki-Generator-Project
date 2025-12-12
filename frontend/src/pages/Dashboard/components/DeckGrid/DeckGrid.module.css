@@ -1,0 +1,62 @@
+.deck-box-wrapper {
+    border: 1px solid var(--neutral-200);
+    background-color: var(--neutral-50);
+    padding: 2.13rem;
+    border-radius: 0.8rem;
+}
+
+.deck-box-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6.285rem;
+}
+
+.deck-title {
+    font-family: var(--font-medium);
+    font-size: var(--fs-md);
+    color: var(--neutral-950);
+    margin-bottom: 0.142rem;
+}
+
+.deck-items {
+    font-family: var(--font-regular);
+    font-size: var(--fs-xs);
+    color: var(--neutral-500);
+}
+
+.tags-container {
+    display: flex;
+    gap: 0.428rem;
+    margin-top: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.tag {
+    font-family: var(--font-regular);
+    font-size: var(--fs-xs);
+    background-color: var(--neutral-950);
+    color: var(--neutral-50);
+    border-radius: 0.428rem;
+    display: inline-flex;
+    padding: 0.8rem;
+}
+
+.deck-account {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.deck-account-name {
+    font-family: var(--font-regular);
+    font-size: var(--fs-xs);
+    color: var(--neutral-500)
+}
+
+.grid-container {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(0, 337px));
+}
