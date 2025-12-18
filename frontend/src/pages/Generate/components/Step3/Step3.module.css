@@ -163,6 +163,7 @@
     padding-block: 8rem;
     font-family: var(--font-regular);
     font-size: var(--fs-sm);
+    text-align: center;
 }
 
 .top-preview {
@@ -223,4 +224,48 @@
 
 .deck-preview-wrapper .buttons-container .btn:disabled .btn-logo svg path {
     stroke: var(--neutral-150);
+}
+
+.view-all-wrapper {
+    margin-top: 3.428rem;
+    width: 100%;
+    max-width: 923px;
+}
+
+.view-all-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.857rem;
+}
+
+.card {
+    border: 1px solid var(--neutral-200);
+    border-radius: 0.857rem;
+    padding: 2.285rem;
+}
+
+.card-top-preview,
+.card-bottom-preview {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-block: 2rem;
+    font-family: var(--font-regular);
+    font-size: var(--fs-sm);
+    text-align: center;
+}
+
+.card-top-preview {
+    border-bottom: 1px solid var(--neutral-200);
+}
+
+.card-num {
+    font-family: var(--font-regular);
+    font-size: var(--fs-xxs);
+    color: var(--neutral-150);
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 0.571rem;
 }
