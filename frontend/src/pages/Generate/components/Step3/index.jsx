@@ -6,7 +6,7 @@ import DeckPreview from "./components/DeckPreview.jsx";
 import HeaderControls from "./components/HeaderControls.jsx";
 import Header from "./components/Header.jsx";
 
-export default function Step3({onBack, material, deckOptions}) {
+export default function Step3({material, deckOptions}) {
     const [loading, setLoading] = useState(true);
     const [generatedDeck, setGeneratedDeck] = useState(null);
     const [error, setError] = useState(null);

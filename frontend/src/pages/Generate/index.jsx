@@ -54,7 +54,6 @@ export default function Generate() {
                 />;
             case 3:
                 return <Step3
-                    onBack={() => setCurrentStep(2)}
                     material={material}
                     deckOptions={deckOptions}
                 />;

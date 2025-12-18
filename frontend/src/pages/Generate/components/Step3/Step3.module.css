@@ -169,6 +169,10 @@
     text-align: center;
 }
 
+.bottom-preview {
+    cursor: pointer;
+}
+
 .top-preview {
     border-bottom: 1px solid var(--neutral-200);
 }
@@ -189,7 +193,6 @@
     border: 1px solid var(--neutral-200);
     outline: none;
     border-radius: 0.4rem;
-    /*padding: 0.857rem;*/
     user-select: none;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
@@ -227,6 +230,10 @@
 
 .deck-preview-wrapper .buttons-container .btn:disabled .btn-logo svg path {
     stroke: var(--neutral-150);
+}
+
+.reveal-txt {
+    color: var(--neutral-150);
 }
 
 /* View All Component */

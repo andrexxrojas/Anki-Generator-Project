@@ -3,6 +3,17 @@ import {useState} from "react";
 
 const DeckPreview = ({cards}) => {
     const [cardIndex, setCardIndex] = useState(0);
+    const [showBack, setShowBack] = useState(false);
+
+    const handleNext = () => {
+        setCardIndex((prev) => Math.min(prev + 1, cards.length - 1));
+        setShowBack(false);
+    };
+
+    const handlePrev = () => {
+        setCardIndex((prev) => Math.max(prev - 1, 0));
+        setShowBack(false);
+    };
 
     return (
         <div className={styles["deck-preview-wrapper"]}>
@@ -10,14 +21,15 @@ const DeckPreview = ({cards}) => {
                 <div className={styles["top-preview"]}>
                     <p>{cards[cardIndex].front}</p>
                 </div>
-                <div className={styles["bottom-preview"]}>
-                    <p>{cards[cardIndex].back}</p>
+                <div className={styles["bottom-preview"]} onClick={() => setShowBack((prev) => !prev)}>
+                    {showBack ? <p>{cards[cardIndex].back}</p> :
+                        <p className={styles["reveal-txt"]}>Click to Reveal Answer</p>}
                 </div>
             </div>
             <div className={styles["buttons-container"]}>
                 <button
                     className={`${styles["btn"]} ${styles["previous"]}`}
-                    onClick={() => setCardIndex((prev) => Math.max(prev - 1, 0))}
+                    onClick={handlePrev}
                     disabled={cardIndex === 0}
                 >
                     <span className={styles["btn-logo"]}>
@@ -32,7 +44,7 @@ const DeckPreview = ({cards}) => {
                 </button>
                 <button
                     className={`${styles["btn"]} ${styles["next"]}`}
-                    onClick={() => setCardIndex((prev) => Math.min(prev + 1, cards.length - 1))}
+                    onClick={handleNext}
                     disabled={cardIndex === cards.length - 1}
                 >
                     <span className={styles["btn-txt"]}>Next</span>
