@@ -4,6 +4,7 @@
     align-items: center;
 }
 
+/* Header Component */
 .header {
     display: flex;
     flex-direction: column;
@@ -23,15 +24,6 @@
     font-size: var(--fs-xs);
     text-align: center;
     color: var(--neutral-150);
-}
-
-.header-controls {
-    width: 100%;
-    max-width: 923px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
 }
 
 .header-info {
@@ -92,6 +84,16 @@
     border-radius: 50%;
 }
 
+/* Header Controls Component */
+.header-controls {
+    width: 100%;
+    max-width: 923px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .header-controls .buttons-container {
     display: flex;
     flex-direction: row;
@@ -141,6 +143,7 @@
     background-color: var(--neutral-700);
 }
 
+/* Deck Preview Component */
 .deck-preview-wrapper {
     box-sizing: border-box;
     width: 100%;
@@ -226,6 +229,7 @@
     stroke: var(--neutral-150);
 }
 
+/* View All Component */
 .view-all-wrapper {
     margin-top: 3.428rem;
     width: 100%;
