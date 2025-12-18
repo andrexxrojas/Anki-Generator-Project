@@ -26,6 +26,7 @@
     color: var(--neutral-150);
 }
 
+/* Header Controls Component */
 .header-info {
     width: fit-content;
     display: flex;
@@ -46,23 +47,58 @@
     color: var(--neutral-150);
 }
 
-.header-info-menu {
-    outline: none;
-    border: none;
-    border-radius: 0.428rem;
-    background-color: transparent;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+.menu-anchor {
     position: absolute;
     right: -38px;
     top: -2px;
+    width: 30px;
+    height: 30px;
+}
+
+.header-info-menu {
+    outline: none;
+    border: none;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.428rem;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 120%;
+    left: 0;
+    background-color: var(--neutral-0);
+    border: 1px solid var(--neutral-200);
+    padding: 8px;
+    z-index: 100;
+    min-width: 140px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.285rem;
+}
+
+.menu-item {
+    background-color: var(--neutral-0);
+    border: none;
+    outline: none;
+    border-radius: 0.4rem;
+    width: 100%;
+    padding: 0.714rem;
     user-select: none;
     cursor: pointer;
+    text-align: left;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.menu-item:hover {
+    background-color: var(--neutral-100);
 }
 
 .header-info-menu:hover {
@@ -84,7 +120,6 @@
     border-radius: 50%;
 }
 
-/* Header Controls Component */
 .header-controls {
     width: 100%;
     max-width: 923px;

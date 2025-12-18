@@ -1,8 +1,30 @@
 import styles from "../Step3.module.css";
 import {exportDeckApkg} from "../services/deck.service.js";
+import {useState, useEffect, useRef} from "react";
 
 const HeaderControls = ({title, numItems, generatedDeck}) => {
     const API_URL = import.meta.env.VITE_API_URL;
+    const [showMenu, setShowMenu] = useState(true);
+    const menuRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (showMenu && menuRef.current && !menuRef.current.contains(event.target)) {
+                setShowMenu(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [showMenu]);
+
+    const handleAction = (actionCallback) => {
+        actionCallback(); // Run the actual logic (save, delete, etc)
+        setShowMenu(false); // Close the menu
+    };
 
     const handleExport = async () => {
         console.log("Export button clicked. generatedDeck:", generatedDeck);
@@ -28,19 +50,51 @@ const HeaderControls = ({title, numItems, generatedDeck}) => {
         }
     };
 
-
     return (
         <div className={styles["header-controls"]}>
             <div className={styles["header-info"]}>
                 <h4 className={styles["header-info-title"]}>{title}</h4>
                 <p className={styles["header-info-subtitle"]}>{numItems} Items</p>
-                <button className={styles["header-info-menu"]}>
-                    <div className={styles["menu-logo"]}>
-                        <div className={styles["circle"]}></div>
-                        <div className={styles["circle"]}></div>
-                        <div className={styles["circle"]}></div>
-                    </div>
-                </button>
+                <div className={styles["menu-anchor"]} ref={menuRef}>
+                    <button
+                        className={styles["header-info-menu"]}
+                        onClick={() => setShowMenu((prev) => !prev)}
+                    >
+                        <div className={styles["menu-logo"]}>
+                            <div className={styles["circle"]}></div>
+                            <div className={styles["circle"]}></div>
+                            <div className={styles["circle"]}></div>
+                        </div>
+                    </button>
+                    {showMenu && (
+                        <div className={styles["dropdown-menu"]}>
+                            <button
+                                className={styles["menu-item"]}
+                                onClick={() => handleAction(() => console.log("Editing"))}
+                            >
+                                Edit Name
+                            </button>
+                            <button
+                                className={styles["menu-item"]}
+                                onClick={() => handleAction(() => console.log("Saving"))}
+                            >
+                                Save Deck
+                            </button>
+                            <button
+                                className={styles["menu-item"]}
+                                onClick={() => handleAction(() => console.log("Regenerating"))}
+                            >
+                                Regenerate
+                            </button>
+                            <button
+                                className={styles["menu-item"]}
+                                onClick={handleExport}
+                            >
+                                Export .apkg
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
             <div className={styles["buttons-container"]}>
                 <button className={`${styles["btn"]} ${styles["save"]}`}>
