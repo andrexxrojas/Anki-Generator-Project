@@ -4,7 +4,7 @@ import {useState, useEffect, useRef} from "react";
 
 const HeaderControls = ({title, numItems, generatedDeck}) => {
     const API_URL = import.meta.env.VITE_API_URL;
-    const [showMenu, setShowMenu] = useState(true);
+    const [showMenu, setShowMenu] = useState(false);
     const menuRef = useRef(null);
 
     useEffect(() => {
