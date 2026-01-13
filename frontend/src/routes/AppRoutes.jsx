@@ -1,4 +1,5 @@
 import {Routes, Route} from "react-router-dom";
+import {ProtectedRoute} from "./ProtectedRoute.jsx";
 
 // Pages
 import Home from "../pages/Home/index.jsx";
@@ -14,7 +15,11 @@ export default function AppRoutes() {
             <Route path={"/auth/login"} element={<Login/>}/>
             <Route path={"/auth/signup"} element={<Signup/>}/>
             <Route path={"/generate-deck"} element={<Generate/>}/>
-            <Route path={"/dashboard"} element={<Dashboard/>}/>
+            <Route path={"/dashboard"} element={
+                <ProtectedRoute>
+                    <Dashboard/>
+                </ProtectedRoute>
+            }/>
         </Routes>
     )
 }

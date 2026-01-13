@@ -1,9 +1,11 @@
 import styles from "./Login.module.css";
 import {Link} from "react-router-dom";
 import {useState} from "react";
+import {useAuth} from "../../context/authContext.jsx";
 
 export default function Login() {
     const API_URL = import.meta.env.VITE_API_URL;
+    const { login } = useAuth();
     const [form, setForm] = useState({
         identifier: "",
         password: ""
@@ -19,29 +21,7 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        try {
-            const res = await fetch(`${API_URL}/auth/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                credentials: "include",
-                body: JSON.stringify({
-                    identifier: form.identifier,
-                    password: form.password
-                })
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                console.error(data.error);
-                return;
-            }
-        } catch (err) {
-            console.error("Login error:", err);
-        }
+        login(form.identifier, form.password);
     }
 
     return (

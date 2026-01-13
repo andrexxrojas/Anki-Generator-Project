@@ -21,7 +21,7 @@
 }
 
 .logo-txt {
-    font-family: "Geist Semibold", serif;
+    font-family: var(--font-bold), serif;
     font-size: 1.33rem;
     text-transform: uppercase;
 }

@@ -73,3 +73,24 @@ export const logout = async (req, res) => {
 
     res.json({message: "User logged out successfully"});
 }
+
+// Check if user is logged in
+export const me = async (req, res) => {
+    try {
+        const token = req.cookies.token;
+
+        if (!token) return res.status(401).json({error: "Token not found"});
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        const user = await User.findByPk(decoded.id, {
+            attributes: ['id', 'email', "username"],
+        });
+
+        if (!user) return res.status(401).json({error: "User not found"});
+
+        res.json({ user });
+    } catch (err) {
+        res.status(401).json({ error: err.message });
+    }
+}

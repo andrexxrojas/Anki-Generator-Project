@@ -1,8 +1,10 @@
 import styles from "./Nav.module.css";
 import {NavLink, useNavigate} from "react-router-dom";
+import {useAuth} from "../../context/authContext.jsx";
 
 export default function Nav() {
     const navigate = useNavigate();
+    const { user, logout } = useAuth();
 
     const handleRedirect = (redirectTo) => {
         navigate(redirectTo);
@@ -23,6 +25,13 @@ export default function Nav() {
                                 Home
                             </NavLink>
                         </li>
+                        {user && (
+                            <li className={styles["list-content"]}>
+                                <NavLink to="/dashboard" className={styles["content-txt"]}>
+                                    Dashboard
+                                </NavLink>
+                            </li>
+                        )}
                         <li className={styles["list-content"]}>
                             <NavLink to="/" className={styles["content-txt"]}>
                                 Features
@@ -34,16 +43,25 @@ export default function Nav() {
                             </NavLink>
                         </li>
                     </ul>
-                    <div className={styles["button-wrapper"]}>
-                        <button className={`${styles["btn"]} ${styles["login"]}`}
-                                onClick={() => handleRedirect("/auth/login")}>
-                            <span className={styles["btn-txt"]}>Login</span>
-                        </button>
-                        <button className={`${styles["btn"]} ${styles["signup"]}`}
-                                onClick={() => handleRedirect("/auth/signup")}>
-                            <span className={styles["btn-txt"]}>Signup</span>
-                        </button>
-                    </div>
+                    {!user && (
+                        <div className={styles["button-wrapper"]}>
+                            <button className={`${styles["btn"]} ${styles["login"]}`}
+                                    onClick={() => handleRedirect("/auth/login")}>
+                                <span className={styles["btn-txt"]}>Login</span>
+                            </button>
+                            <button className={`${styles["btn"]} ${styles["signup"]}`}
+                                    onClick={() => handleRedirect("/auth/signup")}>
+                                <span className={styles["btn-txt"]}>Signup</span>
+                            </button>
+                        </div>
+                    )}
+                    {user && (
+                        <div className={styles["button-wrapper"]}>
+                            <button className={`${styles["btn"]} ${styles["logout"]}`} onClick={logout}>
+                                <span className={styles["btn-txt"]}>Logout</span>
+                            </button>
+                        </div>
+                    )}
                 </div>
             </nav>
         </div>
