@@ -1,5 +1,6 @@
 import styles from "./Dashboard.module.css";
 import {useState, useRef} from "react";
+import {useNavigate} from "react-router-dom";
 import DeckGrid from "./components/DeckGrid/index.jsx";
 
 const HeaderInfo = ({title, subtitle}) => {
@@ -14,6 +15,7 @@ const HeaderInfo = ({title, subtitle}) => {
 const HeaderControls = () => {
     const [query, setQuery] = useState("");
     const searchRef = useRef(null);
+    const navigate = useNavigate();
 
     const handleSearch = (e) => {
         setQuery(e.target.value);
@@ -40,7 +42,9 @@ const HeaderControls = () => {
                     ref={searchRef}
                 />
             </div>
-            <button className={styles["header-create-btn"]}>Create Deck</button>
+            <button className={styles["header-create-btn"]} onClick={() => navigate("/generate-deck")}>
+                Create Deck
+            </button>
         </div>
     )
 }

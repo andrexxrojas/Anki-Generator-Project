@@ -2,9 +2,11 @@ import styles from "./Login.module.css";
 import {Link} from "react-router-dom";
 import {useState} from "react";
 import {useAuth} from "../../context/authContext.jsx";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
     const API_URL = import.meta.env.VITE_API_URL;
+    const navigate = useNavigate();
     const { login } = useAuth();
     const [form, setForm] = useState({
         identifier: "",
@@ -21,7 +23,13 @@ export default function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        login(form.identifier, form.password);
+        try {
+            await login(form.identifier, form.password);
+            navigate("/dashboard");
+        } catch (err) {
+            console.error(err.message);
+        }
+
     }
 
     return (

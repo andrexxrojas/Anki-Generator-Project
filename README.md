@@ -49,8 +49,7 @@ The roadmap shows the current progress and upcoming features for Anki Deck Gener
 :white_check_mark:  **User authentication and accounts** – Enable users to create accounts.  
 :white_check_mark:  **AI-generated flashcards** – Generate smart flashcards using AI.  
 🔲  **Mobile-responsive design** – Make the app fully usable on mobile devices.  
-🔲  **Dashboard creation** – Build a user dashboard to manage decks and flashcards.  
-🔲  **Authentication context** – Add React context for managing user authentication state.  
+:white_check_mark:  **Dashboard creation** – Build a user dashboard to manage decks and flashcards.  
+:white_check_mark:  **Authentication context** – Add React context for managing user authentication state.  
 🔲  **Edit flashcards** – Allow users to update and modify their flashcards.  
 🔲  **Delete user profiles** – Allow users to permanently delete their accounts and data.  
-
