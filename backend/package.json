@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google/genai": "^1.35.0",
     "anki-apkg-export": "^4.0.3",
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
@@ -22,7 +23,6 @@
     "mammoth": "^1.11.0",
     "multer": "^2.0.2",
     "mysql2": "^3.15.3",
-    "openai": "^6.9.1",
     "pdf-parse": "^2.4.5",
     "sequelize": "^6.37.7",
     "uuid": "^13.0.0"

@@ -1,8 +1,10 @@
 import Guest from "../models/Guest.js";
 import User from "../models/User.js";
-import OpenAI from "openai";
+import { GoogleGenAI } from "@google/genai";
 
-const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
+const ai = new GoogleGenAI({
+    apiKey: process.env.GEMINI_API_KEY,
+});
 
 export const generateContent = async (req, res) => {
     try {
@@ -18,12 +20,16 @@ export const generateContent = async (req, res) => {
             return res.status(500).json({message: "Missing user/guest"});
         }
 
-        const response = await openai.chat.completions.create({
-            model: "gpt-3.5-turbo",
-            messages: [{role: "user", content: buildDeckPrompt(material, deckOptions)}],
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash-lite",
+            contents: buildDeckPrompt(material, deckOptions),
+            config: {
+                responseMimeType: "application/json",
+                temperature: 0.2,
+            }
         });
 
-        const result = response.choices[0].message.content;
+        const result = response.text;
 
         // Update quota
         entity.generationsUsed++;
