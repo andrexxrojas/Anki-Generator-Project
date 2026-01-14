@@ -59,6 +59,27 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
     };
 
+    const register = async (username, email, password) => {
+        const res = await fetch(`${API_URL}/auth/register`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ username, email, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            setUser({ id: data.userId || null });
+        } else {
+            throw new Error(data.error || "Register failed");
+        }
+
+        return data;
+    }
+
     return (
         <AuthContext.Provider value={{ user, login, logout, loading }}>
             {children}

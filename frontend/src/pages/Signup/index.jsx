@@ -1,9 +1,13 @@
 import styles from "./Signup.module.css";
 import {Link} from "react-router-dom";
 import {useState} from "react";
+import {useAuth} from "../../context/authContext.jsx";
+import {useNavigate} from "react-router-dom";
 
 export default function Signup() {
     const API_URL = import.meta.env.VITE_API_URL;
+    const navigate = useNavigate();
+    const { register } = useAuth();
     const [form, setForm] = useState({
         username: "",
         email: "",
@@ -25,26 +29,10 @@ export default function Signup() {
         if (form.password !== form.confirmPassword) return;
 
         try {
-            const res = await fetch(`${API_URL}/auth/register`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    username: form.username,
-                    email: form.email,
-                    password: form.password
-                })
-            })
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                console.error(data.error);
-                return;
-            }
+            await register(form.username, form.email, form.password);
+            navigate("/dashboard");
         } catch (err) {
-            console.error(err);
+            console.error(err.message);
         }
     }
 
