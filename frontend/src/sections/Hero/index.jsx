@@ -10,6 +10,7 @@ export default function Hero() {
 
     const handleRedirect = (e, redirectTo) => {
         e.preventDefault();
+        sessionStorage.removeItem("anki-generate-state");
         navigate(redirectTo);
     }
 

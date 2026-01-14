@@ -1,31 +1,45 @@
 import styles from "./Generate.module.css";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Stepper from "./components/Stepper/index.jsx";
 import Step1 from "./components/Step1/index.jsx";
 import Step2 from "./components/Step2/index.jsx";
 import Step3 from "./components/Step3/index.jsx";
 
 export default function Generate() {
-    const [currentStep, setCurrentStep] = useState(1);
+    const getInitialState = () => {
+        const saved = sessionStorage.getItem("anki-generate-state");
+        return saved ? JSON.parse(saved) : null;
+    };
 
-    const [material, setMaterial] = useState({
-        type: null,     // "file" or "text"
-        file: null,     // File object
-        text: ""        // pasted text
+    const persisted = getInitialState();
+
+    const [currentStep, setCurrentStep] = useState(() => persisted?.currentStep ?? 1);
+
+    const [material, setMaterial] = useState(
+    () => persisted?.material ?? {
+        type: null,
+        file: null,
+        text: ""
     });
 
-    const [deckOptions, setDeckOptions] = useState({
-        deckName: "",
-        cardTypes: [],
-        cardLimit: null,
-        cardStyles: []
-    });
+    const [deckOptions, setDeckOptions] = useState(
+        () => persisted?.deckOptions ?? {
+            deckName: "",
+            cardTypes: [],
+            cardLimit: null,
+            cardStyles: []
+        }
+    );
 
     const steps = [
         "Upload",
         "Customize",
         "Export Deck"
     ]
+
+    const [generatedDeck, setGeneratedDeck] = useState(
+        () => persisted?.generatedDeck ?? null
+    );
 
     const resetDeckOptions = () => {
         setDeckOptions({
@@ -56,11 +70,25 @@ export default function Generate() {
                 return <Step3
                     material={material}
                     deckOptions={deckOptions}
+                    generatedDeck={generatedDeck}
+                    setGeneratedDeck={setGeneratedDeck}
                 />;
             default:
                 return null;
         }
     };
+
+    useEffect(() => {
+        sessionStorage.setItem(
+            "anki-generate-state",
+            JSON.stringify({
+                currentStep,
+                material,
+                deckOptions,
+                generatedDeck
+            })
+        );
+    }, [currentStep, material, deckOptions, generatedDeck]);
 
     return (
         <div className={styles["generate-wrapper"]}>

@@ -5,7 +5,7 @@ const ViewAllDecks = ({cards}) => {
         <div className={styles["view-all-wrapper"]}>
             <div className={styles["view-all-container"]}>
                 {cards.map((card, i) => (
-                    <div className={styles["card-wrapper"]}>
+                    <div key={i} className={styles["card-wrapper"]}>
                         <span className={styles["card-num"]}>{i + 1} / {cards.length}</span>
                         <div className={styles["card"]}>
                             <div className={styles["card-top-preview"]}>
