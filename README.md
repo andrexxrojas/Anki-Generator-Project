@@ -34,7 +34,7 @@ Anki Deck Generator is a full-stack web application that allows users to create 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/anki-generator.git
+git clone https://github.com/andrexxrojas/anki-generator.git
 cd anki-generator
 ```
 
