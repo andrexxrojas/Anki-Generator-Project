@@ -9,6 +9,14 @@ const Deck = sequelize.define("Deck", {
     },
     description: {
         type: DataTypes.TEXT
+    },
+    ownerType: {
+        type: DataTypes.ENUM("guest", "user"),
+        allowNull: false
+    },
+    ownerId: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 });
 

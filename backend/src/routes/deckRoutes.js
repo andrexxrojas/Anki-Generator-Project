@@ -1,11 +1,13 @@
 import express from "express";
 import {requireAuth} from "../middleware/authMiddleware.js";
+import {guestMiddleware} from "../middleware/guestMiddleware.js";
 import {
     createDeck,
     getDecks,
     getDeckById,
     deleteDeck,
-    updateDeck
+    updateDeck,
+    saveDeck
 } from "../controllers/deckController.js";
 
 const router = express.Router();
@@ -15,5 +17,6 @@ router.get("/", requireAuth, getDecks);
 router.get("/:deckId", requireAuth, getDeckById);
 router.put("/:deckId", requireAuth, updateDeck);
 router.delete("/:deckId", requireAuth, deleteDeck);
+router.post("/save-deck", guestMiddleware, saveDeck);
 
 export default router;

@@ -19,7 +19,7 @@ const Guest = sequelize.define("Guest", {
         type: DataTypes.INTEGER,
         defaultValue: 15
     }
-});
+}, { timestamps: true });
 
 
 export default Guest;

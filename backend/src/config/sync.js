@@ -5,7 +5,7 @@ import Card from "../models/Card.js";
 
 const syncDb = async () => {
     try {
-        await sequelize.sync(); // Creates tables if they don't exist
+        await sequelize.sync({ alter: true }); // Creates tables if they don't exist
         console.log("All models were synchronized successfully");
     } catch (err) {
         console.error(err);

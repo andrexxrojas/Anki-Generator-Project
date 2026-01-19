@@ -9,6 +9,7 @@ export async function generateDeck(material, deckOptions) {
     const res = await fetch(`${API_URL}/openai/generate`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
+        credentials: "include",
         body,
     });
 
@@ -35,4 +36,22 @@ export async function exportDeckApkg(deckName, cards) {
     }
 
     return await res.blob();
+}
+
+export async function saveDeck(deck) {
+    const res = await fetch(`${API_URL}/deck/save-deck`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(deck),
+    });
+
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || "Failed to save deck");
+    }
+
+    return res.json();
 }

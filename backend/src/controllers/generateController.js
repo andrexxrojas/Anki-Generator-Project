@@ -20,6 +20,10 @@ export const generateContent = async (req, res) => {
             return res.status(500).json({message: "Missing user/guest"});
         }
 
+        if (entity.generationsUsed >= entity.freeGenerations) {
+            return res.status(403).json({ message: "Free generation limit reached" });
+        }
+
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash-lite",
             contents: buildDeckPrompt(material, deckOptions),
@@ -38,7 +42,7 @@ export const generateContent = async (req, res) => {
         return res.json({
             result: JSON.parse(result),
             used: entity.generationsUsed,
-            remaining: entity.freeGenerations - entity.generationsUsed
+            remaining: Math.max(0, entity.freeGenerations - entity.generationsUsed)
         });
 
     } catch (err) {

@@ -117,6 +117,62 @@ export const updateDeck = async (req, res) => {
     }
 };
 
+// Save a deck
+export const saveDeck = async (req, res) => {
+    try {
+        const entity = req.user || req.guest;
+
+        if (!entity) return res.status(401).json({ message: "Not authorized" });
+
+        const { title, description, cards } = req.body;
+
+        if (!title || !cards?.length) {
+            return res.status(400).json({ message: "Invalid deck data" });
+        }
+
+        let deck;
+
+        if (!req.user) {
+            deck = await Deck.findOne({
+                where: { ownerType: "guest", ownerId: entity.id }
+            });
+
+            if (deck) {
+                await deck.update({ title, description });
+                await Card.destroy({ where: { deckId: deck.id } });
+            } else {
+                deck = await Deck.create({
+                    title,
+                    description,
+                    ownerType: "guest",
+                    ownerId: entity.id
+                });
+            }
+        } else {
+            deck = await Deck.create({
+                title,
+                description,
+                ownerType: "user",
+                ownerId: entity.id
+            });
+        }
+
+        await Card.bulkCreate(
+            cards.map(c => ({
+                deckId: deck.id,
+                front: c.front,
+                back: c.back
+            }))
+        );
+
+        return res.json({ message: "Deck saved!", deckId: deck.id });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Failed to save deck" });
+    }
+};
+
 
 
 

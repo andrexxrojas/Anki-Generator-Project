@@ -1,23 +1,57 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import Guest from "../models/Guest.js";
 import {Op} from "sequelize";
 
 // Register a user
 export const register = async (req, res) => {
     const {username, email, password} = req.body;
 
-    try {
-        const existing = await User.findOne({where: {email}});
-        if (existing) return res.status(400).json({error: "Email already in use."});
+    const transaction = await User.sequelize.transaction();
 
-        // Hash password
+    try {
+        const existing = await User.findOne({
+            where: {email},
+            transaction
+        });
+        if (existing) {
+            await transaction.rollback();
+            return res.status(400).json({error: "Email already in use."});
+        }
+
         const hashed = await bcrypt.hash(password, 10);
 
         const user = await User.create({username, email, password: hashed});
 
+        if (req.guest) {
+            await Deck.update(
+                {
+                    ownerType: "user",
+                    ownerId: String(user.id)
+                },
+                {
+                    where: {
+                        ownerType: "guest",
+                        ownerId: req.guest.guestId
+                    },
+                    transaction
+                }
+            );
+
+            await Guest.destroy({
+                where: { guestId: req.guest.guestId },
+                transaction
+            });
+
+            res.clearCookie("guestId");
+        }
+
+        await transaction.commit();
+
         res.json({message: "User created:", userId: user.id});
     } catch (err) {
+        await transaction.rollback();
         res.status(500).json({error: err.message});
     }
 }

@@ -1,11 +1,13 @@
 import styles from "../Step3.module.css";
-import {exportDeckApkg} from "../services/deck.service.js";
+import {exportDeckApkg, saveDeck} from "../services/deck.service.js";
 import {useState, useEffect, useRef} from "react";
+import {useNavigate} from "react-router-dom";
 
 const HeaderControls = ({title, numItems, generatedDeck}) => {
     const API_URL = import.meta.env.VITE_API_URL;
     const [showMenu, setShowMenu] = useState(false);
     const menuRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -50,6 +52,28 @@ const HeaderControls = ({title, numItems, generatedDeck}) => {
         }
     };
 
+    const handleSave = async () => {
+        if (!generatedDeck) return alert("No deck to save");
+
+        const deckData = {
+            title: generatedDeck.result.deckName,
+            description: generatedDeck.result.description || "",
+            cards: generatedDeck.result.cards
+        };
+
+        try {
+            const saved = await saveDeck(deckData);
+            alert(`Deck saved! ID: ${saved.deckId}`);
+        } catch (err) {
+            if (err.message === "Not authorized") {
+                navigate("/auth/signup");
+            } else {
+                console.error(err);
+                // alert("Failed to save deck");
+            }
+        }
+    }
+
     return (
         <div className={styles["header-controls"]}>
             <div className={styles["header-info"]}>
@@ -76,7 +100,7 @@ const HeaderControls = ({title, numItems, generatedDeck}) => {
                             </button>
                             <button
                                 className={styles["menu-item"]}
-                                onClick={() => handleAction(() => console.log("Saving"))}
+                                onClick={() => handleAction(() => handleSave)}
                             >
                                 Save Deck
                             </button>
@@ -97,7 +121,10 @@ const HeaderControls = ({title, numItems, generatedDeck}) => {
                 </div>
             </div>
             <div className={styles["buttons-container"]}>
-                <button className={`${styles["btn"]} ${styles["save"]}`}>
+                <button
+                    className={`${styles["btn"]} ${styles["save"]}`}
+                    onClick={() => handleSave()}
+                >
                     <span className={styles["btn-txt"]}>Save</span>
                     <span className={styles["btn-logo"]}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11" fill="none">
