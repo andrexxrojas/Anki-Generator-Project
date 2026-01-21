@@ -3,6 +3,11 @@ import {sequelize} from "../config/db.js";
 import Deck from "./Deck.js";
 
 const User = sequelize.define("User", {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
     username: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -18,9 +23,5 @@ const User = sequelize.define("User", {
         allowNull: false
     }
 })
-
-// Associations
-User.hasMany(Deck, {foreignKey: "userId"});
-Deck.belongsTo(User, {foreignKey: "userId"});
 
 export default User;

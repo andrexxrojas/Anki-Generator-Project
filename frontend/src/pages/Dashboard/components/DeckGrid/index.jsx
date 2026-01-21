@@ -1,4 +1,6 @@
 import styles from './DeckGrid.module.css';
+import {useState, useEffect} from 'react';
+import {getDecks} from "../../services/deck.service.js";
 
 const DeckBox = ({title, numItems, tags, accountName}) => {
     return (
@@ -31,6 +33,21 @@ const DeckBox = ({title, numItems, tags, accountName}) => {
 }
 
 export default function DeckGrid() {
+    const [decks, setDecks] = useState([]);
+
+    useEffect(() => {
+        const fetchDecks = async () => {
+            try {
+                const fetchedDecks = await getDecks();
+                setDecks(fetchedDecks);
+            } catch (err) {
+                console.error(err.message);
+            }
+        };
+
+        fetchDecks();
+    },[]);
+
     return (
         <div className={styles["grid-wrapper"]}>
             <div className={styles["grid-container"]}>
@@ -40,6 +57,16 @@ export default function DeckGrid() {
                     tags={["Biology", "Science"]}
                     accountName="andrexxrojas"
                 />
+
+                {decks.map((deck, id) => (
+                    <DeckBox
+                        key={id}
+                        title={deck.title}
+                        numItems={deck.Cards.length}
+                        tags={deck?.tags || []}
+                        accountName={deck.username}
+                    />
+                ))}
             </div>
         </div>
     )

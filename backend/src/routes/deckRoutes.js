@@ -7,13 +7,13 @@ import {
     getDeckById,
     deleteDeck,
     updateDeck,
-    saveDeck
+    saveDeck, getUserDecks
 } from "../controllers/deckController.js";
 
 const router = express.Router();
 
 router.post("/create-deck", requireAuth, createDeck);
-router.get("/", requireAuth, getDecks);
+router.get("/my-decks", requireAuth, getUserDecks);
 router.get("/:deckId", requireAuth, getDeckById);
 router.put("/:deckId", requireAuth, updateDeck);
 router.delete("/:deckId", requireAuth, deleteDeck);

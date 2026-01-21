@@ -3,13 +3,14 @@
     background-color: var(--neutral-50);
     padding: 2.13rem;
     border-radius: 0.8rem;
+    min-height: 268px;
 }
 
 .deck-box-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 6.285rem;
+    height: 100%;
 }
 
 .deck-title {
@@ -47,6 +48,7 @@
     flex-direction: row;
     align-items: center;
     gap: 0.8rem;
+    margin-top: auto;
 }
 
 .deck-account-name {

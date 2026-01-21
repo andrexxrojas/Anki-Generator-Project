@@ -1,5 +1,6 @@
 import Deck from "../models/Deck.js";
 import Card from "../models/Card.js";
+import User from "../models/User.js";
 
 // Create a deck
 export const createDeck = async (req, res) => {
@@ -121,6 +122,7 @@ export const updateDeck = async (req, res) => {
 export const saveDeck = async (req, res) => {
     try {
         const entity = req.user || req.guest;
+        const entityType = req.user ? "user" : "guest";
 
         if (!entity) return res.status(401).json({ message: "Not authorized" });
 
@@ -133,6 +135,12 @@ export const saveDeck = async (req, res) => {
         let deck;
 
         if (!req.user) {
+            res.cookie("pendingDeckMigration", "1", {
+                httpOnly: true,
+                sameSite: "lax",
+                maxAge: 10 * 60 * 1000
+            });
+
             deck = await Deck.findOne({
                 where: { ownerType: "guest", ownerId: entity.id }
             });
@@ -153,7 +161,8 @@ export const saveDeck = async (req, res) => {
                 title,
                 description,
                 ownerType: "user",
-                ownerId: entity.id
+                ownerId: entity.id,
+                userId: entity.id,
             });
         }
 
@@ -165,7 +174,12 @@ export const saveDeck = async (req, res) => {
             }))
         );
 
-        return res.json({ message: "Deck saved!", deckId: deck.id });
+        return res.json({
+            entity: entityType,
+            entityId: entity.id,
+            message: "Deck saved!",
+            deckId: deck.id
+        });
 
     } catch (err) {
         console.error(err);
@@ -173,6 +187,30 @@ export const saveDeck = async (req, res) => {
     }
 };
 
+// Get user decks
+export const getUserDecks = async (req, res) => {
+    try {
+        if (!req.user) return res.status(401).json({ message: "Not authorized" });
+
+        const decks = await Deck.findAll({
+            where: {
+                ownerType: "user",
+                ownerId: String(req.user.id)
+            },
+            include: [Card]
+        });
+
+        const decksWithUser = decks.map(deck => ({
+            ...deck.toJSON(),
+            username: req.user.username,
+        }))
+
+        res.json(decksWithUser);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Error fetching decks" });
+    }
+};
 
 
 

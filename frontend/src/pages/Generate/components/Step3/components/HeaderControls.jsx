@@ -62,14 +62,19 @@ const HeaderControls = ({title, numItems, generatedDeck}) => {
         };
 
         try {
-            const saved = await saveDeck(deckData);
-            alert(`Deck saved! ID: ${saved.deckId}`);
+            const result = await saveDeck(deckData);
+
+            if (result.entity === "guest") {
+                console.log(result);
+                navigate("/auth/signup?from=save-deck");
+            } else {
+                // Popup to show user their deck has been saved
+            }
         } catch (err) {
             if (err.message === "Not authorized") {
                 navigate("/auth/signup");
             } else {
                 console.error(err);
-                // alert("Failed to save deck");
             }
         }
     }

@@ -3,6 +3,11 @@ import {sequelize} from "../config/db.js";
 import Card from "./Card.js";
 
 const Deck = sequelize.define("Deck", {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
     title: {
         type: DataTypes.STRING,
         allowNull: false
@@ -20,8 +25,7 @@ const Deck = sequelize.define("Deck", {
     }
 });
 
-// Associations
-Deck.hasMany(Card, {foreignKey: "deckId"});
-Card.belongsTo(Deck, {foreignKey: "deckId"});
+Deck.hasMany(Card, { foreignKey: "deckId", onDelete: "CASCADE" });
+Card.belongsTo(Deck, { foreignKey: "deckId" });
 
 export default Deck;
