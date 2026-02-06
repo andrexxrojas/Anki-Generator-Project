@@ -51,13 +51,6 @@ export default function DeckGrid() {
     return (
         <div className={styles["grid-wrapper"]}>
             <div className={styles["grid-container"]}>
-                <DeckBox
-                    title="Nervous System"
-                    numItems={20}
-                    tags={["Biology", "Science"]}
-                    accountName="andrexxrojas"
-                />
-
                 {decks.map((deck, id) => (
                     <DeckBox
                         key={id}
