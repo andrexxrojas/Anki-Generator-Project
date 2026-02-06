@@ -48,7 +48,6 @@
     flex-direction: row;
     align-items: center;
     gap: 0.8rem;
-    margin-top: auto;
 }
 
 .deck-account-name {
@@ -61,4 +60,70 @@
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(0, 337px));
+}
+
+.additional-container {
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-anchor {
+    position: relative;
+}
+
+.deck-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.857rem;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    border-radius: 0.428rem;
+    transition: background-color 0.3s ease-in-out;
+    user-select: none;
+    cursor: pointer;
+}
+
+.deck-menu:hover {
+    background-color: var(--neutral-200);
+}
+
+.dropdown-menu {
+    position: absolute;
+    bottom: 0;
+    right: 120%;
+    background-color: var(--neutral-0);
+    border: 1px solid var(--neutral-200);
+    padding: 8px;
+    z-index: 100;
+    min-width: 140px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.285rem;
+}
+
+.menu-item {
+    background-color: var(--neutral-0);
+    border: none;
+    outline: none;
+    border-radius: 0.4rem;
+    width: 100%;
+    padding: 0.714rem;
+    user-select: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease;
+}
+
+.menu-item:hover {
+    background-color: var(--neutral-100);
+}
+
+.menu-item.warning:hover {
+    color: #FF2C2C;
 }

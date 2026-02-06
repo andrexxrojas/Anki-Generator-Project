@@ -1,9 +1,26 @@
 import styles from './DeckGrid.module.css';
-import {useState, useEffect, useMemo} from 'react';
+import {useState, useEffect, useMemo, useRef} from 'react';
 import {getDecks} from "../../services/deck.service.js";
-import {UserCircleIcon} from "@phosphor-icons/react";
+import {UserCircleIcon, DotsThreeVerticalIcon} from "@phosphor-icons/react";
 
 const DeckBox = ({title, numItems, tags, accountName}) => {
+    const [showMenu, setShowMenu] = useState(false);
+    const menuRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (showMenu && menuRef.current && !menuRef.current.contains(event.target)) {
+                setShowMenu(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [showMenu]);
+
     return (
         <div className={styles["deck-box-wrapper"]}>
             <div className={styles["deck-box-container"]}>
@@ -20,9 +37,39 @@ const DeckBox = ({title, numItems, tags, accountName}) => {
                     </div>
                 </div>
 
-                <div className={styles["deck-account"]}>
-                    <UserCircleIcon size={32} fill="#E5E5E5"/>
-                    <span className={styles["deck-account-name"]}>{accountName}</span>
+                <div className={styles["additional-container"]}>
+                    <div className={styles["deck-account"]}>
+                        <UserCircleIcon size={32} fill="#E5E5E5"/>
+                        <span className={styles["deck-account-name"]}>{accountName}</span>
+                    </div>
+
+                    <div className={styles["menu-anchor"]} ref={menuRef}>
+                        <button
+                            className={styles["deck-menu"]}
+                            onClick={() => setShowMenu((prev) => !prev)}
+                        >
+                            <DotsThreeVerticalIcon size={19} weight="bold"/>
+                        </button>
+                        {showMenu && (
+                            <div className={styles["dropdown-menu"]}>
+                                <button
+                                    className={styles["menu-item"]}
+                                >
+                                    Edit Deck
+                                </button>
+                                <button
+                                    className={styles["menu-item"]}
+                                >
+                                    Export .apkg
+                                </button>
+                                <button
+                                    className={`${styles["menu-item"]} ${styles["warning"]}`}
+                                >
+                                    Delete Deck
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
