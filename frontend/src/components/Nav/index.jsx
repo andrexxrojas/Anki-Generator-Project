@@ -38,7 +38,14 @@ export default function Nav() {
                             </NavLink>
                         </li>
                         <li className={styles["list-content"]}>
-                            <NavLink to="/" className={styles["content-txt"]}>
+                            <NavLink
+                                to="#"
+                                className={styles["content-txt"]}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    window.open("https://github.com/andrexxrojas/Anki-Generator-Project");
+                                }}
+                            >
                                 Docs
                             </NavLink>
                         </li>
