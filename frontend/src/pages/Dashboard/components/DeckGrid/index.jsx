@@ -1,5 +1,5 @@
 import styles from './DeckGrid.module.css';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useMemo} from 'react';
 import {getDecks} from "../../services/deck.service.js";
 
 const DeckBox = ({title, numItems, tags, accountName}) => {
@@ -32,7 +32,7 @@ const DeckBox = ({title, numItems, tags, accountName}) => {
     )
 }
 
-export default function DeckGrid() {
+export default function DeckGrid({ searchQuery = "" }) {
     const [decks, setDecks] = useState([]);
 
     useEffect(() => {
@@ -45,21 +45,38 @@ export default function DeckGrid() {
             }
         };
 
-        fetchDecks();
+        void fetchDecks();
     },[]);
+
+    const filteredDecks = useMemo(() => {
+        if (!searchQuery.trim()) {
+            return decks;
+        }
+
+        const query = searchQuery.toLowerCase().trim();
+        return decks.filter(deck =>
+            deck.title.toLowerCase().includes(query)
+        );
+    }, [searchQuery, decks]);
 
     return (
         <div className={styles["grid-wrapper"]}>
             <div className={styles["grid-container"]}>
-                {decks.map((deck, id) => (
-                    <DeckBox
-                        key={id}
-                        title={deck.title}
-                        numItems={deck.Cards.length}
-                        tags={deck?.tags || []}
-                        accountName={deck.username}
-                    />
-                ))}
+                {filteredDecks.length === 0 ? (
+                    <div className={styles["no-results"]}>
+                        <p>No decks found{searchQuery && ` for "${searchQuery}"`}</p>
+                    </div>
+                ) : (
+                    filteredDecks.map((deck, id) => (
+                        <DeckBox
+                            key={id}
+                            title={deck.title}
+                            numItems={deck.Cards.length}
+                            tags={deck?.tags || []}
+                            accountName={deck.username}
+                        />
+                    ))
+                )}
             </div>
         </div>
     )

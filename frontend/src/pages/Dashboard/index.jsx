@@ -12,13 +12,14 @@ const HeaderInfo = ({title, subtitle}) => {
     )
 }
 
-const HeaderControls = () => {
+const HeaderControls = ({ onSearch }) => {
     const [query, setQuery] = useState("");
     const searchRef = useRef(null);
     const navigate = useNavigate();
 
     const handleSearch = (e) => {
         setQuery(e.target.value);
+        onSearch(e.target.value);
     }
 
     const handleFocus = () => {
@@ -56,24 +57,26 @@ const HeaderControls = () => {
     )
 }
 
-const Header = () => {
+const Header = ({ onSearch }) => {
     return (
         <div className={styles["header-container"]}>
             <HeaderInfo
                 title="Dashboard"
                 subtitle="Quick access to your deck and learning stats"
             />
-            <HeaderControls/>
+            <HeaderControls onSearch={onSearch}/>
         </div>
     )
 }
 
 export default function Dashboard() {
+    const [searchQuery, setSearchQuery] = useState("");
+
     return (
         <div className={styles["dashboard-wrapper"]}>
             <div className={styles["dashboard-container"]}>
-                <Header/>
-                <DeckGrid/>
+                <Header onSearch={setSearchQuery} />
+                <DeckGrid searchQuery={searchQuery}/>
             </div>
         </div>
     )
