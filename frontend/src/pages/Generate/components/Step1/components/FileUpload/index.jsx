@@ -1,5 +1,6 @@
 import styles from "./FileUpload.module.css";
 import {useState, useRef, useEffect} from "react";
+import {UploadIcon} from "@phosphor-icons/react";
 import gsap from "gsap";
 
 export default function FileUpload({onComplete, onDelete, setCanContinue, file: parentFile}) {
@@ -129,20 +130,7 @@ export default function FileUpload({onComplete, onDelete, setCanContinue, file: 
                     onDrop={handleDrop}
                 >
                     <div className={styles["icon-container"]}>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="14"
-                            viewBox="0 0 16 14"
-                            fill="none"
-                        >
-                            <path
-                                d="M11.8889 10.75H11.8967M10.8 8.5H12.6667C13.3915 8.5 13.7538 8.5 14.0398 8.61415C14.4209 8.7664 14.7237 9.05845 14.8816 9.42595C15 9.70165 15 10.0511 15 10.75C15 11.4489 15 11.7983 14.8816 12.074C14.7237 12.4415 14.4209 12.7336 14.0398 12.8858C13.7538 13 13.3915 13 12.6667 13H3.33333C2.60854 13 2.24614 13 1.96027 12.8858C1.57912 12.7336 1.27629 12.4415 1.11841 12.074C1 11.7983 1 11.4489 1 10.75C1 10.0511 1 9.70165 1.11841 9.42595C1.27629 9.05845 1.57912 8.7664 1.96027 8.61415C2.24614 8.5 2.60854 8.5 3.33333 8.5H5.2M8 9.25V1M8 1L10.3333 3.25M8 1L5.66667 3.25"
-                                stroke="black"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-                        </svg>
+                        <UploadIcon size={19}/>
                     </div>
                     <p className={styles["drop-zone-text"]}>
                         Drop your files here or browse
