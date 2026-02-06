@@ -61,6 +61,7 @@ OUTPUT MUST BE A VALID JSON OBJECT ONLY.
 JSON FORMAT:
 {
   "deckName": string,
+  "tags": string[]
   "cards": [
     {
       "type": "basic" | "reversible" | "multiple-choice" | "cloze",
@@ -75,6 +76,20 @@ DECK SETTINGS:
 - Card Types: ${deckOptions.cardTypes.join(", ")}
 - Card Number: Exactly ${deckOptions.cardLimit}
 - Card Styles: ${deckOptions.cardStyles.join(", ")}
+
+TAG RULES:
+1. Generate EXACTLY 3 tags (no more, no less)
+2. Tags should be:
+   - Capitalized (first letter uppercase, rest lowercase)
+   - Single words only (no spaces, no hyphens)
+   - Most relevant to the material
+   - Broad category tags that are useful for filtering
+3. Follow this priority for tag selection:
+   - First tag: Main subject/category (e.g., "Spanish", "Biology", "Programming")
+   - Second tag: Sub-category or focus area (e.g., "Vocabulary", "Cells", "JavaScript")
+   - Third tag: Difficulty or type (e.g., "Beginner", "Concepts", "Practice")
+4. NO DUPLICATES - ensure all 3 tags are distinct
+5. IMPORTANT: Each tag must be Capitalized (e.g., "Spanish", not "spanish" or "SPANISH")
 
 RULES:
 - Use ONLY content from the provided material.

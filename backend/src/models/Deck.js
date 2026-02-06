@@ -15,6 +15,11 @@ const Deck = sequelize.define("Deck", {
     description: {
         type: DataTypes.TEXT
     },
+    tags: {
+        type: DataTypes.JSON,
+        defaultValue: [],
+        allowNull: false
+    },
     ownerType: {
         type: DataTypes.ENUM("guest", "user"),
         allowNull: false

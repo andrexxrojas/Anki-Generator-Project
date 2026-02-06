@@ -24,8 +24,8 @@ const HeaderControls = ({title, numItems, generatedDeck}) => {
     }, [showMenu]);
 
     const handleAction = (actionCallback) => {
-        actionCallback(); // Run the actual logic (save, delete, etc)
-        setShowMenu(false); // Close the menu
+        actionCallback();
+        setShowMenu(false);
     };
 
     const handleExport = async () => {
@@ -58,7 +58,8 @@ const HeaderControls = ({title, numItems, generatedDeck}) => {
         const deckData = {
             title: generatedDeck.result.deckName,
             description: generatedDeck.result.description || "",
-            cards: generatedDeck.result.cards
+            cards: generatedDeck.result.cards,
+            tags: generatedDeck.result.tags,
         };
 
         try {
