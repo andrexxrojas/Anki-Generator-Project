@@ -2,10 +2,12 @@ import styles from "../Step3.module.css";
 import {exportDeckApkg, saveDeck} from "../services/deck.service.js";
 import {useState, useEffect, useRef} from "react";
 import {useNavigate} from "react-router-dom";
+import {useAuth} from "../../../../../context/authContext.jsx";
 
 const HeaderControls = ({title, numItems, generatedDeck}) => {
     const API_URL = import.meta.env.VITE_API_URL;
     const [showMenu, setShowMenu] = useState(false);
+    const { user } = useAuth();
     const menuRef = useRef(null);
     const navigate = useNavigate();
 
@@ -66,10 +68,9 @@ const HeaderControls = ({title, numItems, generatedDeck}) => {
             const result = await saveDeck(deckData);
 
             if (result.entity === "guest") {
-                console.log(result);
                 navigate("/auth/signup?from=save-deck");
             } else {
-                // Popup to show user their deck has been saved
+                // Popup to show deck has been saved
             }
         } catch (err) {
             if (err.message === "Not authorized") {

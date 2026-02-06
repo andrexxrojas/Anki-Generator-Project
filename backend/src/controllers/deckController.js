@@ -5,12 +5,18 @@ import User from "../models/User.js";
 // Create a deck
 export const createDeck = async (req, res) => {
     try {
+        const entity = req.user || req.guest;
+        if (!entity) return res.status(401).json({message: "Not authorized"});
+
         const {title, description, tags} = req.body;
 
         const deck = await Deck.create({
             title,
             description,
-            tags: tags || []
+            tags: tags || [],
+            ownerType: req.user ? "user" : "guest",
+            ownerId: entity.id,
+            ...(req.user && { userId: req.user.id })
         });
 
         res.json(deck);

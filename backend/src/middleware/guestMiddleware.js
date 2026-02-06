@@ -1,27 +1,38 @@
 import {v4 as uuidv4} from "uuid";
 import Guest from "../models/Guest.js";
+import User from "../models/User.js";
+import jwt from "jsonwebtoken";
 
 export const guestMiddleware = async (req, res, next) => {
     try {
-        if (req.user) return next(); // skip if logged in
+        const token = req.cookies.token;
+        if (token) {
+            try {
+                const decoded = jwt.verify(token, process.env.JWT_SECRET);
+                const user = await User.findByPk(decoded.id);
+                if (user) {
+                    req.user = user;
+                    return next();
+                }
+            } catch (err) {
+                // Token invalid, proceed with guest logic
+            }
+        }
 
         const ip = req.headers["x-forwarded-for"]?.split(",")[0] || req.socket.remoteAddress;
         let guestId = req.cookies.guestId;
 
         let guest = null;
 
-        // 1. If guestId cookie exists → load that guest
         if (guestId) {
             guest = await Guest.findOne({where: {guestId}});
         }
 
-        // 2. If no guest from cookie → try IP address
         if (!guest) {
             guest = await Guest.findOne({where: {ipAddress: ip}});
             if (guest) {
                 guestId = guest.guestId;
 
-                // Restore cookie since it was deleted
                 res.cookie("guestId", guest.guestId, {
                     httpOnly: true,
                     maxAge: 1000 * 60 * 60 * 24 * 30
@@ -29,7 +40,6 @@ export const guestMiddleware = async (req, res, next) => {
             }
         }
 
-        // 3. If STILL no guest → create new
         if (!guest) {
             guestId = uuidv4();
             guest = await Guest.create({
