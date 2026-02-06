@@ -25,3 +25,20 @@ export async function deleteDeck(id) {
 
     return res.json();
 }
+
+export async function exportDeckApkg(deckName, cards) {
+    const res = await fetch(`${API_URL}/file-export/export-apkg`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            deckName: deckName,
+            cards: cards,
+        }),
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to export deck");
+    }
+
+    return await res.blob();
+}

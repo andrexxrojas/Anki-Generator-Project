@@ -1,9 +1,9 @@
 import styles from './DeckGrid.module.css';
 import {useState, useEffect, useMemo, useRef} from 'react';
-import {deleteDeck, getDecks} from "../../services/deck.service.js";
+import {deleteDeck, exportDeckApkg, getDecks} from "../../services/deck.service.js";
 import {UserCircleIcon, DotsThreeVerticalIcon} from "@phosphor-icons/react";
 
-const DeckBox = ({id, title, numItems, tags, accountName, onDelete}) => {
+const DeckBox = ({id, title, numItems, tags, accountName, onDelete, cards}) => {
     const [showMenu, setShowMenu] = useState(false);
     const menuRef = useRef(null);
 
@@ -33,6 +33,24 @@ const DeckBox = ({id, title, numItems, tags, accountName, onDelete}) => {
             alert("Failed to delete deck:", err.message);
         }
     }
+
+    const handleExport = async () => {
+        try {
+            const blob = await exportDeckApkg(title, cards);
+
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `${title}.apkg`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+        } catch (err) {
+            console.error(err);
+            alert("Failed to export deck");
+        }
+    };
 
     return (
         <div className={styles["deck-box-wrapper"]}>
@@ -72,6 +90,7 @@ const DeckBox = ({id, title, numItems, tags, accountName, onDelete}) => {
                                 </button>
                                 <button
                                     className={styles["menu-item"]}
+                                    onClick={handleExport}
                                 >
                                     Export .apkg
                                 </button>
@@ -137,6 +156,7 @@ export default function DeckGrid({ searchQuery = "" }) {
                             title={deck.title}
                             numItems={deck.Cards.length}
                             tags={deck?.tags || []}
+                            cards={deck.Cards}
                             accountName={deck.username}
                             onDelete={handleDeleteDeck}
                         />
