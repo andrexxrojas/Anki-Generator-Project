@@ -130,7 +130,7 @@ const HeaderControls = ({title, numItems, generatedDeck}) => {
                             </button>
                             <button
                                 className={styles["menu-item"]}
-                                onClick={() => handleAction(() => handleSave)}
+                                onClick={() => handleAction(handleSave)}
                             >
                                 Save Deck
                             </button>
