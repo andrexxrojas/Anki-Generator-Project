@@ -1,9 +1,9 @@
 import styles from './DeckGrid.module.css';
 import {useState, useEffect, useMemo, useRef} from 'react';
-import {getDecks} from "../../services/deck.service.js";
+import {deleteDeck, getDecks} from "../../services/deck.service.js";
 import {UserCircleIcon, DotsThreeVerticalIcon} from "@phosphor-icons/react";
 
-const DeckBox = ({title, numItems, tags, accountName}) => {
+const DeckBox = ({id, title, numItems, tags, accountName, onDelete}) => {
     const [showMenu, setShowMenu] = useState(false);
     const menuRef = useRef(null);
 
@@ -20,6 +20,19 @@ const DeckBox = ({title, numItems, tags, accountName}) => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [showMenu]);
+
+    const handleDelete = async () => {
+        if (!window.confirm(`Are you sure you want to delete ${title}?`)) { return; }
+
+        try {
+            await deleteDeck(id);
+            setShowMenu(false);
+            onDelete(id);
+            alert("Deck deleted successfully!");
+        } catch (err) {
+            alert("Failed to delete deck:", err.message);
+        }
+    }
 
     return (
         <div className={styles["deck-box-wrapper"]}>
@@ -64,6 +77,7 @@ const DeckBox = ({title, numItems, tags, accountName}) => {
                                 </button>
                                 <button
                                     className={`${styles["menu-item"]} ${styles["warning"]}`}
+                                    onClick={handleDelete}
                                 >
                                     Delete Deck
                                 </button>
@@ -92,6 +106,11 @@ export default function DeckGrid({ searchQuery = "" }) {
         void fetchDecks();
     },[]);
 
+    const handleDeleteDeck = (deletedId) => {
+        setDecks(prevDecks => prevDecks.filter(deck => deck.id !== deletedId));
+    };
+
+
     const filteredDecks = useMemo(() => {
         if (!searchQuery.trim()) {
             return decks;
@@ -114,10 +133,12 @@ export default function DeckGrid({ searchQuery = "" }) {
                     filteredDecks.map((deck, id) => (
                         <DeckBox
                             key={id}
+                            id={deck.id}
                             title={deck.title}
                             numItems={deck.Cards.length}
                             tags={deck?.tags || []}
                             accountName={deck.username}
+                            onDelete={handleDeleteDeck}
                         />
                     ))
                 )}
