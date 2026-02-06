@@ -109,6 +109,9 @@ export const login = async (req, res) => {
             maxAge: 60 * 60 * 1000
         })
 
+        res.clearCookie("guestId");
+        res.clearCookie("pendingDeckMigration");
+
         res.json({message: "Logged in user with token:", token});
     } catch (err) {
         res.status(500).json({error: err.message});

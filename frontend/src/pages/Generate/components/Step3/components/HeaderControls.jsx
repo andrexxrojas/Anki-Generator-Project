@@ -2,12 +2,10 @@ import styles from "../Step3.module.css";
 import {exportDeckApkg, saveDeck} from "../services/deck.service.js";
 import {useState, useEffect, useRef} from "react";
 import {useNavigate} from "react-router-dom";
-import {useAuth} from "../../../../../context/authContext.jsx";
 
 const HeaderControls = ({title, numItems, generatedDeck}) => {
     const API_URL = import.meta.env.VITE_API_URL;
     const [showMenu, setShowMenu] = useState(false);
-    const { user } = useAuth();
     const menuRef = useRef(null);
     const navigate = useNavigate();
 
@@ -68,16 +66,41 @@ const HeaderControls = ({title, numItems, generatedDeck}) => {
             const result = await saveDeck(deckData);
 
             if (result.entity === "guest") {
-                navigate("/auth/signup?from=save-deck");
+                switch(result.action) {
+                    case "created":
+                        alert("Deck saved temporarily! Sign up to keep it permanently.");
+                        navigate("/auth/signup?from=save-deck&deckId=" + result.deckId);
+                        break;
+                    case "updated":
+                        alert("Deck updated temporarily! Sign up to keep it permanently.");
+                        navigate("/auth/signup?from=save-deck&deckId=" + result.deckId);
+                        break;
+                    case "already_exists_guest":
+                        alert("Sign up to migrate it to your account.");
+                        navigate("/auth/signup?from=save-deck&deckId=" + result.deckId);
+                        break;
+                }
             } else {
-                // Popup to show deck has been saved
+                switch(result.action) {
+                    case "created":
+                        alert("Deck saved to dashboard!");
+                        console.log("Successfully created!");
+                        break;
+                    case "already_exists":
+                        alert("You've already saved this exact deck!");
+                        console.log("Deck already exists!");
+                        break;
+                    case "migrated":
+                        alert("Deck migrated to your account successfully!");
+                        break;
+                    case "updated":
+                        alert("Deck updated successfully!");
+                        break;
+                }
             }
         } catch (err) {
-            if (err.message === "Not authorized") {
-                navigate("/auth/signup");
-            } else {
-                console.error(err);
-            }
+            console.error(err);
+            alert("Failed to save deck");
         }
     }
 

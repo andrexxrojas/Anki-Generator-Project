@@ -1,6 +1,27 @@
 import Deck from "../models/Deck.js";
 import Card from "../models/Card.js";
-import User from "../models/User.js";
+import crypto from "crypto";
+
+// Helper to create hash of deck content
+const createDeckHash = (cards, tags = []) => {
+    // Create a consistent string representation
+    const sortedCards = [...cards]
+        .map(card => ({
+            front: (card.front || '').toLowerCase().trim(),
+            back: (card.back || '').toLowerCase().trim(),
+            type: card.type || 'basic'
+        }))
+        .sort((a, b) => a.front.localeCompare(b.front));
+
+    const sortedTags = [...tags].sort();
+
+    const contentString = JSON.stringify({
+        cards: sortedCards,
+        tags: sortedTags
+    });
+
+    return crypto.createHash('md5').update(contentString).digest('hex');
+};
 
 // Create a deck
 export const createDeck = async (req, res) => {
@@ -8,16 +29,48 @@ export const createDeck = async (req, res) => {
         const entity = req.user || req.guest;
         if (!entity) return res.status(401).json({message: "Not authorized"});
 
-        const {title, description, tags} = req.body;
+        const {title, description, tags, cards = []} = req.body;
+
+        let deckHash = "";
+        if (cards && cards.length > 0) {
+            deckHash = createDeckHash(cards, tags || []);
+
+            const existingDeck = await Deck.findOne({
+                where: {
+                    ownerType: req.user ? "user" : "guest",
+                    ownerId: entity.id,
+                    deckHash: deckHash
+                }
+            });
+
+            if (existingDeck) {
+                return res.status(409).json({
+                    message: "This deck already exists!",
+                    deckId: existingDeck.id
+                });
+            }
+        }
 
         const deck = await Deck.create({
             title,
             description,
             tags: tags || [],
+            deckHash: deckHash || '',
             ownerType: req.user ? "user" : "guest",
             ownerId: entity.id,
             ...(req.user && { userId: req.user.id })
         });
+
+        if (cards && cards.length > 0) {
+            await Card.bulkCreate(
+                cards.map(c => ({
+                    deckId: deck.id,
+                    front: c.front,
+                    back: c.back,
+                    type: c.type || "basic"
+                }))
+            );
+        }
 
         res.json(deck);
     } catch (err) {
@@ -133,17 +186,40 @@ export const saveDeck = async (req, res) => {
 
         if (!entity) return res.status(401).json({ message: "Not authorized" });
 
-        const { title, description, cards, tags } = req.body;
+        const { title, description, cards, tags = [] } = req.body;
 
         if (!title || !cards?.length) {
             return res.status(400).json({ message: "Invalid deck data" });
         }
 
+        const deckHash = createDeckHash(cards, tags);
+
         let deck;
+        let isUpdate = false;
+        let action = "created";
 
         const hasPendingMigration = req.cookies?.pendingDeckMigration === "1";
 
         if (req.user) {
+            const existingDeck = await Deck.findOne({
+                where: {
+                    ownerType: "user",
+                    ownerId: req.user.id,
+                    deckHash: deckHash
+                }
+            });
+
+            if (existingDeck) {
+                return res.status(200).json({
+                    message: "This deck has already been saved!",
+                    deckId: existingDeck.id,
+                    deckTitle: existingDeck.title,
+                    action: "already_exists",
+                    entity: "user",
+                    entityId: req.user.id,
+                });
+            }
+
             if (hasPendingMigration && req.guest) {
                 const guestDeck = await Deck.findOne({
                     where: { ownerType: "guest", ownerId: req.guest.id }
@@ -153,7 +229,8 @@ export const saveDeck = async (req, res) => {
                     await guestDeck.update({
                         title,
                         description,
-                        tags: tags || [],
+                        tags: tags,
+                        deckHash,
                         ownerType: "user",
                         ownerId: req.user.id,
                         userId: req.user.id
@@ -161,13 +238,16 @@ export const saveDeck = async (req, res) => {
 
                     await Card.destroy({ where: { deckId: guestDeck.id } });
                     deck = guestDeck;
+                    action = "migrated";
 
                     res.clearCookie("pendingDeckMigration");
+                    res.clearCookie("guestId");
                 } else {
                     deck = await Deck.create({
                         title,
                         description,
-                        tags: tags || [],
+                        tags: tags,
+                        deckHash,
                         ownerType: "user",
                         ownerId: req.user.id,
                         userId: req.user.id,
@@ -177,13 +257,33 @@ export const saveDeck = async (req, res) => {
                 deck = await Deck.create({
                     title,
                     description,
-                    tags: tags || [],
+                    tags: tags,
+                    deckHash,
                     ownerType: "user",
                     ownerId: req.user.id,
                     userId: req.user.id,
                 });
             }
         } else {
+            const existingDeck = await Deck.findOne({
+                where: {
+                    ownerType: "guest",
+                    ownerId: entity.id,
+                    deckHash: deckHash
+                }
+            });
+
+            if (existingDeck) {
+                return res.json({
+                    entity: "guest",
+                    entityId: entity.id,
+                    message: "This deck is ready for migration! Sign up to keep it permanently.",
+                    deckId: existingDeck.id,
+                    tags: existingDeck.tags,
+                    action: "already_exists_guest",
+                    requiresSignup: true
+                });
+            }
 
             res.cookie("pendingDeckMigration", "1", {
                 httpOnly: true,
@@ -196,33 +296,54 @@ export const saveDeck = async (req, res) => {
             });
 
             if (deck) {
-                await deck.update({ title, description, tags: tags || [] });
+                await deck.update({
+                    title,
+                    description,
+                    tags: tags,
+                    deckHash
+                });
                 await Card.destroy({ where: { deckId: deck.id } });
+                action = "updated";
             } else {
                 deck = await Deck.create({
                     title,
                     description,
-                    tags: tags || [],
+                    tags: tags,
+                    deckHash,
                     ownerType: "guest",
                     ownerId: entity.id
                 });
             }
+
+            return res.json({
+                entity: "guest",
+                entityId: entity.id,
+                message: "Deck saved temporarily! Sign up to keep it permanently.",
+                deckId: deck.id,
+                tags: deck.tags,
+                action: action,
+                requiresSignup: true
+            });
         }
 
         await Card.bulkCreate(
             cards.map(c => ({
                 deckId: deck.id,
                 front: c.front,
-                back: c.back
+                back: c.back,
+                type: c.type || "basic"
             }))
         );
 
         return res.json({
             entity: entityType,
             entityId: entity.id,
-            message: "Deck saved!",
+            message: action === "migrated" ? "Deck migrated successfully!" :
+                action === "updated" ? "Deck updated successfully!" :
+                    "Deck saved successfully!",
             deckId: deck.id,
-            tags: deck.tags
+            tags: deck.tags,
+            action: action
         });
 
     } catch (err) {

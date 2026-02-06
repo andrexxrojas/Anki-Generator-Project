@@ -42,7 +42,14 @@ const HeaderControls = () => {
                     ref={searchRef}
                 />
             </div>
-            <button className={styles["header-create-btn"]} onClick={() => navigate("/generate-deck")}>
+            <button
+                className={styles["header-create-btn"]}
+                onClick={(e) => {
+                    e.preventDefault();
+                    sessionStorage.removeItem("anki-generate-state");
+                    navigate("/generate-deck")
+                }}
+            >
                 Create Deck
             </button>
         </div>

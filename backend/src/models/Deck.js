@@ -20,6 +20,11 @@ const Deck = sequelize.define("Deck", {
         defaultValue: [],
         allowNull: false
     },
+    deckHash: {
+        type: DataTypes.STRING(32),
+        allowNull: false,
+        defaultValue: ""
+    },
     ownerType: {
         type: DataTypes.ENUM("guest", "user"),
         allowNull: false
