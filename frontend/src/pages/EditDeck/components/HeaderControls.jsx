@@ -13,11 +13,10 @@ export default function HeaderControls({title, numItems, deck}) {
 
     const handleStartEdit = () => {
         setIsEditing(true);
-        // Focus and select all text when editing starts
+        setShowMenu(false);
         setTimeout(() => {
             if (titleInputRef.current) {
                 titleInputRef.current.focus();
-                titleInputRef.current.select();
             }
         }, 0);
     };
