@@ -6,7 +6,7 @@ import {updateDeckTitle} from "../services/deck.service.js";
 
 export default function HeaderControls({title, numItems, deck}) {
     const [showMenu, setShowMenu] = useState(false);
-    const [isEditing, setIsEditing] = useState(true);
+    const [isEditing, setIsEditing] = useState(false);
     const [deckTitle, setDeckTitle] = useState(title);
     const menuRef = useRef(null);
     const titleInputRef = useRef(null);
@@ -26,8 +26,7 @@ export default function HeaderControls({title, numItems, deck}) {
         setIsEditing(false);
 
         const res = await updateDeckTitle(deck.id, deckTitle);
-
-        console.log(res);
+        setDeckTitle(res.deck.title);
     };
 
     const handleKeyDown = (e) => {
@@ -35,7 +34,7 @@ export default function HeaderControls({title, numItems, deck}) {
             handleSaveTitle();
         } else if (e.key === 'Escape') {
             setIsEditing(false);
-            setDeckTitle(title); // Reset to original
+            setDeckTitle(title);
         }
     };
 
