@@ -178,6 +178,34 @@ export const updateDeck = async (req, res) => {
     }
 };
 
+// Update deck title
+export const updateDeckTitle = async (req, res) => {
+    try {
+        const { deckId } = req.params;
+        const { title } = req.body;
+
+        if (!title || title.trim() === '') {
+            return res.status(400).json({ message: "Title cannot be empty" });
+        }
+
+        const deck = await Deck.findByPk(deckId);
+        if (!deck) {
+            return res.status(404).json({ message: "Deck not found" });
+        }
+
+        deck.title = title.trim();
+        await deck.save();
+
+        res.json({
+            message: "Title updated successfully",
+            deck: deck
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Error updating deck title" });
+    }
+};
+
 // Save a deck
 export const saveDeck = async (req, res) => {
     try {

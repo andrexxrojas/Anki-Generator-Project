@@ -1,0 +1,294 @@
+.edit-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.edit-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Header Controls Component */
+.header-info {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 0.142rem;
+    position: relative;
+}
+
+.header-controls {
+    width: 100%;
+    max-width: 923px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-info-title {
+    font-family: var(--font-medium);
+    font-size: var(--fs-lg2);
+    color: var(--neutral-950);
+    outline: none;
+}
+
+.header-info-title-input {
+    font-family: var(--font-medium);
+    font-size: var(--fs-lg2);
+    color: var(--neutral-950);
+    outline: none;
+    border: none;
+    width: fit-content;
+    background-color: var(--neutral-50);
+    box-sizing: border-box;
+    padding: 0.2rem 0.2rem 0.2rem 0;
+    border-radius: 0.4rem;
+}
+
+.header-info-subtitle {
+    font-family: var(--font-regular);
+    font-size: var(--fs-xxs);
+    color: var(--neutral-150);
+}
+
+.menu-anchor {
+    position: absolute;
+    right: -38px;
+    top: -2px;
+    width: 30px;
+    height: 30px;
+}
+
+.header-info-menu {
+    outline: none;
+    border: none;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.428rem;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 120%;
+    left: 0;
+    background-color: var(--neutral-0);
+    border: 1px solid var(--neutral-200);
+    padding: 8px;
+    z-index: 100;
+    min-width: 140px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.285rem;
+}
+
+.menu-item {
+    background-color: var(--neutral-0);
+    border: none;
+    outline: none;
+    border-radius: 0.4rem;
+    width: 100%;
+    padding: 0.714rem;
+    user-select: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.menu-item:hover {
+    background-color: var(--neutral-100);
+}
+
+.header-info-menu:hover {
+    background-color: var(--neutral-100);
+}
+
+.menu-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    width: fit-content;
+}
+
+.btn {
+    font-family: var(--font-regular);
+    font-size: var(--fs-sm);
+    border: none;
+    outline: none;
+    border-radius: 0.4rem;
+    user-select: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.header-controls .buttons-container .btn-txt {
+    display: inline-block;
+    padding: 0.857rem;
+}
+
+.header-controls .buttons-container .btn-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.857rem;
+    border-left: 1px solid var(--neutral-200);
+}
+
+.btn.export {
+    color: var(--neutral-50);
+    background-color: var(--neutral-800);
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn.export:hover {
+    background-color: var(--neutral-700);
+}
+
+/* Deck Preview Component */
+.deck-preview-wrapper {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 923px;
+    margin-top: 2.285rem;
+}
+
+.deck-preview {
+    border: 1px solid var(--neutral-200);
+    border-radius: 0.857rem;
+    padding: 2.285rem;
+}
+
+.top-preview,
+.bottom-preview {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-block: 8rem;
+    font-family: var(--font-regular);
+    font-size: var(--fs-sm);
+    text-align: center;
+}
+
+.bottom-preview {
+    cursor: pointer;
+}
+
+.top-preview {
+    border-bottom: 1px solid var(--neutral-200);
+}
+
+.deck-preview-wrapper .buttons-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.857rem;
+    gap: 0.57rem;
+}
+
+.deck-preview-wrapper .buttons-container .btn {
+    background-color: transparent;
+    font-family: var(--font-regular);
+    font-size: var(--fs-sm);
+    border: 1px solid var(--neutral-200);
+    outline: none;
+    border-radius: 0.4rem;
+    user-select: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.deck-preview-wrapper .buttons-container .btn:hover {
+    background-color: var(--neutral-100);
+}
+
+.deck-preview-wrapper .buttons-container .btn:disabled:hover {
+    background-color: transparent;
+    cursor: default;
+}
+
+.deck-preview-wrapper .buttons-container .btn-txt {
+    display: inline-block;
+    padding: 0.857rem;
+}
+
+.deck-preview-wrapper .buttons-container .btn.next .btn-logo {
+    display: inline-block;
+    padding: 0.857rem;
+    border-left: 1px solid var(--neutral-200);
+}
+
+.deck-preview-wrapper .buttons-container .btn.previous .btn-logo {
+    display: inline-block;
+    padding: 0.857rem;
+    border-right: 1px solid var(--neutral-200);
+}
+
+.deck-preview-wrapper .buttons-container .btn:disabled .btn-txt {
+    color: var(--neutral-150);
+}
+
+.deck-preview-wrapper .buttons-container .btn:disabled .btn-logo svg path {
+    stroke: var(--neutral-150);
+}
+
+.reveal-txt {
+    color: var(--neutral-150);
+}
+
+/* View All Component */
+.view-all-wrapper {
+    margin-top: 3.428rem;
+    width: 100%;
+    max-width: 923px;
+}
+
+.view-all-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.857rem;
+}
+
+.card {
+    border: 1px solid var(--neutral-200);
+    border-radius: 0.857rem;
+    padding: 2.285rem;
+}
+
+.card-top-preview,
+.card-bottom-preview {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-block: 2rem;
+    font-family: var(--font-regular);
+    font-size: var(--fs-sm);
+    text-align: center;
+}
+
+.card-top-preview {
+    border-bottom: 1px solid var(--neutral-200);
+}
+
+.card-num {
+    font-family: var(--font-regular);
+    font-size: var(--fs-xxs);
+    color: var(--neutral-150);
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 0.571rem;
+}

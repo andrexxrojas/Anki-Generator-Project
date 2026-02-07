@@ -127,3 +127,9 @@
 .menu-item.warning:hover {
     color: #FF2C2C;
 }
+
+.no-results {
+    font-family: var(--font-regular);
+    font-size: var(--fs-sm);
+    color: var(--neutral-500);
+}

@@ -2,10 +2,12 @@ import styles from './DeckGrid.module.css';
 import {useState, useEffect, useMemo, useRef} from 'react';
 import {deleteDeck, exportDeckApkg, getDecks} from "../../services/deck.service.js";
 import {UserCircleIcon, DotsThreeVerticalIcon} from "@phosphor-icons/react";
+import {useNavigate} from "react-router-dom";
 
 const DeckBox = ({id, title, numItems, tags, accountName, onDelete, cards}) => {
     const [showMenu, setShowMenu] = useState(false);
     const menuRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -85,6 +87,7 @@ const DeckBox = ({id, title, numItems, tags, accountName, onDelete, cards}) => {
                             <div className={styles["dropdown-menu"]}>
                                 <button
                                     className={styles["menu-item"]}
+                                    onClick={() => navigate(`/edit-deck/${id}`)}
                                 >
                                     Edit Deck
                                 </button>
@@ -146,7 +149,7 @@ export default function DeckGrid({ searchQuery = "" }) {
             <div className={styles["grid-container"]}>
                 {filteredDecks.length === 0 ? (
                     <div className={styles["no-results"]}>
-                        <p>No decks found{searchQuery && ` for "${searchQuery}"`}</p>
+                        <p>No decks found{searchQuery && ` with title "${searchQuery}"`}</p>
                     </div>
                 ) : (
                     filteredDecks.map((deck, id) => (

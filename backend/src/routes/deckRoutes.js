@@ -7,6 +7,7 @@ import {
     getDeckById,
     deleteDeck,
     updateDeck,
+    updateDeckTitle,
     saveDeck, getUserDecks
 } from "../controllers/deckController.js";
 
@@ -16,6 +17,7 @@ router.post("/create-deck", requireAuth, createDeck);
 router.get("/my-decks", requireAuth, getUserDecks);
 router.get("/:deckId", requireAuth, getDeckById);
 router.put("/:deckId", requireAuth, updateDeck);
+router.patch("/:deckId/title", requireAuth, updateDeckTitle);
 router.delete("/:deckId", requireAuth, deleteDeck);
 router.post("/save-deck", guestMiddleware, saveDeck);
 

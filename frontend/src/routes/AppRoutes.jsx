@@ -7,6 +7,7 @@ import Login from "../pages/Login/index.jsx";
 import Signup from "../pages/Signup/index.jsx";
 import Generate from "../pages/Generate/index.jsx";
 import Dashboard from "../pages/Dashboard/index.jsx";
+import EditDeck from "../pages/EditDeck/EditDeck.jsx";
 
 export default function AppRoutes() {
     return (
@@ -18,6 +19,11 @@ export default function AppRoutes() {
             <Route path={"/dashboard"} element={
                 <ProtectedRoute>
                     <Dashboard/>
+                </ProtectedRoute>
+            }/>
+            <Route path={"/edit-deck/:id"} element={
+                <ProtectedRoute>
+                    <EditDeck/>
                 </ProtectedRoute>
             }/>
         </Routes>
