@@ -24,7 +24,7 @@ export default function Step3({material, deckOptions, generatedDeck, setGenerate
             <div className={styles["step-container"]}>
                 {(loading || !generatedDeck?.result?.cards) ? (
                     <div className={styles["loading-container"]}>
-                        <p>Generating your deck...</p>
+                        <p>Generating your deck</p>
                     </div>
                 ) : (
                     <>

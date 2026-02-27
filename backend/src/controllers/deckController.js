@@ -134,35 +134,28 @@ export const updateDeck = async (req, res) => {
         const {deckId} = req.params;
         const {title, description, cards} = req.body;
 
-        // 1. Update deck info
         await Deck.update(
             {title, description},
             {where: {id: deckId}}
         );
 
-        // 2. Get current cards in DB
         const existingCards = await Card.findAll({where: {deckId}});
         const existingIds = existingCards.map(c => c.id);
 
-        // 3. Get ids coming from a client
         const incomingIds = cards.filter(c => c.id).map(c => c.id);
 
-        // 4. Delete removed cards
         const cardsToDelete = existingIds.filter(id => !incomingIds.includes(id));
         if (cardsToDelete.length > 0) {
             await Card.destroy({where: {id: cardsToDelete}});
         }
 
-        // 5. Add or update cards
         for (let card of cards) {
             if (card.id) {
-                // Update existing card
                 await Card.update(
                     {front: card.front, back: card.back},
                     {where: {id: card.id}}
                 );
             } else {
-                // Create a new card
                 await Card.create({
                     front: card.front,
                     back: card.back,
