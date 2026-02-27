@@ -4,10 +4,13 @@ import {useState, useEffect, useRef} from "react";
 import {useNavigate} from "react-router-dom";
 import { FloppyDiskIcon, DownloadSimpleIcon, DotsThreeVerticalIcon } from "@phosphor-icons/react";
 
-const HeaderControls = ({title, numItems, generatedDeck}) => {
+const HeaderControls = ({title, updateTitle, numItems, generatedDeck}) => {
     const API_URL = import.meta.env.VITE_API_URL;
     const [showMenu, setShowMenu] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [deckTitle, setDeckTitle] = useState(title);
     const menuRef = useRef(null);
+    const titleInputRef = useRef(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -104,10 +107,54 @@ const HeaderControls = ({title, numItems, generatedDeck}) => {
         }
     }
 
+    const handleStartEdit = () => {
+        setIsEditing(true);
+        setShowMenu(false);
+        setTimeout(() => {
+            if (titleInputRef.current) {
+                titleInputRef.current.focus();
+            }
+        }, 0);
+    };
+
+    const handleSaveTitle = () => {
+        setIsEditing(false);
+        if (updateTitle && deckTitle !== title) {
+            updateTitle(deckTitle);
+        }
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleSaveTitle();
+        } else if (e.key === 'Escape') {
+            setIsEditing(false);
+            setDeckTitle(title);
+        }
+    };
+
     return (
         <div className={styles["header-controls"]}>
             <div className={styles["header-info"]}>
-                <h4 className={styles["header-info-title"]}>{title}</h4>
+                {isEditing ? (
+                    <input
+                        ref={titleInputRef}
+                        type="text"
+                        value={deckTitle}
+                        onChange={(e) => setDeckTitle(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        onBlur={handleSaveTitle}
+                        className={styles["header-info-title-input"]}
+                        autoFocus
+                    />
+                ) : (
+                    <h4
+                        className={styles["header-info-title"]}
+                        onClick={handleStartEdit}
+                    >
+                        {deckTitle}
+                    </h4>
+                )}
                 <p className={styles["header-info-subtitle"]}>{numItems} Items</p>
                 <div className={styles["menu-anchor"]} ref={menuRef}>
                     <button
@@ -120,7 +167,7 @@ const HeaderControls = ({title, numItems, generatedDeck}) => {
                         <div className={styles["dropdown-menu"]}>
                             <button
                                 className={styles["menu-item"]}
-                                onClick={() => handleAction(() => console.log("Editing"))}
+                                onClick={() => handleAction(handleStartEdit)}
                             >
                                 Edit Name
                             </button>
@@ -129,12 +176,6 @@ const HeaderControls = ({title, numItems, generatedDeck}) => {
                                 onClick={() => handleAction(handleSave)}
                             >
                                 Save Deck
-                            </button>
-                            <button
-                                className={styles["menu-item"]}
-                                onClick={() => handleAction(() => console.log("Regenerating"))}
-                            >
-                                Regenerate
                             </button>
                             <button
                                 className={styles["menu-item"]}

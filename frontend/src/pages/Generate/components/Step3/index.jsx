@@ -19,6 +19,16 @@ export default function Step3({material, deckOptions, generatedDeck, setGenerate
             .finally(() => setLoading(false))
     }, []);
 
+    const handleTitleUpdate = (newTitle) => {
+        setGeneratedDeck(prevDeck => ({
+            ...prevDeck,
+            result: {
+                ...prevDeck.result,
+                deckName: newTitle
+            }
+        }))
+    }
+
     return (
         <div className={styles["step-wrapper"]}>
             <div className={styles["step-container"]}>
@@ -34,6 +44,7 @@ export default function Step3({material, deckOptions, generatedDeck, setGenerate
                         />
                         <HeaderControls
                             title={generatedDeck?.result?.deckName || ''}
+                            updateTitle={handleTitleUpdate}
                             numItems={generatedDeck?.result?.cards?.length || 0}
                             generatedDeck={generatedDeck}
                         />
