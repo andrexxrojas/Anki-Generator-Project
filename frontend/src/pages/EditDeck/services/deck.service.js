@@ -47,3 +47,21 @@ export const updateDeckTitle = async (deckId, title) => {
 
     return res.json();
 };
+
+export const updateDeck = async (deckId, deckData) => {
+    const res = await fetch(`${API_URL}/deck/${deckId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(deckData),
+    });
+
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || "Failed to update deck");
+    }
+
+    return res.json();
+};

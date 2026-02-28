@@ -2,7 +2,7 @@ import styles from "./EditDeck.module.css";
 import HeaderControls from "./components/HeaderControls.jsx";
 import DeckPreview from "./components/DeckPreview.jsx";
 import ViewAllDecks from "./components/ViewAllDecks.jsx";
-import {getDeck} from "./services/deck.service.js";
+import {getDeck, updateDeck} from "./services/deck.service.js";
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 
@@ -30,7 +30,6 @@ export default function EditDeck() {
     }, [id]);
 
     const handleUpdateCard = async (index, updatedData) => {
-        // Update local state
         const updatedCards = [...deck.Cards];
         updatedCards[index] = {
             ...updatedCards[index],
@@ -42,9 +41,12 @@ export default function EditDeck() {
             Cards: updatedCards
         });
 
-        // Update in backend
         try {
-            await updateCard(updatedCards[index].id, updatedData);
+            await updateDeck(deck.id, {
+                title: deck.title,
+                description: deck.description,
+                cards: updatedCards
+            });
         } catch (err) {
             console.error("Failed to update card:", err);
         }
