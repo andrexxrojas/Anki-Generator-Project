@@ -29,6 +29,27 @@ export default function EditDeck() {
         void fetchDeck();
     }, [id]);
 
+    const handleUpdateCard = async (index, updatedData) => {
+        // Update local state
+        const updatedCards = [...deck.Cards];
+        updatedCards[index] = {
+            ...updatedCards[index],
+            ...updatedData
+        };
+
+        setDeck({
+            ...deck,
+            Cards: updatedCards
+        });
+
+        // Update in backend
+        try {
+            await updateCard(updatedCards[index].id, updatedData);
+        } catch (err) {
+            console.error("Failed to update card:", err);
+        }
+    }
+
     return (
         <div className={styles["edit-wrapper"]}>
             <div className={styles["edit-container"]}>
@@ -48,6 +69,7 @@ export default function EditDeck() {
                         />
                         <ViewAllDecks
                             cards={deck.Cards}
+                            onUpdateCard={handleUpdateCard}
                         />
                     </>
                 )}
