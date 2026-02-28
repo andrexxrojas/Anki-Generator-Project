@@ -68,7 +68,22 @@
     outline: none;
 }
 
+@media (max-width: 868px) {
+    .header-container {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
 
+    .header-controls,
+    .header-search-container {
+        width: 100%;
+    }
+
+    .header-create-btn {
+        flex-shrink: 0;
+    }
+}
 
 
 
