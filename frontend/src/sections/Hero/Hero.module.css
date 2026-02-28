@@ -2,7 +2,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(100vh - 8.5rem);
+    padding-block: 12rem;
 }
 
 .hero-container {
