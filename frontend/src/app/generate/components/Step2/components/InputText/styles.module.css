@@ -1,0 +1,11 @@
+.inputText {
+    outline: none;
+    border: 1px solid #E5E5E5;
+    background-color: #F5F5F5;
+    font-family: var(--font-regular);
+    font-size: var(--text-sm);
+    padding: var(--padding-sm);
+    max-height: 3.5rem;
+    width: 100%;
+    border-radius: var(--radius-sm);
+}

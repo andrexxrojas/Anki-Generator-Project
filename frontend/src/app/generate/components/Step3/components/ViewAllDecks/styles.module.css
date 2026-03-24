@@ -1,0 +1,44 @@
+.viewAllWrapper {
+    margin-top: var(--space-2xl);
+    width: 100%;
+    max-width: 923px;
+}
+
+.viewAllContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.card {
+    border: 1px solid #E5E5E5;
+    border-radius: 0.857rem;
+    padding: 2.285rem;
+}
+
+.cardTopPreview,
+.cardBottomPreview {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-block: 2rem;
+    font-family: var(--font-regular);
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.cardTopPreview {
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.cardNum {
+    font-family: var(--font-regular);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+    margin-bottom: var(--space-sm);
+}

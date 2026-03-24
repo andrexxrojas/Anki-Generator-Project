@@ -1,0 +1,121 @@
+.container {
+    border: 1px solid #E5E5E5;
+    padding: 2.285rem;
+    border-radius: 0.857rem;
+    width: 100%;
+    max-width: 454px;
+    margin-top: 2.285rem;
+}
+
+.hiddenInput {
+    display: none;
+}
+
+.dropZoneContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: #F5F5F5;
+    border: 2px dashed #E5E5E5;
+    border-radius: 0.7rem;
+}
+
+.dropZone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+    padding-block: 3rem;
+    padding-inline: 2rem;
+    width: 100%;
+}
+
+.iconContainer {
+    padding: 0.7rem;
+    border-radius: 8px;
+    background-color: #ffffff;
+    border: 1px solid #E5E5E5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropZoneText {
+    font-family: var(--font-medium);
+    font-size: var(--text-md);
+    color: var(--text-primary);
+    margin-top: 1.1rem;
+    text-align: center;
+}
+
+.dropZoneSubtext {
+    font-family: var(--font-medium);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 0.428rem;
+}
+
+.selectedFile {
+    border: 1px solid #E5E5E5;
+    border-radius: 0.7rem;
+    padding: 0.7rem;
+    margin-top: 0.7rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    z-index: 1;
+}
+
+.fileIcon {
+    width: 40px;
+    height: 40px;
+    font-family: var(--font-bold);
+    font-size: var(--text-xxs);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F5F5F5;
+    border: 1px solid #E5E5E5;
+    color: var(--text-secondary);
+    border-radius: 6px;
+    margin-right: 10px;
+}
+
+.fileDetails {
+    display: flex;
+    flex-direction: column;
+}
+
+.fileName {
+    display: block;
+    max-width: 14rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: var(--font-medium);
+    font-size: var(--text-xs);
+    color: var(--text-primary);
+}
+
+.fileMeta {
+    font-family: var(--font-medium);
+    font-size: var(--text-xxs);
+    color: var(--text-secondary);
+}
+
+.deleteIcon {
+    display: inline-flex;
+    margin-left: auto;
+    padding: 0.7rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #E5E5E5;
+    }
+
+    &:hover path {
+        fill: #ff3737;
+    }
+}

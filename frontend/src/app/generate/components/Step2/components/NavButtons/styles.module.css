@@ -1,0 +1,30 @@
+.buttonWrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.571rem;
+    margin-top: var(--space-lg);
+}
+
+.btn {
+    font-family: var(--font-medium);
+    font-size: var(--text-xs);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: none;
+    outline: none;
+    padding: var(--padding-sm);
+    user-select: none;
+    cursor: pointer;
+    transition: background-color 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn:hover {
+    background-color: var(--bg-tertiary);
+}
+
+.btn:disabled {
+    pointer-events: none;
+    color: var(--text-disabled);
+}

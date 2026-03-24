@@ -1,0 +1,39 @@
+.layoutContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-block: 8rem;
+    padding-inline: 1rem;
+}
+
+.title {
+    font-family: var(--font-medium);
+    font-size: var(--text-md);
+    font-weight: 500;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.description {
+    font-family: var(--font-regular);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.toggleContainer {
+    margin-top: 2rem;
+}
+
+.toggleText {
+    font-family: var(--font-medium);
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+    text-align: center;
+}
+
+.toggleLink {
+    color: var(--text-tertiary);
+}

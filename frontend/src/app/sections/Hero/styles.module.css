@@ -1,0 +1,111 @@
+.sectionWrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.notSelectable {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.sectionContainer {
+    padding-block: 12.8rem;
+    padding-inline: var(--section-padding);
+    width: 100%;
+    max-width: 1440px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titleContainer {
+    position: relative;
+}
+
+.tag {
+    font-family: var(--font-medium);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    padding: 0.4rem;
+    background-color: var(--bg-tertiary);
+
+    border-radius: 0.6rem;
+    position: absolute;
+    white-space: nowrap;
+    composes: notSelectable;
+}
+
+.tag.one { bottom: calc(100% + 2.4rem); }
+.tag.two { bottom: 4.73rem; right: calc(100% + 1.33rem); }
+.tag.three { top: calc(100% + 1rem); right: calc(90% + 2.33rem); }
+.tag.four { bottom: calc(100% + 2.33rem); right: 0; }
+.tag.five { bottom: 4.4rem; left: calc(100% + 1rem); }
+.tag.six { left: calc(90% + 2.33rem); top: calc(100% + 1rem); }
+
+.title {
+    font-family: var(--font-medium);
+    font-weight: 500;
+    font-size: var(--text-5xl);
+    color: var(--text-primary);
+    text-align: center;
+    max-width: 37rem;
+    line-height: 100%;
+}
+
+.cta {
+    font-family: var(--font-medium);
+    font-size: var(--text-sm);
+    color: var(--text-light-primary);
+    text-decoration: none;
+    background-color: var(--bg-dark-primary);
+    transition: background-color 0.3s cubic-bezier(0.215, 0.61, 0.3555, 1);
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-sm);
+    composes: notSelectable;
+}
+
+.freeHint {
+    font-family: var(--font-medium);
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+}
+
+@media (hover: hover) {
+    .cta:hover {
+        background-color: var(--bg-dark-primary-hover);
+    }
+}
+
+
+@media (max-width: 768px) {
+    .titleContainer {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 1rem;
+    }
+
+    .title {
+        font-size: var(--text-4xl);
+    }
+
+    .tagContainer {
+        max-width: 25rem;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap-reverse;
+        gap: 0.5rem;
+    }
+
+    .tag {
+        position: static;
+        flex-shrink: 0;
+    }
+
+    .tag.five { display: none; }
+    .tag.two { display: none; }
+}

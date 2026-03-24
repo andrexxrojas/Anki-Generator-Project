@@ -1,0 +1,86 @@
+html {
+    font-size: 15px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-primary);
+}
+
+:root {
+    /* OVERALL PADDING */
+    --layout-padding: 1rem; /* 15px */
+
+    /* FONT FAMILY */
+    --font-regular: 'Inter Regular', sans-serif;
+    --font-medium: 'Inter Medium', sans-serif;
+    --font-semibold: 'Inter SemiBold', sans-serif;
+    --font-bold: 'Inter Bold', sans-serif;
+
+    /* TYPOGRAPHY SCALE - Golden Ratio (1:1.618) */
+    /* Base: 15px */
+    --text-xxs: 0.6rem;
+    --text-xs: 0.8rem; /* 12px     - Small print, captions */
+    --text-sm: 0.933rem; /* 14px     - Secondary text, metadata */
+    --text-base: 1rem; /* 15px     - Body text */
+    --text-md: 1.067rem; /* 16px     - Slightly larger body */
+    --text-lg: 1.2rem; /* 18px     - Small headings */
+    --text-xl: 1.333rem; /* 20px     - Subheadings */
+    --text-2xl: 1.618rem; /* 24.27px  - Section headings */
+    --text-3xl: 2.133rem; /* 30.87px  - Page headings */
+    --text-4xl: 2.618rem; /* 39.27px  - Large headings */
+    --text-5xl: 3.333rem; /* 50px     - Hero text */
+    --text-6xl: 4.236rem; /* 63.54px  - Display text */
+
+    /* SPACINGS */
+    --space-xs: 0.25rem; /* 4px  */
+    --space-sm: 0.5rem; /* 8px  */
+    --space-md: 1rem; /* 16px */
+    --space-lg: 1.5rem; /* 24px */
+    --space-xl: 2rem; /* 32px */
+    --space-2xl: 3rem; /* 48px */
+
+    /* COLOR PALETTE */
+    --bg-white: #FFFFFF;
+    --bg-primary: #FAFAFA;
+    --bg-secondary: #F5F5F5;
+    --bg-tertiary: #EEEEEE;
+    --bg-error-light: #FEE2E2;
+    --bg-muted: #DEDEDE;
+
+    --border-primary: #D9D9D9;
+    --border-error: #FCA5A5;
+
+    --bg-brand: #CBFFA6;
+    --bg-brand-hover: #A8E67C;
+
+    --bg-dark-primary: #1B1B1B;
+    --bg-dark-primary-hover: #3A3A3A;
+
+    --bg-dark-secondary: #2C2C2C;
+
+    --text-primary: #1A1A1A;
+    --text-secondary: #5C5C5C;
+    --text-tertiary: #8A8A8A;
+    --text-muted: #A1A1A1;
+    --text-disabled: #BDBDBD;
+    --text-brand: #38744D;
+    --text-error: #DC2626;
+    --text-error-light: #EF4444;
+    --text-light-primary: #FFFFFF;
+    --text-light-secondary: #A8A8A8;
+
+    /* PADDING AND RADIUS */
+    --nav-padding: 1rem;
+    --section-padding: 1rem;
+    --padding-xs: 0.4rem 0.8rem;
+    --padding-sm: 0.8rem 1rem;
+
+    --radius-xs: 0.4rem;
+    --radius-sm: 0.8rem;
+}

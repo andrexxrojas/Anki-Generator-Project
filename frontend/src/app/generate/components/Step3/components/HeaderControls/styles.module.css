@@ -1,0 +1,160 @@
+.headerControls {
+    width: 100%;
+    max-width: 923px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.headerInfo {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    position: relative;
+}
+
+.headerInfoTitle {
+    font-family: var(--font-semibold);
+    font-size: var(--text-lg);
+    color: var(--text-primary);
+}
+
+.headerInfoTitleInput {
+    font-family: var(--font-semibold);
+    font-size: var(--text-lg);
+    color: var(--text-primary);
+    outline: none;
+    border: none;
+    width: fit-content;
+    background-color: var(--bg-secondary);
+    box-sizing: border-box;
+    border-radius: 0.4rem;
+}
+
+.headerInfoSubtitle {
+    font-family: var(--font-regular);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+}
+
+.menuAnchor {
+    position: absolute;
+    right: -2.5rem;
+    top: -0.2rem;
+    width: 2rem;
+    height: 2rem;
+}
+
+.headerInfoMenu {
+    outline: none;
+    border: none;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-xs);
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.headerInfoMenu:hover {
+    background-color: var(--bg-tertiary);
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: 120%;
+    left: 0;
+    background-color: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    padding: 8px;
+    z-index: 100;
+    min-width: 140px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.285rem;
+}
+
+.menuItem {
+    font-family: var(--font-regular);
+    font-size: var(--text-xs);
+    background-color: #FFFFFF;
+    border: none;
+    outline: none;
+    border-radius: var(--radius-xs);
+    width: 100%;
+    padding: 0.714rem;
+    user-select: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.menuItem:hover {
+    background-color: var(--bg-secondary);
+}
+
+.menuLogo {
+    display: flex;
+}
+
+.buttonsContainer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.btn {
+    font-family: var(--font-medium);
+    font-size: var(--text-xs);
+    border: none;
+    outline: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.btnTxt {
+    display: inline-block;
+    padding: var(--padding-sm);
+}
+
+.btnLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--padding-sm);
+    border-left: 1px solid #E5E5E5;
+}
+
+.btn.export {
+    background-color: var(--bg-brand);
+    color: var(--text-light-primary);
+    transition: background-color 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn.export:hover {
+    background-color: var(--bg-brand-hover);
+}
+
+.btn.save {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    transition: background-color 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn.save:hover {
+    background-color: var(--bg-tertiary);
+}
+
+@media (max-width: 768px) {
+    .btn,
+    .menuItem {
+        font-size: var(--text-sm);
+    }
+}

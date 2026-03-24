@@ -1,0 +1,8 @@
+.generateWrapper {
+    padding-block: 4rem;
+    padding-inline: var(--section-padding);
+}
+
+.stepContent {
+    margin-top: 4.571rem;
+}

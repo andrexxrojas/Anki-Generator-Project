@@ -1,0 +1,65 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+}
+
+.fieldWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 22rem;
+}
+
+.formLabel {
+    font-family: var(--font-regular);
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    margin-left: 0.5rem;
+}
+
+.formInput {
+    font-family: var(--font-regular);
+    font-size: var(--text-sm);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    padding: 1rem;
+    width: 100%;
+    border: none;
+    border-radius: var(--radius-sm);
+}
+
+.formSubmitBtn {
+    font-family: var(--font-medium);
+    font-size: var(--text-sm);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    width: 100%;
+    max-width: 22rem;
+    padding: 1rem;
+    border: none;
+    outline: none;
+    border-radius: var(--radius-sm);
+    transition: background-color 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.formSubmitBtn:hover {
+    background-color: var(--bg-tertiary);
+}
+
+.errorMessage {
+    font-family: var(--font-medium);
+    font-size: var(--text-xs);
+    color: var(--text-error);
+    margin-left: 0.5rem;
+    width: 100%;
+}

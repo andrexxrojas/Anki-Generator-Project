@@ -1,0 +1,19 @@
+.inputLabel {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.142rem;
+    margin-bottom: 1.142rem;
+}
+
+.labelTitle {
+    font-family: var(--font-medium);
+    font-size: var(--text-md);
+    color: var(--text-primary);
+}
+
+.labelSubtitle {
+    font-family: var(--font-regular);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+}

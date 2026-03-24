@@ -1,0 +1,26 @@
+.tabsContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    padding: var(--padding-sm);
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-sm);
+    gap: 0.714rem;
+}
+
+.tab {
+    font-family: var(--font-medium);
+    font-size: var(--text-xs);
+    padding: var(--padding-sm);
+    border-radius: var(--radius-sm);
+    user-select: none;
+    cursor: pointer;
+    color: var(--text-tertiary);
+}
+
+.tab.active {
+    background-color: var(--bg-dark-primary);
+    color: var(--text-light-primary);
+}
