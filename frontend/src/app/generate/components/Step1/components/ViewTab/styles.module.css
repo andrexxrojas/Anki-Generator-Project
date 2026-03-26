@@ -4,19 +4,20 @@
     align-items: center;
     justify-content: center;
     width: fit-content;
-    padding: var(--padding-sm);
+    padding: 0.6rem;
     background-color: var(--bg-secondary);
-    border-radius: var(--radius-sm);
+    border-radius: 1.2rem;
     gap: 0.714rem;
 }
 
 .tab {
-    font-family: var(--font-medium);
-    font-size: var(--text-xs);
-    padding: var(--padding-sm);
-    border-radius: var(--radius-sm);
+    font-family: var(--font-regular);
+    font-size: var(--text-sm);
+    padding: 1rem;
+    border-radius: 0.8rem;
     user-select: none;
     cursor: pointer;
+    line-height: 1;
     color: var(--text-tertiary);
 }
 

@@ -17,11 +17,23 @@ export default function NavBar() {
                 </div>
                 <div className={styles.rightSection}>
                     <div className={styles.buttonsContainer}>
-                        <Link href="/account/login" className={styles.linkBtn}>Login</Link>
-                        <Link
-                            href="/generate"
-                            className={`${styles.linkBtn} ${styles.generate}`}
-                        >Try it now</Link>
+                        {user ? (
+                            <>
+                                <Link href="/account" className={styles.linkBtn}>Account</Link>
+                                <Link
+                                    href="/generate"
+                                    className={`${styles.linkBtn} ${styles.generate}`}
+                                >Try it now</Link>
+                            </>
+                        ) : (
+                            <>
+                                <Link href="/account/login" className={styles.linkBtn}>Login</Link>
+                                <Link
+                                    href="/generate"
+                                    className={`${styles.linkBtn} ${styles.generate}`}
+                                >Try it now</Link>
+                            </>
+                        )}
                     </div>
                 </div>
             </nav>

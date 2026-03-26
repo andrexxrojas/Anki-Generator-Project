@@ -4,6 +4,7 @@
     align-items: flex-end;
     gap: 1.1rem;
     border: 1px solid #E5E5E5;
+    background-color: var(--bg-white);
     padding: 2.285rem;
     border-radius: 0.857rem;
     width: 100%;
@@ -23,8 +24,9 @@
     min-height: 188px;
     padding: 16px;
     border-radius: 10px;
-    background-color: #FFFFFF;
+    background-color: var(--bg-primary);
     border: 1px solid #E5E5E5;
     font-family: var(--font-regular);
     font-size: var(--text-sm);
+    color: var(--text-primary);
 }

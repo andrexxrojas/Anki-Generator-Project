@@ -9,12 +9,12 @@
 .btn {
     font-family: var(--font-medium);
     font-size: var(--text-xs);
-    border-radius: var(--radius-sm);
+    padding: 1rem;
+    border-radius: 1rem;
     background-color: var(--bg-secondary);
     color: var(--text-primary);
     border: none;
     outline: none;
-    padding: var(--padding-sm);
     user-select: none;
     cursor: pointer;
     transition: background-color 0.18s cubic-bezier(0.4, 0, 0.2, 1);

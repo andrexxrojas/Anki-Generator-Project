@@ -1,5 +1,6 @@
 .container {
     border: 1px solid #E5E5E5;
+    background-color: var(--bg-white);
     padding: 2.285rem;
     border-radius: 0.857rem;
     width: 100%;
@@ -14,7 +15,7 @@
 .dropZoneContainer {
     display: flex;
     flex-direction: column;
-    background-color: #F5F5F5;
+    background-color: var(--bg-primary);
     border: 2px dashed #E5E5E5;
     border-radius: 0.7rem;
 }
@@ -33,7 +34,7 @@
 .iconContainer {
     padding: 0.7rem;
     border-radius: 8px;
-    background-color: #ffffff;
+    background-color: var(--bg-white);
     border: 1px solid #E5E5E5;
     display: flex;
     justify-content: center;
