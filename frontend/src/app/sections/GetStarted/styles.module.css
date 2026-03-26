@@ -67,3 +67,9 @@
     font-size: var(--text-xs);
     color: var(--text-tertiary);
 }
+
+@media (hover: hover) {
+    .cta:hover {
+        background-color: var(--bg-dark-primary-hover);
+    }
+}

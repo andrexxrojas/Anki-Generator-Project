@@ -12,7 +12,7 @@ export default function NavBar() {
             <nav className={styles.navContainer}>
                 <div className={styles.leftSection}>
                     <div className={styles.logoContainer}>
-                        <Link href="/" className={styles.logo}>Anki Gen</Link>
+                        <Link href="/" className={styles.logo}>ANKI GEN</Link>
                     </div>
                 </div>
                 <div className={styles.rightSection}>

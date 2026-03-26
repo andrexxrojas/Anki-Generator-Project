@@ -9,9 +9,6 @@ export default function GetStarted() {
                     <h1 className={styles.title}>
                         Stop wasting time making flashcards.
                     </h1>
-                    <p className={styles.subtitle}>
-                        Generate Anki decks instantly.
-                    </p>
                 </div>
                 <Link href="/generate" className={styles.cta}>Generate Flashcards</Link>
                 <p className={styles.freeHint}>
