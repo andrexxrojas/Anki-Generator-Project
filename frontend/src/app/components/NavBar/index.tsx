@@ -11,29 +11,14 @@ export default function NavBar() {
         <div className={styles.navWrapper}>
             <nav className={styles.navContainer}>
                 <div className={styles.leftSection}>
-                    <div className={styles.logoContainer}>
-                        <Link href="/" className={styles.logo}>ANKI GEN</Link>
-                    </div>
+                    <Link href="/" className={styles.logo}>
+                        AnkiGen
+                    </Link>
                 </div>
                 <div className={styles.rightSection}>
                     <div className={styles.buttonsContainer}>
-                        {user ? (
-                            <>
-                                <Link href="/account" className={styles.linkBtn}>Account</Link>
-                                <Link
-                                    href="/generate"
-                                    className={`${styles.linkBtn} ${styles.generate}`}
-                                >Try it now</Link>
-                            </>
-                        ) : (
-                            <>
-                                <Link href="/account/login" className={styles.linkBtn}>Login</Link>
-                                <Link
-                                    href="/generate"
-                                    className={`${styles.linkBtn} ${styles.generate}`}
-                                >Try it now</Link>
-                            </>
-                        )}
+                        <Link href="/account/login" className={`${styles.btn} ${styles.login}`}>Login</Link>
+                        <Link href="/generate" className={`${styles.btn} ${styles.generate}`}>Try it now</Link>
                     </div>
                 </div>
             </nav>

@@ -21,7 +21,7 @@ export default function RootLayout({
           lang="en"
           className={`${regular.variable} ${medium.variable} ${semibold.variable} ${bold.variable}`}
       >
-        <body>
+        <body className={styles.bodyContainer}>
           <AuthProvider>
             <NavBar />
             <main>

@@ -9,12 +9,12 @@ html {
 }
 
 body {
-    background-color: var(--bg-primary);
+    background-color: var(--bg-white);
 }
 
 :root {
     /* OVERALL PADDING */
-    --layout-padding: 1rem; /* 15px */
+    --layout-padding: 1.33rem; /* 15px */
 
     /* FONT FAMILY */
     --font-regular: 'Inter Regular', sans-serif;
@@ -25,7 +25,7 @@ body {
     /* TYPOGRAPHY SCALE - Golden Ratio (1:1.618) */
     /* Base: 15px */
     --text-xxs: 0.6rem;
-    --text-xs: 0.8rem; /* 12px     - Small print, captions */
+    --text-xs: 0.866rem; /* 12px     - Small print, captions */
     --text-sm: 0.933rem; /* 14px     - Secondary text, metadata */
     --text-base: 1rem; /* 15px     - Body text */
     --text-md: 1.067rem; /* 16px     - Slightly larger body */
@@ -36,6 +36,7 @@ body {
     --text-4xl: 2.618rem; /* 39.27px  - Large headings */
     --text-5xl: 3.333rem; /* 50px     - Hero text */
     --text-6xl: 4.236rem; /* 63.54px  - Display text */
+    --text-7xl: 6.4rem;
 
     /* SPACINGS */
     --space-xs: 0.25rem; /* 4px  */
@@ -44,6 +45,7 @@ body {
     --space-lg: 1.5rem; /* 24px */
     --space-xl: 2rem; /* 32px */
     --space-2xl: 3rem; /* 48px */
+    --space-3xl: 4.266rem;
 
     /* COLOR PALETTE */
     --bg-white: #FFFFFF;
@@ -56,7 +58,7 @@ body {
     --border-primary: #D9D9D9;
     --border-error: #FCA5A5;
 
-    --bg-brand: #0145F2;
+    --bg-brand: #CBFFA6;
     --bg-brand-hover: #1a5aff;
 
     --bg-dark-primary: #1B1B1B;
@@ -69,7 +71,7 @@ body {
     --text-tertiary: #8A8A8A;
     --text-muted: #A1A1A1;
     --text-disabled: #BDBDBD;
-    --text-brand: #EDF1F5;
+    --text-brand: #38744D;
     --text-error: #DC2626;
     --text-error-light: #EF4444;
     --text-light-primary: #FFFFFF;
@@ -83,4 +85,25 @@ body {
 
     --radius-xs: 0.4rem;
     --radius-sm: 0.8rem;
+
+    /* BUTTONS */
+    --brand-btn-sm-color: #38744D;
+    --brand-btn-sm-bg: #CBFFA6;
+    --brand-btn-sm-padding: 0.666rem 0.8rem;
+    --brand-btn-sm-radius: 0.533rem;
+
+    --grey-btn-sm-color: #6A6967;
+    --grey-btn-sm-bg: #EFEFEF;
+    --grey-btn-sm-padding: 0.666rem 0.8rem;
+    --grey-btn-sm-radius: 0.533rem;
+
+    --grey-btn-md-color: #6A6967;
+    --grey-btn-md-bg: #EFEFEF;
+    --grey-btn-md-padding: 1rem;
+    --grey-btn-md-radius: 0.533rem;
+
+    --black-btn-md-color: #FAFAFA;
+    --black-btn-md-bg: #000000;
+    --black-btn-md-padding: 1rem;
+    --black-btn-md-radius: 0.533rem;
 }

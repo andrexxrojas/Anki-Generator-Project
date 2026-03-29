@@ -9,74 +9,71 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--nav-padding);
 }
 
 .navContainer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: var(--bg-white);
-    border: 1px solid var(--border-primary);
-    padding: 0.6rem;
-    border-radius: 1.2rem;
     height: 100%;
     width: 100%;
-    max-width: 350px;
+    max-width: 1440px;
     composes: notSelectable;
 }
 
-.leftSection {
-    display: flex;
-    align-items: center;
-    gap: 1.6rem;
-}
-
 .logo {
-    font-family: var(--font-medium);
+    font-family: var(--font-regular);
     font-size: var(--text-sm);
-    color: var(--text-primary);
+    color: var(--grey-btn-sm-color);
+    background-color: var(--grey-btn-sm-bg);
+    padding: var(--grey-btn-sm-padding);
+    border-radius: var(--grey-btn-sm-radius);
     text-decoration: none;
-    padding: 1rem;
-    border-radius: 0.8rem;
-    transition: background-color 0.3s cubic-bezier(0.215, 0.61, 0.3555, 1);
-    background-color: var(--bg-secondary);
+    border: none;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    cursor: pointer;
+    width: auto;
 }
 
 .buttonsContainer {
     display: flex;
     align-items: center;
-    gap: 0.533rem;
+    gap: var(--space-sm);
 }
 
-.linkBtn {
+.btn.login {
     font-family: var(--font-regular);
     font-size: var(--text-sm);
-    padding: 1rem;
-    border-radius: 0.8rem;
-    background-color: transparent;
-    color: var(--text-primary);
-    transition: background-color 0.3s cubic-bezier(0.215, 0.61, 0.3555, 1);
+    color: var(--grey-btn-sm-color);
+    background-color: var(--grey-btn-sm-bg);
+    padding: var(--grey-btn-sm-padding);
+    border-radius: var(--grey-btn-sm-radius);
     text-decoration: none;
+    border: none;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
     line-height: 1;
-    letter-spacing: 0.01em;
+    cursor: pointer;
+    width: auto;
 }
 
-.linkBtn.generate {
-    color: var(--text-brand);
-    background-color: var(--bg-brand);
-}
-
-@media (hover: hover) {
-    .logo:hover {
-        background-color: var(--bg-tertiary);
-    }
-
-    .linkBtn:hover {
-        background-color: var(--bg-secondary);
-    }
-
-    .linkBtn.generate:hover {
-        background-color: var(--bg-brand-hover);
-    }
+.btn.generate {
+    font-family: var(--font-regular);
+    font-size: var(--text-sm);
+    color: var(--brand-btn-sm-color);
+    background-color: var(--brand-btn-sm-bg);
+    padding: var(--brand-btn-sm-padding);
+    border-radius: var(--brand-btn-sm-radius);
+    text-decoration: none;
+    border: none;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    cursor: pointer;
+    width: auto;
 }

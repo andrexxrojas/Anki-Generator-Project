@@ -1,0 +1,101 @@
+.boxContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    grid-column: 1 / span 7;
+    padding: 2.133rem;
+    background-color: var(--bg-primary);
+    min-height: 400px;
+    border-radius: 1.33rem;
+}
+
+.bottomSection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.microlabel {
+    font-family: var(--font-medium);
+    font-size: var(--text-xs);
+    color: var(--text-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.microlabel::before {
+    content: "";
+    width: 0.866rem;
+    height: 0.866rem;
+    border-radius: 0.266rem;
+    background-color: var(--bg-dark-primary);
+}
+
+.title {
+    font-family: var(--font-medium);
+    font-weight: 500;
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-sm);
+    color: var(--text-primary);
+    width: 100%;
+    line-height: 110%;
+}
+
+.subtitle {
+    font-family: var(--font-regular);
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    line-height: 140%;
+    width: 100%;
+    max-width: 410px;
+    margin-bottom: var(--space-3xl);
+}
+
+.cta {
+    font-family: var(--font-regular);
+    font-size: var(--text-sm);
+    color: var(--grey-btn-md-color);
+    background-color: var(--grey-btn-md-bg);
+    padding: var(--grey-btn-md-padding);
+    border-radius: var(--grey-btn-md-radius);
+    text-decoration: none;
+    border: none;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    cursor: pointer;
+    width: auto;
+}
+
+@media (max-width: 1090px) {
+    .boxContainer {
+        grid-column: 1 / span 6;
+    }
+}
+
+@media (max-width: 1020px) {
+    .title {
+        max-width: 220px;
+    }
+
+    .subtitle {
+        max-width: 310px;
+    }
+}
+
+@media (max-width: 768px) {
+    .boxContainer {
+        grid-column: span 12;
+    }
+
+    .title {
+        max-width: 420px;
+    }
+
+    .subtitle {
+        max-width: 410px;
+    }
+}
