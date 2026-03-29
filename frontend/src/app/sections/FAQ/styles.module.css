@@ -1,0 +1,17 @@
+.sectionWrapper {
+    padding-top: 17.06rem;
+    padding-bottom: 8.533rem;
+    display: flex;
+    justify-content: center;
+}
+
+.sectionContainer {
+    width: 100%;
+    max-width: 1440px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+}

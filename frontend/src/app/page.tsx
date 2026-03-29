@@ -2,6 +2,7 @@ import styles from "./page.module.css";
 import Hero from "@/app/sections/Hero";
 import Features from "@/app/sections/Features";
 import Pricing from "@/app/sections/Pricing";
+import FAQ from "@/app/sections/FAQ";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
         <Hero />
         <Features />
         <Pricing />
+        <FAQ />
       </div>
   )
 }

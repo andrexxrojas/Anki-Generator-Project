@@ -1,9 +1,10 @@
 import styles from "./styles.module.css";
+import React from "react";
 
 interface SectionHeaderProps {
     microlabel: string;
     title: string;
-    subtitle: string;
+    subtitle: string | React.ReactNode;
 }
 
 export default function SectionHeader({ microlabel, title, subtitle }: SectionHeaderProps) {
