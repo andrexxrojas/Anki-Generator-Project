@@ -10,7 +10,7 @@ export default function StatsCard() {
                     Real-time count of flashcard decks created using AI.
                     Every click turns notes into study-ready cards.
                 </p>
-                <button className={styles.cta}>Try it now</button>
+                <button className={styles.cta}>Learn more</button>
             </div>
         </div>
     )
