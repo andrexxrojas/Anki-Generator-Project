@@ -1,0 +1,48 @@
+.container {
+    grid-column: span 12;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: var(--space-3xl);
+}
+
+.microlabel {
+    font-family: var(--font-medium);
+    font-size: var(--text-xs);
+    color: var(--text-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    position: relative;
+}
+
+.microlabel::before {
+    content: "";
+    position: absolute;
+    right: calc(100% + var(--space-sm));
+    width: 0.866rem;
+    height: 0.866rem;
+    border-radius: 0.266rem;
+    background-color: var(--bg-brand);
+}
+
+.title {
+    font-family: var(--font-medium);
+    font-weight: 500;
+    font-size: var(--text-5xl);
+    text-align: center;
+    color: var(--text-primary);
+    margin-bottom: var(--space-lg);
+    line-height: 100%;
+}
+
+.subtitle {
+    font-family: var(--font-regular);
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    line-height: 140%;
+    text-align: center;
+    width: 100%;
+    max-width: 306px;
+}

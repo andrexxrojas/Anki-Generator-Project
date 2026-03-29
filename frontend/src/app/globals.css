@@ -50,7 +50,7 @@ body {
     /* COLOR PALETTE */
     --bg-white: #FFFFFF;
     --bg-primary: #FAFAFA;
-    --bg-secondary: #F5F5F5;
+    --bg-secondary: #EFEFEF;
     --bg-tertiary: #EEEEEE;
     --bg-error-light: #FEE2E2;
     --bg-muted: #DEDEDE;
@@ -67,8 +67,8 @@ body {
     --bg-dark-secondary: #2C2C2C;
 
     --text-primary: #1A1A1A;
-    --text-secondary: #5C5C5C;
-    --text-tertiary: #8A8A8A;
+    --text-secondary: #8A8A8A;
+    --text-tertiary: #C7C5C4;
     --text-muted: #A1A1A1;
     --text-disabled: #BDBDBD;
     --text-brand: #38744D;
@@ -96,6 +96,11 @@ body {
     --grey-btn-sm-bg: #EFEFEF;
     --grey-btn-sm-padding: 0.666rem 0.8rem;
     --grey-btn-sm-radius: 0.533rem;
+
+    --brand-btn-md-color: #38744D;
+    --brand-btn-md-bg: #CBFFA6;
+    --brand-btn-md-padding: 1rem;
+    --brand-btn-md-radius: 0.533rem;
 
     --grey-btn-md-color: #6A6967;
     --grey-btn-md-bg: #EFEFEF;

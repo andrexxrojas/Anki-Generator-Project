@@ -1,0 +1,97 @@
+.sectionWrapper {
+    padding-top: 17.06rem;
+    display: flex;
+    justify-content: center;
+}
+
+.sectionContainer {
+    width: 100%;
+    max-width: 1440px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+}
+
+.featureGrid {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: span 12;
+    gap: inherit;
+}
+
+.feature {
+    grid-column: span 4;
+    padding: 2.133rem;
+    background-color: var(--bg-primary);
+    border-radius: 1.33rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.iconContainer {
+    background-color: var(--bg-secondary);
+    color: #6A6967;
+    display: flex;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    padding: 0.8rem;
+    border-radius: 0.4rem;
+    margin-bottom: var(--space-lg);
+}
+
+.boxInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+}
+
+.boxTitle {
+    font-family: var(--font-medium);
+    font-weight: 500;
+    font-size: var(--text-xl);
+    color: var(--text-primary);
+    line-height: 100%;
+}
+
+.boxSubtitle {
+    font-family: var(--font-regular);
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    width: 100%;
+}
+
+@media (max-width: 1372px) {
+    .boxSubtitle {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .boxSubtitle {
+        max-width: 310px;
+    }
+
+    .feature:not(:last-child) {
+        grid-column: span 6;
+    }
+
+    .feature:last-child {
+        grid-column: span 12;
+    }
+}
+
+@media (max-width: 768px) {
+    .feature:not(:last-child) {
+        grid-column: span 12;
+    }
+
+    .boxSubtitle {
+        max-width: 350px;
+    }
+}
