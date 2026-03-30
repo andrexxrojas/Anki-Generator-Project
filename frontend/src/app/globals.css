@@ -87,6 +87,11 @@ body {
     --radius-sm: 0.8rem;
 
     /* BUTTONS */
+    --red-btn-sm-color: #8B0000;
+    --red-btn-sm-bg: #FF4C4C;
+    --red-btn-sm-padding: 0.666rem 0.8rem;
+    --red-btn-sm-radius: 0.533rem;
+
     --brand-btn-sm-color: #38744D;
     --brand-btn-sm-bg: #CBFFA6;
     --brand-btn-sm-padding: 0.666rem 0.8rem;

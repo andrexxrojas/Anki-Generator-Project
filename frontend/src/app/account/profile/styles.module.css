@@ -1,0 +1,16 @@
+.pageWrapper {
+    padding-top: 8.533rem;
+    display: flex;
+    justify-content: center;
+}
+
+.pageContainer {
+    width: 100%;
+    max-width: 1440px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1rem;
+}

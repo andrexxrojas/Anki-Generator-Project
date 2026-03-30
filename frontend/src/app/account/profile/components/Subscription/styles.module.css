@@ -1,0 +1,43 @@
+.card {
+    grid-column: 4 / span 6;
+    padding: 2.133rem;
+    border-radius: 1.33rem;
+    background-color: var(--bg-primary);
+}
+
+.title {
+    font-family: var(--font-medium);
+    font-weight: 500;
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    margin-bottom: var(--space-xl);
+}
+
+.currentPlan {
+    font-family: var(--font-medium);
+    font-weight: 500;
+    font-size: var(--text-3xl);
+    margin-bottom: var(--space-md);
+}
+
+.description {
+    font-family: var(--font-regular);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+}
+
+.linkItem {
+    color: var(--text-primary);
+}
+
+@media (max-width: 1024px) {
+    .card {
+        grid-column: 2 / span 10;
+    }
+}
+
+@media (max-width: 768px) {
+    .card {
+        grid-column: span 12;
+    }
+}
