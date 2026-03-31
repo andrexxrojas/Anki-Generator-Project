@@ -4,17 +4,17 @@
     align-items: center;
     justify-content: center;
     width: fit-content;
-    padding: 0.6rem;
-    background-color: var(--bg-secondary);
+    padding: 0.8rem;
+    background-color: var(--bg-primary);
     border-radius: 1.2rem;
-    gap: 0.714rem;
+    gap: 0.4rem;
 }
 
 .tab {
     font-family: var(--font-regular);
     font-size: var(--text-sm);
     padding: 1rem;
-    border-radius: 0.8rem;
+    border-radius: 0.533rem;
     user-select: none;
     cursor: pointer;
     line-height: 1;
@@ -22,6 +22,6 @@
 }
 
 .tab.active {
-    background-color: var(--bg-dark-primary);
-    color: var(--text-light-primary);
+    background-color: #EFEFEF;
+    color: #6A6967;
 }

@@ -49,7 +49,7 @@ export default function Step1({ onNext, material, setMaterial, resetDeckOptions 
 
     return (
         <div className={styles.stepWrapper}>
-            <div className={styles.stepContainer}>
+            <div className={`${styles.stepContainer} ${styles.grid}`}>
                 <StepHeader
                     title="Upload Material"
                     subtitle="Choose how you want to create your deck"
