@@ -10,15 +10,6 @@ interface FileUploadProps {
     file: File | null;
 }
 
-interface DropZoneProps {
-    onFileUpload: (file: File) => Promise<void>;
-}
-
-interface SelectedFileProps {
-    file: File;
-    onDelete: () => void;
-}
-
 interface FileData {
     name: string;
     size: number;
@@ -27,115 +18,19 @@ interface FileData {
     wordCount: number;
 }
 
-const Dropzone = ({ onFileUpload }: DropZoneProps) => {
+// Updated Dropzone to accept currentFile and onDelete props
+const Dropzone = ({
+                      onFileUpload,
+                      currentFile,
+                      onDelete
+                  }: {
+    onFileUpload: (file: File) => Promise<void>;
+    currentFile: File | null;
+    onDelete: () => void;
+}) => {
     const inputRef = useRef<HTMLInputElement>(null);
-    const isDraggingRef = useRef<boolean>(false);
-
-    const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        isDraggingRef.current = true;
-
-        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-            await onFileUpload(e.dataTransfer.files[0]);
-            if (inputRef.current) {
-                inputRef.current.value = "";
-            }
-        }
-    };
-
-    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        isDraggingRef.current = true;
-    };
-
-    const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-        e.preventDefault();
-        isDraggingRef.current = false;
-    };
-
-    const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            await onFileUpload(e.target.files[0]);
-            e.target.value = "";
-        }
-    };
-
-    const handleClick = () => {
-        inputRef.current?.click();
-    };
-
-    return (
-        <div className={styles.dropZoneContainer}>
-            <input
-                type="file"
-                ref={inputRef}
-                className={styles.hiddenInput}
-                onChange={handleFileSelect}
-                accept=".pdf,.docx"
-            />
-
-            <div
-                className={styles.dropZone}
-                onClick={handleClick}
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-            >
-                <div className={styles.iconContainer}>
-                    <UploadIcon size={19} />
-                </div>
-                <p className={styles.dropZoneText}>
-                    Drop your files here or browse
-                </p>
-                <small className={styles.dropZoneSubtext}>
-                    Max word count up to 500
-                </small>
-            </div>
-        </div>
-    )
-}
-
-const SelectedFile = ({ file, onDelete }: SelectedFileProps) => {
-    const fileRef = useRef<HTMLDivElement>(null);
-    const prevFileRef = useRef<File | null>(null);
-    const didMount = useRef<boolean>(false);
-
-    useEffect(() => {
-        if (!didMount.current) {
-            didMount.current = true;
-            prevFileRef.current = file;
-            return;
-        }
-
-        if (!file || prevFileRef.current === file) return;
-
-        if (fileRef.current) {
-            gsap.fromTo(
-                fileRef.current,
-                { autoAlpha: 0, y: -30 },
-                {
-                    autoAlpha: 1,
-                    y: 0,
-                    duration: 0.525,
-                    ease: "power3.out",
-                }
-            );
-        }
-
-        prevFileRef.current = file;
-    }, [file]);
-
-    const handleDelete = () => {
-        if (fileRef.current) {
-            gsap.to(fileRef.current, {
-                autoAlpha: 0,
-                y: 30,
-                duration: 0.3,
-                ease: "power3.out",
-                onComplete: () => onDelete(),
-            });
-        }
-    };
+    const dropzoneRef = useRef<HTMLDivElement>(null);
+    const [isAnimating, setIsAnimating] = useState(false);
 
     const formatSize = (bytes: number): string => {
         if (bytes < 1024) return `${bytes} B`;
@@ -149,32 +44,100 @@ const SelectedFile = ({ file, onDelete }: SelectedFileProps) => {
         return "FILE";
     };
 
+    const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        if (currentFile) return; // Don't allow drop if file already selected
+
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+            await onFileUpload(e.dataTransfer.files[0]);
+            if (inputRef.current) {
+                inputRef.current.value = "";
+            }
+        }
+    };
+
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
+        if (!currentFile) {
+            e.dataTransfer.dropEffect = "copy";
+        }
+    };
+
+    const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0] && !currentFile) {
+            await onFileUpload(e.target.files[0]);
+            e.target.value = "";
+        }
+    };
+
+    const handleClick = () => {
+        if (!currentFile) {
+            inputRef.current?.click();
+        }
+    };
+
+    const handleDeleteClick = async (e: React.MouseEvent) => {
+        e.stopPropagation();
+        onDelete();
+    };
+
     return (
-        <div ref={fileRef} className={styles.selectedFile}>
-            <div className={styles.fileIcon}>
-                {getFileTypeLabel(file.type)}
-            </div>
-            <div className={styles.fileDetails}>
-                <small className={styles.fileName}>{file.name}</small>
-                <small className={styles.fileMeta}>{formatSize(file.size)}</small>
-            </div>
-            <div className={styles.deleteIcon} onClick={handleDelete}>
-                <TrashSimpleIcon size={19} />
+        <div className={styles.dropZoneContainer}>
+            <input
+                type="file"
+                ref={inputRef}
+                className={styles.hiddenInput}
+                onChange={handleFileSelect}
+                accept=".pdf,.docx"
+            />
+
+            <div
+                ref={dropzoneRef}
+                className={`${styles.dropZone} ${currentFile ? styles.hasFile : ''}`}
+                onClick={handleClick}
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+            >
+                {!currentFile ? (
+                    // Empty state
+                    <>
+                        <div className={styles.iconContainer}>
+                            <UploadIcon size={19} />
+                        </div>
+                        <p className={styles.dropZoneText}>
+                            Drop your file here or browse
+                        </p>
+                        <small className={styles.dropZoneSubtext}>
+                            Pick a file and we'll extract the key content
+                        </small>
+                    </>
+                ) : (
+                    // File selected state
+                    <>
+                        <div className={styles.iconContainer} onClick={handleDeleteClick}>
+                            <TrashSimpleIcon size={19} />
+                        </div>
+                        <div className={styles.fileDetails}>
+                            <p className={styles.dropZoneText}>
+                                {currentFile.name}
+                            </p>
+                            <small className={styles.dropZoneSubtext}>
+                                {formatSize(currentFile.size)}
+                            </small>
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );
-}
+};
 
 export default function FileUpload({onComplete, onDelete, setCanContinue, file: parentFile}: FileUploadProps) {
     const [file, setFile] = useState<File | null>(parentFile);
     const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
     useEffect(() => {
-        const changeFile = (file: File | null) => {
-            setFile(file);
-        }
-
-        changeFile(parentFile);
+        setFile(parentFile);
         setCanContinue(!!parentFile);
     }, [parentFile, setCanContinue]);
 
@@ -212,14 +175,6 @@ export default function FileUpload({onComplete, onDelete, setCanContinue, file: 
         const validated = await validateFile(uploadedFile);
 
         if (validated) {
-            const fileData: FileData = {
-                name: uploadedFile.name,
-                size: uploadedFile.size,
-                type: uploadedFile.type,
-                text: validated.text,
-                wordCount: validated.wordCount
-            };
-
             setFile(uploadedFile);
             onComplete(uploadedFile);
             setCanContinue(true);
@@ -236,10 +191,11 @@ export default function FileUpload({onComplete, onDelete, setCanContinue, file: 
 
     return (
         <div className={styles.container}>
-            <Dropzone onFileUpload={handleFileUpload} />
-            {file && (
-                <SelectedFile file={file} onDelete={handleDelete} />
-            )}
+            <Dropzone
+                onFileUpload={handleFileUpload}
+                currentFile={file}
+                onDelete={handleDelete}
+            />
         </div>
-    )
+    );
 }
