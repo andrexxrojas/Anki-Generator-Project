@@ -3,17 +3,17 @@
     flex-direction: row;
     align-items: center;
     gap: 0.571rem;
-    margin-top: var(--space-lg);
+    margin-top: var(--space-2xl);
 }
 
 .btn {
     font-family: var(--font-regular);
     font-size: var(--text-xs);
 
-    color: var(--grey-btn-sm-color);
-    padding: var(--grey-btn-sm-padding);
-    border-radius: var(--grey-btn-sm-radius);
-    background-color: var(--grey-btn-sm-bg);
+    color: var(--grey-btn-md-color);
+    padding: var(--grey-btn-md-padding);
+    border-radius: var(--grey-btn-md-radius);
+    background-color: var(--grey-btn-md-bg);
 
     border: none;
     outline: none;

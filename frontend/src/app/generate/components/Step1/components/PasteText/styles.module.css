@@ -4,7 +4,7 @@
     align-items: flex-end;
     gap: var(--space-sm);
     background-color: var(--bg-white);
-    border-radius: 0.857rem;
+    border-radius: 1.333rem;
     width: 100%;
     max-width: 454px;
     margin-top: 2.285rem;
@@ -21,7 +21,7 @@
     width: 100%;
     min-height: 263px;
     padding: 2.133rem;
-    border-radius: 10px;
+    border-radius: 1.333rem;
     background-color: var(--bg-primary);
     border: transparent;
     font-family: var(--font-regular);

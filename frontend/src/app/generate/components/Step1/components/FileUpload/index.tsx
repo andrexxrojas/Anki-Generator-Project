@@ -114,7 +114,7 @@ const Dropzone = ({
                 ) : (
                     // File selected state
                     <>
-                        <div className={styles.iconContainer} onClick={handleDeleteClick}>
+                        <div className={`${styles.iconContainer} ${styles.trash}`} onClick={handleDeleteClick}>
                             <TrashSimpleIcon size={19} />
                         </div>
                         <div className={styles.fileDetails}>
