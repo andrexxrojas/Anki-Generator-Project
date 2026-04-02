@@ -29,7 +29,7 @@
     padding: 1rem;
     width: 100%;
     border: none;
-    border-radius: var(--radius-sm);
+    border-radius: 0.533rem;
 }
 
 .formSubmitBtn {
