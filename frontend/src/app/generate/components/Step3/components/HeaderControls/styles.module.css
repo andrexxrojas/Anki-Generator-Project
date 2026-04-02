@@ -68,9 +68,9 @@
     position: absolute;
     top: 120%;
     left: 0;
-    background-color: #FFFFFF;
-    border: 1px solid #E5E5E5;
-    padding: 8px;
+    background-color: var(--bg-primary);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.13);
+    padding: 0.8rem;
     z-index: 100;
     min-width: 140px;
     border-radius: 8px;
@@ -82,7 +82,7 @@
 .menuItem {
     font-family: var(--font-regular);
     font-size: var(--text-xs);
-    background-color: #FFFFFF;
+    background-color: var(--bg-primary);
     border: none;
     outline: none;
     border-radius: var(--radius-xs);
@@ -113,7 +113,7 @@
     font-size: var(--text-xs);
     border: none;
     outline: none;
-    border-radius: var(--radius-sm);
+    border-radius: 0.533rem;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -129,27 +129,26 @@
     justify-content: center;
     align-items: center;
     padding: var(--padding-sm);
-    border-left: 1px solid #E5E5E5;
+}
+
+.btn.export .btnLogo {
+    border-left: 1px solid var(--brand-btn-md-color);
 }
 
 .btn.export {
-    background-color: var(--bg-brand);
-    color: var(--text-light-primary);
+    background-color: var(--brand-btn-md-bg);
+    color: var(--brand-btn-md-color);
     transition: background-color 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.btn.export:hover {
-    background-color: var(--bg-brand-hover);
-}
-
-.btn.save {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
+.btn.new {
+    background-color: var(--grey-btn-md-bg);
+    color: var(--grey-btn-md-color);
     transition: background-color 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.btn.save:hover {
-    background-color: var(--bg-tertiary);
+.btn.new .btnLogo {
+    border-left: 1px solid var(--grey-btn-md-color);
 }
 
 @media (max-width: 768px) {

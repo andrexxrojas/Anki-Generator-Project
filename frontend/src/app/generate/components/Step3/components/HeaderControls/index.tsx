@@ -4,12 +4,14 @@ import styles from "./styles.module.css";
 import React, { useState, useEffect, useRef } from "react";
 import { exportDeckApkg, saveDeck } from "@/app/services/deck.service";
 import {DotsThreeVerticalIcon, DownloadSimpleIcon, FloppyDiskIcon} from "@phosphor-icons/react";
+import {PlusIcon} from "@phosphor-icons/react/ssr";
 
 interface HeaderControlsProps {
     title: string;
     updateTitle: (newTitle: string) => void;
     numItems: number;
     generatedDeck: GeneratedDeck | null;
+    onNewSet: () => void;
 }
 
 interface GeneratedDeck {
@@ -24,7 +26,7 @@ interface GeneratedCard {
     back: string;
 }
 
-export default function HeaderControls({ title, updateTitle, numItems, generatedDeck }: HeaderControlsProps) {
+export default function HeaderControls({ title, updateTitle, numItems, generatedDeck, onNewSet }: HeaderControlsProps) {
     const [showMenu, setShowMenu] = useState<boolean>(false);
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [deckTitle, setDeckTitle] = useState<string>(title);
@@ -203,12 +205,12 @@ export default function HeaderControls({ title, updateTitle, numItems, generated
             </div>
             <div className={styles.buttonsContainer}>
                 <button
-                    className={`${styles.btn} ${styles.save}`}
-                    onClick={() => handleSave()}
+                    className={`${styles.btn} ${styles.new}`}
+                    onClick={onNewSet}
                 >
-                    <span className={styles.btnTxt}>Save</span>
+                    <span className={styles.btnTxt}>New Set</span>
                     <span className={styles.btnLogo}>
-                        <FloppyDiskIcon size={19}/>
+                        <PlusIcon size={19}/>
                     </span>
                 </button>
                 <button

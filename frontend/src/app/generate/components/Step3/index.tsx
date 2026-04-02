@@ -14,6 +14,7 @@ interface StepProps {
     deckOptions: DeckOptions;
     generatedDeck: GeneratedDeck | null;
     setGeneratedDeck: Dispatch<SetStateAction<GeneratedDeck | null>>
+    onNewSet: () => void;
 }
 
 interface GeneratedDeck {
@@ -41,7 +42,7 @@ export interface DeckOptions {
     cardStyles: string[];
 }
 
-export default function Step3({ material, deckOptions, generatedDeck, setGeneratedDeck }: StepProps) {
+export default function Step3({ material, deckOptions, generatedDeck, setGeneratedDeck, onNewSet }: StepProps) {
     const [loading, setLoading] = useState<boolean>(!generatedDeck);
 
     useEffect(() => {
@@ -101,6 +102,7 @@ export default function Step3({ material, deckOptions, generatedDeck, setGenerat
                             updateTitle={handleTitleUpdate}
                             numItems={generatedDeck.cards.length || 0}
                             generatedDeck={generatedDeck}
+                            onNewSet={onNewSet}
                         />
                         <DeckPreview
                             cards={generatedDeck.cards}

@@ -124,6 +124,15 @@ export default function Generate() {
         setDeckOptions(defaultDeckOptions);
     };
 
+    const handleNewSet = () => {
+        setCurrentStep(1);
+        setMaterial(defaultMaterial);
+        setDeckOptions(defaultDeckOptions);
+        setGeneratedDeck(null);
+
+        sessionStorage.removeItem("anki-generate-state");
+    };
+
     const renderStep = () => {
         switch (currentStep) {
             case 1:
@@ -150,6 +159,7 @@ export default function Generate() {
                     deckOptions={deckOptions}
                     generatedDeck={generatedDeck}
                     setGeneratedDeck={setGeneratedDeck}
+                    onNewSet={handleNewSet}
                 />;
             default:
                 return null;
