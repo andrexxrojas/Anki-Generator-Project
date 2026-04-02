@@ -7,12 +7,14 @@
 }
 
 .btn {
-    font-family: var(--font-medium);
+    font-family: var(--font-regular);
     font-size: var(--text-xs);
-    padding: 1rem;
-    border-radius: 1rem;
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
+
+    color: var(--grey-btn-sm-color);
+    padding: var(--grey-btn-sm-padding);
+    border-radius: var(--grey-btn-sm-radius);
+    background-color: var(--grey-btn-sm-bg);
+
     border: none;
     outline: none;
     user-select: none;
