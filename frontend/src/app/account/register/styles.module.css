@@ -19,7 +19,6 @@
     font-family: var(--font-regular);
     font-size: var(--text-sm);
     color: var(--text-primary);
-    margin-left: 0.5rem;
 }
 
 .formInput {
