@@ -31,7 +31,7 @@ export default function LoginForm() {
                     type="text"
                     id="identifier"
                     name="identifier"
-                    placeholder="Email or username"
+                    placeholder="Enter your email or username"
                     className={styles.formInput}
                     disabled={isLoading}
                     required
@@ -45,7 +45,7 @@ export default function LoginForm() {
                     type="password"
                     id="password"
                     name="password"
-                    placeholder="Password"
+                    placeholder="Enter your password"
                     className={styles.formInput}
                     disabled={isLoading}
                     required

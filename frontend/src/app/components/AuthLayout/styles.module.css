@@ -8,11 +8,11 @@
 
 .title {
     font-family: var(--font-medium);
-    font-size: var(--text-md);
+    font-size: var(--text-lg);
     font-weight: 500;
     color: var(--text-primary);
     text-align: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-sm);
 }
 
 .description {
@@ -20,7 +20,7 @@
     font-size: var(--text-sm);
     color: var(--text-secondary);
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: var(--space-3xl);
 }
 
 .toggleContainer {
@@ -28,12 +28,12 @@
 }
 
 .toggleText {
-    font-family: var(--font-medium);
+    font-family: var(--font-regular);
     font-size: var(--text-xs);
-    color: var(--text-tertiary);
+    color: var(--text-secondary);
     text-align: center;
 }
 
 .toggleLink {
-    color: var(--text-tertiary);
+    color: var(--text-secondary);
 }
