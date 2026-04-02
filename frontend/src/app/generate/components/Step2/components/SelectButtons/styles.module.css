@@ -1,9 +1,8 @@
 .selectContainer {
-    width: fit-content;
-    padding: var(--padding-sm);
-    border: 1px solid #E5E5E5;
-    border-radius: var(--radius-sm);
-    background-color: #F5F5F5;
+    width: 100%;
+    padding: 1rem 1.6rem;
+    border-radius: 0.8rem;
+    background-color: var(--bg-primary);
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -14,10 +13,10 @@
     border: none;
     outline: none;
     display: inline-block;
-    background-color: #F5F5F5;
+    background-color: var(--bg-primary);
     font-family: var(--font-medium);
-    font-size: var(--text-sm);
-    padding: 5px 8px;
+    font-size: var(--text-xs);
+    padding: 0.533rem 0.666rem;
     border-radius: 6px;
     color: var(--text-secondary);
     border: 1px solid transparent;
@@ -30,7 +29,6 @@
 
 .selectOption.active {
     background-color: #FFFFFF;
-    border: 1px solid #E5E5E5;
     color: var(--text-primary);
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.13);
 

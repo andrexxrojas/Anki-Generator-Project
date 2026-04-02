@@ -108,7 +108,7 @@ const Dropzone = ({
                             Drop your file here or browse
                         </p>
                         <small className={styles.dropZoneSubtext}>
-                            Pick a file and we'll extract the key content
+                            Pick a file and we&#39;ll extract the key content
                         </small>
                     </>
                 ) : (

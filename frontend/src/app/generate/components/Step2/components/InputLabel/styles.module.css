@@ -8,7 +8,7 @@
 
 .labelTitle {
     font-family: var(--font-medium);
-    font-size: var(--text-md);
+    font-size: var(--text-base);
     color: var(--text-primary);
 }
 

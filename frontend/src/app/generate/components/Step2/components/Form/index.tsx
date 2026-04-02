@@ -30,7 +30,7 @@ export default function Form({ formData, setFormData }: FormProps) {
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setFormData({...formData, deckName: e.target.value})
                     }}
-                    placeholder="Input your deck name here..."
+                    placeholder="Enter your deck name"
                 />
             </InputBox>
 
