@@ -20,8 +20,17 @@ export const generateContent = async (req, res) => {
             return res.status(500).json({message: "Missing user/guest"});
         }
 
-        if (entity.generationsUsed >= entity.freeGenerations) {
-            return res.status(403).json({ message: "Free generation limit reached" });
+        // Check limits
+        if (req.user) {
+            if (entity.monthlyGenerationsUsed >= entity.monthlyGenerationLimit) {
+                return res.status(403).json({
+                    message: "Monthly generation limit reached. Upgrade to continue."
+                });
+            }
+        } else {
+            if (entity.generationsUsed >= entity.freeGenerations) {
+                return res.status(403).json({ message: "Free generation limit reached. Sign up for an account." });
+            }
         }
 
         const response = await ai.models.generateContent({
@@ -36,18 +45,27 @@ export const generateContent = async (req, res) => {
         const result = response.text;
 
         // Update quota
-        entity.generationsUsed++;
-        await entity.save();
+        if (req.user) {
+            entity.monthlyGenerationsUsed++;
+            entity.totalDecksGenerated++;  // Increment lifetime counter
+            await entity.save();
+        } else {
+            entity.generationsUsed++;
+            await entity.save();
+        }
 
         return res.json({
             result: JSON.parse(result),
-            used: entity.generationsUsed,
-            remaining: Math.max(0, entity.freeGenerations - entity.generationsUsed)
+            used: req.user ? entity.monthlyGenerationsUsed : entity.generationsUsed,
+            remaining: req.user
+                ? Math.max(0, entity.monthlyGenerationLimit - entity.monthlyGenerationsUsed)
+                : Math.max(0, entity.freeGenerations - entity.generationsUsed),
+            totalDecksGenerated: req.user ? entity.totalDecksGenerated : undefined
         });
 
     } catch (err) {
         console.error(err);
-        res.status(500).json({message: "OpenAI error"});
+        res.status(500).json({message: "Generation error: " + err.message});
     }
 };
 

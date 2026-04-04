@@ -22,7 +22,11 @@ const User = sequelize.define("User", {
         type: DataTypes.STRING,
         allowNull: false
     },
-    // Removed generationsUsed - using monthlyGenerationsUsed instead
+    // Lifetime total decks generated (all-time)
+    totalDecksGenerated: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+    },
     subscriptionTier: {
         type: DataTypes.ENUM('free', 'pro', 'premium'),
         defaultValue: 'free'

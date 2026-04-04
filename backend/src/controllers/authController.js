@@ -201,22 +201,14 @@ export const getProfile = async (req, res) => {
             await user.save();
         }
 
-        // Count total decks generated (all-time)
-        const totalDecks = await Deck.count({
-            where: {
-                ownerType: "user",
-                ownerId: String(user.id)
-            }
-        });
-
         // Get generations left this month
         const generationsLeft = Math.max(0, user.monthlyGenerationLimit - user.monthlyGenerationsUsed);
 
         res.json({
             username: user.username,
             email: user.email,
-            totalDecksGenerated: totalDecks,
-            monthlyDecksGenerated: user.monthlyGenerationsUsed, // This month's generations
+            totalDecksGenerated: user.totalDecksGenerated,
+            monthlyDecksGenerated: user.monthlyGenerationsUsed,
             generationsLeft: generationsLeft,
             monthlyLimit: user.monthlyGenerationLimit,
             subscriptionTier: user.subscriptionTier,
