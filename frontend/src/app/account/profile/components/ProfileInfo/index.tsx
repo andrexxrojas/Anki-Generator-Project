@@ -1,7 +1,12 @@
 import styles from "./styles.module.css";
 import {UserCircleIcon} from "@phosphor-icons/react/ssr";
 
-export default function ProfileInfo() {
+interface ProfileInfoProps {
+    username: string;
+    email: string;
+}
+
+export default function ProfileInfo({ username, email }: ProfileInfoProps) {
     return (
         <div className={styles.container}>
             <div className={styles.leftSection}>
@@ -10,8 +15,8 @@ export default function ProfileInfo() {
                         <UserCircleIcon size={32}/>
                     </div>
                     <div className={styles.detailsContainer}>
-                        <h1 className={styles.name}>Jay Andre Rojas</h1>
-                        <span className={styles.email}>jayandrerojas@gmail.com</span>
+                        <h1 className={styles.name}>{username}</h1>
+                        <span className={styles.email}>{email}</span>
                     </div>
                 </div>
             </div>

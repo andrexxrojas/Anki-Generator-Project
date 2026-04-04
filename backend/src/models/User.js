@@ -21,7 +21,36 @@ const User = sequelize.define("User", {
     password: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    // Removed generationsUsed - using monthlyGenerationsUsed instead
+    subscriptionTier: {
+        type: DataTypes.ENUM('free', 'pro', 'premium'),
+        defaultValue: 'free'
+    },
+    monthlyGenerationLimit: {
+        type: DataTypes.INTEGER,
+        defaultValue: 15  // Free tier gets 15 per month
+    },
+    monthlyGenerationsUsed: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+    },
+    lastResetDate: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW
+    },
+    stripeCustomerId: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    stripeSubscriptionId: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    subscriptionStatus: {
+        type: DataTypes.ENUM('active', 'past_due', 'canceled', 'incomplete', 'inactive'),
+        defaultValue: 'inactive'
     }
-})
+});
 
 export default User;

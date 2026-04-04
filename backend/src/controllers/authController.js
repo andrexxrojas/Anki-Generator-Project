@@ -18,13 +18,40 @@ export const register = async (req, res) => {
         }
 
         const hashed = await bcrypt.hash(password, 10);
+
+        // Get guestId from cookies
+        const guestId = req.cookies.guestId;
+        let guest = null;
+        let monthlyGenerationsUsed = 0;
+        let monthlyGenerationLimit = 15; // Default for new users (15 per month)
+
+        // Find guest if exists
+        if (guestId) {
+            guest = await Guest.findOne({ where: { guestId }, transaction });
+            if (guest) {
+                // Transfer their generation usage to monthly usage
+                monthlyGenerationsUsed = guest.generationsUsed;
+                monthlyGenerationLimit = 15; // Same limit as guests
+            }
+        }
+
+        // Create user with transferred generation data
         const user = await User.create(
-            { username, email, password: hashed },
+            {
+                username,
+                email,
+                password: hashed,
+                monthlyGenerationsUsed: monthlyGenerationsUsed,  // Preserve their usage
+                monthlyGenerationLimit: monthlyGenerationLimit,  // 15 per month
+                subscriptionTier: 'free',
+                subscriptionStatus: 'inactive',
+                lastResetDate: new Date()
+            },
             { transaction }
         );
 
         const shouldMigrateDeck =
-            req.guest && req.cookies?.pendingDeckMigration === "1";
+            guest && req.cookies?.pendingDeckMigration === "1";
 
         if (shouldMigrateDeck) {
             await Deck.update(
@@ -35,17 +62,19 @@ export const register = async (req, res) => {
                 {
                     where: {
                         ownerType: "guest",
-                        ownerId: String(req.guest.id)
+                        ownerId: String(guest.id)
                     },
                     transaction
                 }
             );
+        }
 
+        // Delete the guest account after transferring data
+        if (guest) {
             await Guest.destroy({
-                where: { id: req.guest.id },
+                where: { id: guest.id },
                 transaction
             });
-
             res.clearCookie("guestId");
             res.clearCookie("pendingDeckMigration");
         }
@@ -65,7 +94,9 @@ export const register = async (req, res) => {
         res.json({
             message: "User created",
             userId: user.id,
-            migratedDeck: shouldMigrateDeck
+            migratedDeck: shouldMigrateDeck,
+            generationsTransferred: monthlyGenerationsUsed,
+            monthlyLimit: monthlyGenerationLimit
         });
 
     } catch (err) {
@@ -73,7 +104,6 @@ export const register = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
-
 
 // Log in a user
 export const login = async (req, res) => {
@@ -150,3 +180,50 @@ export const me = async (req, res) => {
         res.status(401).json({ error: err.message });
     }
 }
+
+// Get user profile information
+export const getProfile = async (req, res) => {
+    try {
+        const user = req.user; // From your auth middleware
+
+        if (!user) {
+            return res.status(401).json({ error: "User not authenticated" });
+        }
+
+        // Check and reset monthly limit if needed
+        const now = new Date();
+        const lastReset = new Date(user.lastResetDate);
+
+        if (now.getMonth() !== lastReset.getMonth() ||
+            now.getFullYear() !== lastReset.getFullYear()) {
+            user.monthlyGenerationsUsed = 0;
+            user.lastResetDate = now;
+            await user.save();
+        }
+
+        // Count total decks generated (all-time)
+        const totalDecks = await Deck.count({
+            where: {
+                ownerType: "user",
+                ownerId: String(user.id)
+            }
+        });
+
+        // Get generations left this month
+        const generationsLeft = Math.max(0, user.monthlyGenerationLimit - user.monthlyGenerationsUsed);
+
+        res.json({
+            username: user.username,
+            email: user.email,
+            totalDecksGenerated: totalDecks,
+            monthlyDecksGenerated: user.monthlyGenerationsUsed, // This month's generations
+            generationsLeft: generationsLeft,
+            monthlyLimit: user.monthlyGenerationLimit,
+            subscriptionTier: user.subscriptionTier,
+            subscriptionStatus: user.subscriptionStatus
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
+    }
+};

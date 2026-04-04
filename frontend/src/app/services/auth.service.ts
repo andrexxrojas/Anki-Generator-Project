@@ -40,7 +40,7 @@ export async function Register(username: string, email: string, password: string
         throw new Error(data.error || "Failed to register user.");
     }
 
-    return res.json();
+    return data;
 }
 
 export async function Logout() {
@@ -70,6 +70,23 @@ export async function CheckAuth() {
 
     if (!res.ok) {
         throw new Error("Failed to check user.");
+    }
+
+    return res.json();
+}
+
+export async function GetProfile() {
+    const res = await fetch(`${API_URL}/auth/profile`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    });
+
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || "Failed to fetch profile");
     }
 
     return res.json();

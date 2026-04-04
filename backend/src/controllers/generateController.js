@@ -121,11 +121,40 @@ export const getGenerationStats = async (req, res) => {
             return res.status(401).json({ message: "No session found" });
         }
 
-        return res.json({
-            generationsUsed: entity.generationsUsed,
-            generationsLimit: entity.freeGenerations,
-            generationsLeft: Math.max(0, entity.freeGenerations - entity.generationsUsed)
-        });
+        // Handle logged-in user (has subscription model)
+        if (req.user) {
+            // Check if monthly limit should reset
+            const now = new Date();
+            const lastReset = new Date(entity.lastResetDate);
+
+            if (now.getMonth() !== lastReset.getMonth() ||
+                now.getFullYear() !== lastReset.getFullYear()) {
+                // Reset monthly usage
+                entity.monthlyGenerationsUsed = 0;
+                entity.lastResetDate = now;
+                await entity.save();
+            }
+
+            const generationsLeft = Math.max(0, entity.monthlyGenerationLimit - entity.monthlyGenerationsUsed);
+
+            return res.json({
+                generationsUsed: entity.monthlyGenerationsUsed,
+                generationsLimit: entity.monthlyGenerationLimit,
+                generationsLeft: generationsLeft,
+                subscriptionTier: entity.subscriptionTier
+            });
+        }
+
+        // Handle guest user (simple model)
+        if (req.guest) {
+            return res.json({
+                generationsUsed: entity.generationsUsed,
+                generationsLimit: entity.freeGenerations,
+                generationsLeft: Math.max(0, entity.freeGenerations - entity.generationsUsed),
+                subscriptionTier: 'guest'
+            });
+        }
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error fetching generation stats" });

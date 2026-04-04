@@ -114,7 +114,6 @@ export const checkGenerationLimit = async (req, res, next) => {
 };
 
 // Update generation usage
-// Update generation usage
 export const incrementGenerationUsage = async (req, res, next) => {
     try {
         if (req.user) {
