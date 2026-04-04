@@ -1,5 +1,5 @@
-import {DataTypes} from "sequelize";
-import {sequelize} from "../config/db.js";
+import { DataTypes } from "sequelize";
+import { sequelize } from "../config/db.js";
 
 const Guest = sequelize.define("Guest", {
     id: {
@@ -16,6 +16,10 @@ const Guest = sequelize.define("Guest", {
         type: DataTypes.STRING,
         allowNull: true
     },
+    fingerprint: {
+        type: DataTypes.STRING, // Browser fingerprint to prevent cookie theft
+        allowNull: true
+    },
     generationsUsed: {
         type: DataTypes.INTEGER,
         defaultValue: 0
@@ -23,8 +27,18 @@ const Guest = sequelize.define("Guest", {
     freeGenerations: {
         type: DataTypes.INTEGER,
         defaultValue: 15
+    },
+    expiresAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: () => new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
     }
-}, { timestamps: true });
-
+}, {
+    timestamps: true,
+    indexes: [
+        { fields: ['ipAddress', 'fingerprint'] },
+        { fields: ['expiresAt'] }
+    ]
+});
 
 export default Guest;
