@@ -5,6 +5,7 @@ import { regular, medium, semibold, bold } from "./fonts";
 import {ReactNode} from "react";
 import {AuthProvider} from "@/app/context/AuthContext/AuthContext";
 import NavBar from "@/app/components/NavBar";
+import ProtectedRoute from "@/app/components/ProtectedRoute";
 
 export const metadata: Metadata = {
   title: "Anki Generator",
@@ -25,7 +26,9 @@ export default function RootLayout({
           <AuthProvider>
             <NavBar />
             <main>
-              {children}
+              <ProtectedRoute>
+                {children}
+              </ProtectedRoute>
             </main>
           </AuthProvider>
         </body>

@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import crypto from 'crypto';
 import Guest from "../models/Guest.js";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
@@ -172,7 +173,7 @@ export const guestMiddleware = async (req, res, next) => {
         // Create a browser fingerprint (basic version)
         const userAgent = req.headers['user-agent'] || '';
         const acceptLanguage = req.headers['accept-language'] || '';
-        const fingerprint = require('crypto')
+        const fingerprint = crypto
             .createHash('md5')
             .update(`${ip}|${userAgent}|${acceptLanguage}`)
             .digest('hex');

@@ -5,12 +5,15 @@ import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Link from "next/link";
-import {useAuth} from "@/app/context/AuthContext/AuthContext";
+import { useAuth } from "@/app/context/AuthContext/AuthContext";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function AccountDropdown() {
     const [showMenu, setShowMenu] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const pathname = usePathname();
+    const router = useRouter();
     const { logout } = useAuth();
 
     useEffect(() => {
@@ -44,6 +47,19 @@ export default function AccountDropdown() {
         }
     }, { dependencies: [showMenu] });
 
+    const handleLogout = async () => {
+        const protectedRoutes = ['/account/profile', '/account/dashboard'];
+
+        if (protectedRoutes.includes(pathname)) {
+            logout();
+            router.push('/');
+        } else {
+            await logout();
+        }
+
+        setShowMenu(false);
+    };
+
     return (
         <div className={styles.menuAnchor} ref={menuRef}>
             <button
@@ -65,7 +81,7 @@ export default function AccountDropdown() {
                 </Link>
                 <button
                     className={`${styles.dropdownItem} ${styles.btn}`}
-                    onClick={logout}
+                    onClick={handleLogout}
                 >
                     Logout
                 </button>
