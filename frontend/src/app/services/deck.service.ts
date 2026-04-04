@@ -19,7 +19,7 @@ export async function generateDeck(material: Material, deckOptions: DeckOptions)
         deckOptions,
     });
 
-    const res = await fetch(`${API_URL}/openai/generate`, {
+    const res = await fetch(`${API_URL}/ai/generate`, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         credentials: "include",
@@ -76,6 +76,27 @@ export async function saveDeck(deck: Deck) {
     if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         throw new Error(err.message || "Failed to save deck");
+    }
+
+    return res.json();
+}
+
+interface GenerationStats {
+    generationsUsed: number;
+    generationsLimit: number;
+    generationsLeft: number;
+}
+
+export async function getGenerationStats(): Promise<GenerationStats> {
+    const res = await fetch(`${API_URL}/ai/generation-stats`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+    });
+
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || "Failed to fetch generation stats");
     }
 
     return res.json();

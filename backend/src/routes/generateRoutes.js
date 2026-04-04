@@ -2,7 +2,7 @@ import express from "express";
 import {authMiddlewareOptional} from "../middleware/authMiddlewareOptional.js";
 import {guestMiddleware} from "../middleware/guestMiddleware.js";
 import {checkQuota} from "../middleware/checkQuota.js";
-import {generateContent} from "../controllers/generateController.js";
+import {generateContent, getGenerationStats} from "../controllers/generateController.js";
 
 const router = express.Router();
 
@@ -14,5 +14,7 @@ router.post(
     checkQuota,             // enforces 15-limit
     generateContent
 );
+
+router.get("/generation-stats", guestMiddleware, getGenerationStats);
 
 export default router;

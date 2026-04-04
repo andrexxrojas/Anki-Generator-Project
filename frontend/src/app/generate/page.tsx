@@ -5,6 +5,7 @@ import {useEffect, useRef, useState} from "react";
 import Step1 from "@/app/generate/components/Step1";
 import Step2 from "@/app/generate/components/Step2";
 import Step3 from "@/app/generate/components/Step3";
+import GenerationsLeft from "@/app/components/GenerationsLeft";
 
 interface Material {
     type: "file" | "text" | null;
@@ -65,6 +66,7 @@ export default function Generate() {
     const [material, setMaterial] = useState<Material>(defaultMaterial);
     const [deckOptions, setDeckOptions] = useState<DeckOptions>(defaultDeckOptions);
     const [generatedDeck, setGeneratedDeck] = useState<GeneratedDeck | null>(null);
+    const [refreshStats, setRefreshStats] = useState<number>(0);
     const isClient = useRef(false);
 
     const steps = [
@@ -72,6 +74,10 @@ export default function Generate() {
         "Customize",
         "Export Deck"
     ];
+
+    const triggerStatsRefresh = () => {
+        setRefreshStats(prev => prev + 1);
+    };
 
     useEffect(() => {
         isClient.current = true;
@@ -129,6 +135,7 @@ export default function Generate() {
         setMaterial(defaultMaterial);
         setDeckOptions(defaultDeckOptions);
         setGeneratedDeck(null);
+        triggerStatsRefresh();
 
         sessionStorage.removeItem("anki-generate-state");
     };
@@ -160,6 +167,7 @@ export default function Generate() {
                     generatedDeck={generatedDeck}
                     setGeneratedDeck={setGeneratedDeck}
                     onNewSet={handleNewSet}
+                    onGenerationComplete={triggerStatsRefresh}
                 />;
             default:
                 return null;
@@ -198,6 +206,7 @@ export default function Generate() {
     return (
         <div className={styles.generateWrapper}>
             <div className={styles.stepContent}>
+                <GenerationsLeft refreshTrigger={refreshStats} />
                 {renderStep()}
             </div>
         </div>

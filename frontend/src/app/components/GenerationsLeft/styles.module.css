@@ -1,0 +1,14 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-md);
+}
+
+.number {
+    font-family: var(--font-regular);
+    font-size: var(--text-xs);
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.4rem;
+    background-color: var(--bg-brand);
+    color: var(--text-brand);
+}

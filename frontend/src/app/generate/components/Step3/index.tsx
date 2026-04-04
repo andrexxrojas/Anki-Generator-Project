@@ -15,6 +15,7 @@ interface StepProps {
     generatedDeck: GeneratedDeck | null;
     setGeneratedDeck: Dispatch<SetStateAction<GeneratedDeck | null>>
     onNewSet: () => void;
+    onGenerationComplete: () => void;
 }
 
 interface GeneratedDeck {
@@ -42,7 +43,7 @@ export interface DeckOptions {
     cardStyles: string[];
 }
 
-export default function Step3({ material, deckOptions, generatedDeck, setGeneratedDeck, onNewSet }: StepProps) {
+export default function Step3({ material, deckOptions, generatedDeck, setGeneratedDeck, onNewSet, onGenerationComplete }: StepProps) {
     const [loading, setLoading] = useState<boolean>(!generatedDeck);
 
     useEffect(() => {
@@ -52,6 +53,7 @@ export default function Step3({ material, deckOptions, generatedDeck, setGenerat
             try {
                 const res = await generateDeck(material, deckOptions);
                 setGeneratedDeck(res.result);
+                onGenerationComplete();
             } catch (error) {
                 console.error("Error generating deck:", error);
             } finally {

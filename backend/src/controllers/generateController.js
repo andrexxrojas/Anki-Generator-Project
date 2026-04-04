@@ -113,3 +113,21 @@ ${material}
 `;
 }
 
+export const getGenerationStats = async (req, res) => {
+    try {
+        const entity = req.user || req.guest;
+
+        if (!entity) {
+            return res.status(401).json({ message: "No session found" });
+        }
+
+        return res.json({
+            generationsUsed: entity.generationsUsed,
+            generationsLimit: entity.freeGenerations,
+            generationsLeft: Math.max(0, entity.freeGenerations - entity.generationsUsed)
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error fetching generation stats" });
+    }
+};

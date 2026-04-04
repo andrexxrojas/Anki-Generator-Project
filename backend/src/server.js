@@ -27,7 +27,7 @@ app.use(express.urlencoded({extended: true}));
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/openai", generateRoutes);
+app.use("/api/ai", generateRoutes);
 app.use("/api/deck", deckRoutes);
 app.use("/api/file", validateRoutes);
 app.use('/api/file-export', exportRoutes);
