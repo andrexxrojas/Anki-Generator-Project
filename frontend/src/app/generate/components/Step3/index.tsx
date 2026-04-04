@@ -82,7 +82,7 @@ export default function Step3({ material, deckOptions, generatedDeck, setGenerat
                         <Oval
                             height={40}
                             width={40}
-                            color="#0A4FED"
+                            color="#CBFFA6"
                             wrapperStyle={{}}
                             wrapperClass=""
                             visible={true}
