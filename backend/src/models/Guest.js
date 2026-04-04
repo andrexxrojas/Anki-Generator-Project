@@ -17,7 +17,7 @@ const Guest = sequelize.define("Guest", {
         allowNull: true
     },
     fingerprint: {
-        type: DataTypes.STRING, // Browser fingerprint to prevent cookie theft
+        type: DataTypes.STRING,
         allowNull: true
     },
     generationsUsed: {

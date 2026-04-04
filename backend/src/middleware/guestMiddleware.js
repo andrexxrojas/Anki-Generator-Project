@@ -113,22 +113,39 @@ export const checkGenerationLimit = async (req, res, next) => {
 };
 
 // Update generation usage
+// Update generation usage
 export const incrementGenerationUsage = async (req, res, next) => {
     try {
         if (req.user) {
-            // Track user usage separately
             return next();
         }
 
         if (req.guest) {
-            await req.guest.increment('generationsUsed');
+            // Atomic increment with check - prevents going over limit
+            const [updated] = await Guest.update(
+                {
+                    generationsUsed: req.guest.generationsUsed + 1
+                },
+                {
+                    where: {
+                        guestId: req.guest.guestId,
+                        generationsUsed: req.guest.generationsUsed // Only update if not changed
+                    }
+                }
+            );
+
+            // If no rows updated, someone else already incremented
+            if (updated === 0 && req.guest.generationsUsed + 1 > req.guest.freeGenerations) {
+                return res.status(403).json({
+                    message: "Generation limit exceeded"
+                });
+            }
         }
 
         next();
     } catch (err) {
         console.error(err);
-        // Don't block the request if tracking fails
-        next();
+        next(); // Don't block on tracking error
     }
 };
 
@@ -197,7 +214,7 @@ export const guestMiddleware = async (req, res, next) => {
                 fingerprint: fingerprint,
                 generationsUsed: 0,
                 freeGenerations: parseInt(process.env.GUEST_FREE_GENERATIONS) || 15,
-                expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // 30 days expiry
+                expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
             });
 
             // Set cookies with security flags
