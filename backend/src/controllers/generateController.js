@@ -1,6 +1,7 @@
 import Guest from "../models/Guest.js";
 import User from "../models/User.js";
 import { GoogleGenAI } from "@google/genai";
+import subscriptionService from "../services/subscriptionService.js";
 
 const ai = new GoogleGenAI({
     apiKey: process.env.GEMINI_API_KEY,
@@ -20,19 +21,7 @@ export const generateContent = async (req, res) => {
             return res.status(500).json({message: "Missing user/guest"});
         }
 
-        // Check limits
-        if (req.user) {
-            if (entity.monthlyGenerationsUsed >= entity.monthlyGenerationLimit) {
-                return res.status(403).json({
-                    message: "Monthly generation limit reached. Upgrade to continue."
-                });
-            }
-        } else {
-            if (entity.generationsUsed >= entity.freeGenerations) {
-                return res.status(403).json({ message: "Free generation limit reached. Sign up for an account." });
-            }
-        }
-
+        // Generate content
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash-lite",
             contents: buildDeckPrompt(material, deckOptions),
@@ -44,23 +33,35 @@ export const generateContent = async (req, res) => {
 
         const result = response.text;
 
-        // Update quota
+        // ONLY increment after successful generation
         if (req.user) {
-            entity.monthlyGenerationsUsed++;
-            entity.totalDecksGenerated++;  // Increment lifetime counter
-            await entity.save();
+            await subscriptionService.incrementUsage(req.user.id);
+            await entity.reload();
         } else {
+            // Guest increment with atomic update
             entity.generationsUsed++;
             await entity.save();
         }
 
+        // Get updated counts
+        let used, remaining, totalDecksGenerated;
+
+        if (req.user) {
+            const limits = await subscriptionService.getUserLimits(req.user.id);
+            used = limits.used;
+            remaining = limits.limit - limits.used;
+            totalDecksGenerated = entity.totalDecksGenerated;
+        } else {
+            used = entity.generationsUsed;
+            remaining = Math.max(0, entity.freeGenerations - entity.generationsUsed);
+            totalDecksGenerated = undefined;
+        }
+
         return res.json({
             result: JSON.parse(result),
-            used: req.user ? entity.monthlyGenerationsUsed : entity.generationsUsed,
-            remaining: req.user
-                ? Math.max(0, entity.monthlyGenerationLimit - entity.monthlyGenerationsUsed)
-                : Math.max(0, entity.freeGenerations - entity.generationsUsed),
-            totalDecksGenerated: req.user ? entity.totalDecksGenerated : undefined
+            used: used,
+            remaining: remaining,
+            totalDecksGenerated: totalDecksGenerated
         });
 
     } catch (err) {

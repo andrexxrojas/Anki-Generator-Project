@@ -2,9 +2,7 @@ import Deck from "../models/Deck.js";
 import Card from "../models/Card.js";
 import crypto from "crypto";
 
-// Helper to create hash of deck content
 const createDeckHash = (cards, tags = []) => {
-    // Create a consistent string representation
     const sortedCards = [...cards]
         .map(card => ({
             front: (card.front || '').toLowerCase().trim(),

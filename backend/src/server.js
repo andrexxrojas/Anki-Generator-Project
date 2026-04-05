@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import syncDb from "./config/sync.js";
 import dotenv from "dotenv";
+import { handleStripeWebhook } from "./webhooks/stripeWebhook.js";
 
 // Routes
 import authRoutes from "./routes/authRoutes.js";
@@ -10,11 +11,14 @@ import generateRoutes from "./routes/generateRoutes.js";
 import deckRoutes from "./routes/deckRoutes.js";
 import validateRoutes from "./routes/validateRoutes.js";
 import exportRoutes from "./routes/exportRoutes.js";
+import subscriptionRoutes from "./routes/subscriptionRoutes.js";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.post("/webhook/stripe", express.raw({ type: "application/json" }), handleStripeWebhook);
 
 // Middleware
 app.use(cors({
@@ -30,7 +34,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/ai", generateRoutes);
 app.use("/api/deck", deckRoutes);
 app.use("/api/file", validateRoutes);
-app.use('/api/file-export', exportRoutes);
+app.use("/api/file-export", exportRoutes);
+app.use("/api/subscription", subscriptionRoutes);
 
 // Sync database and start the server
 syncDb()

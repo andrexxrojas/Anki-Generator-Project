@@ -5,7 +5,7 @@ import Card from "../models/Card.js";
 
 const syncDb = async () => {
     try {
-        await sequelize.sync({force: true});
+        await sequelize.sync();
         console.log("All models were synchronized successfully");
     } catch (err) {
         console.error(err);
