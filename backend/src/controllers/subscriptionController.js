@@ -1,5 +1,6 @@
 import subscriptionService from "../services/subscriptionService.js";
-import User from "../models/User.js"; // Add this import for getUsage
+import User from "../models/User.js";
+import stripe from "../config/stripe.js"; // Add this import for getUsage
 
 export const createCheckout = async (req, res) => {
     try {
@@ -20,6 +21,61 @@ export const createCheckout = async (req, res) => {
         res.json({ url: session.url });
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+};
+
+export const downgradeSubscription = async (req, res) => {
+    try {
+        const user = req.user;
+        const { newPriceId, newTier } = req.body; // newTier: 'free' or 'pro'
+
+        if (!user.stripeSubscriptionId) {
+            return res.status(400).json({ message: "No active subscription found" });
+        }
+
+        // For downgrading to free (cancel subscription)
+        if (newTier === 'free') {
+            // Cancel at period end (they keep access until billing period ends)
+            await stripe.subscriptions.update(user.stripeSubscriptionId, {
+                cancel_at_period_end: true
+            });
+
+            await user.update({
+                subscriptionStatus: 'canceled'
+                // Don't change tier yet - keep pro until period end
+            });
+
+            return res.json({
+                message: "Subscription will be canceled at end of billing period",
+                effectiveDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+            });
+        }
+
+        // For downgrading from premium to pro
+        const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
+
+        await stripe.subscriptions.update(user.stripeSubscriptionId, {
+            items: [{
+                id: subscription.items.data[0].id,
+                price: newPriceId,
+            }],
+            proration_behavior: 'none', // Downgrade at period end
+        });
+
+        // Store pending downgrade
+        await user.update({
+            pendingDowngradeTier: newTier,
+            pendingDowngradeDate: new Date(subscription.current_period_end * 1000)
+        });
+
+        res.json({
+            message: `Downgrade to ${newTier} will take effect at end of billing period`,
+            effectiveDate: new Date(subscription.current_period_end * 1000)
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error downgrading subscription" });
     }
 };
 

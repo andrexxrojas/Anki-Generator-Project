@@ -54,6 +54,14 @@ const User = sequelize.define("User", {
     subscriptionStatus: {
         type: DataTypes.ENUM('active', 'past_due', 'canceled', 'incomplete', 'inactive'),
         defaultValue: 'inactive'
+    },
+    pendingDowngradeTier: {
+        type: DataTypes.ENUM('free', 'pro', 'premium'),
+        allowNull: true
+    },
+    pendingDowngradeDate: {
+        type: DataTypes.DATE,
+        allowNull: true
     }
 });
 

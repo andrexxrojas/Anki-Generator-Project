@@ -181,6 +181,32 @@ export const me = async (req, res) => {
     }
 }
 
+export const deleteAccount = async (req, res) => {
+    try {
+        const user = req.user;
+
+        // Check if user has an active subscription
+        if (user.stripeSubscriptionId && user.subscriptionStatus === 'active') {
+            // Cancel the Stripe subscription first
+            await stripe.subscriptions.cancel(user.stripeSubscriptionId);
+        }
+
+        // Delete user's decks and cards first (cascade will handle if set)
+        await Deck.destroy({ where: { userId: user.id } });
+
+        // Delete the user
+        await user.destroy();
+
+        // Clear cookies
+        res.clearCookie('token');
+
+        res.json({ message: "Account deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error deleting account" });
+    }
+};
+
 // Get user profile information
 export const getProfile = async (req, res) => {
     try {

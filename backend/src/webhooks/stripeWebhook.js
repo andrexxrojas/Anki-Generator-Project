@@ -64,6 +64,18 @@ export const handleStripeWebhook = async (req, res) => {
                     user.monthlyGenerationsUsed = 0;
 
                     await user.save();
+
+                    // ✅ CHECK FOR PENDING DOWNGRADE AFTER SAVING
+                    if (user.pendingDowngradeTier && user.pendingDowngradeDate <= new Date()) {
+                        // Downgrade takes effect
+                        await user.update({
+                            subscriptionTier: user.pendingDowngradeTier,
+                            monthlyGenerationLimit: TIER_LIMITS[user.pendingDowngradeTier].monthlyLimit,
+                            pendingDowngradeTier: null,
+                            pendingDowngradeDate: null
+                        });
+                        console.log(`Applied pending downgrade for user ${user.email} to ${user.pendingDowngradeTier}`);
+                    }
                 }
             }
         }
