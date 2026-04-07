@@ -76,9 +76,6 @@ export default function AccountDropdown() {
                 <Link href="/account/profile" className={styles.dropdownItem}>
                     Profile
                 </Link>
-                <Link href="/my-decks" className={styles.dropdownItem}>
-                    My Decks
-                </Link>
                 <button
                     className={`${styles.dropdownItem} ${styles.btn}`}
                     onClick={handleLogout}
