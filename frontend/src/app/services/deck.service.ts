@@ -101,3 +101,22 @@ export async function getGenerationStats(): Promise<GenerationStats> {
 
     return res.json();
 }
+
+interface TotalGenerations {
+    total: number;
+}
+
+export async function getTotalGenerations(): Promise<TotalGenerations> {
+    const res = await fetch(`${API_URL}/ai/total-generations`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+    });
+
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || "Failed to fetch generation stats");
+    }
+
+    return res.json();
+}

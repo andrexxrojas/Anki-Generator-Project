@@ -179,3 +179,18 @@ export const getGenerationStats = async (req, res) => {
         res.status(500).json({ message: "Error fetching generation stats" });
     }
 };
+
+export const getTotalGenerations = async (req, res) => {
+    try {
+        const guestTotal = await Guest.sum('generationsUsed') || 0;
+        const userTotal = await User.sum('monthlyGenerationsUsed') || 0;
+
+        const seedValue = 1000;
+        const total = seedValue + guestTotal + userTotal;
+
+        res.json({ total });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+};

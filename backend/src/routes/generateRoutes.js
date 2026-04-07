@@ -2,7 +2,7 @@ import express from "express";
 import {authMiddlewareOptional} from "../middleware/authMiddlewareOptional.js";
 import {guestMiddleware} from "../middleware/guestMiddleware.js";
 import {checkQuota} from "../middleware/checkQuota.js";
-import {generateContent, getGenerationStats} from "../controllers/generateController.js";
+import {generateContent, getGenerationStats, getTotalGenerations} from "../controllers/generateController.js";
 
 const router = express.Router();
 
@@ -30,16 +30,16 @@ const preventDuplicateGeneration = (req, res, next) => {
     next();
 };
 
-// Guest OR user → allowed
 router.post(
     "/generate",
     authMiddlewareOptional,
     guestMiddleware,
     checkQuota,
-    preventDuplicateGeneration,  // ← ADD THIS
+    preventDuplicateGeneration,
     generateContent
 );
 
 router.get("/generation-stats", guestMiddleware, getGenerationStats);
+router.get("/total-generations", getTotalGenerations);
 
 export default router;
