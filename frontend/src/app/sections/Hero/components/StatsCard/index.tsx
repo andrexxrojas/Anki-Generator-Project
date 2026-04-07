@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./styles.module.css";
 import { useState, useEffect } from "react";
 import { getTotalGenerations } from "@/app/services/deck.service";
