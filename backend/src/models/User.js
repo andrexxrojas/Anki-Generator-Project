@@ -62,6 +62,10 @@ const User = sequelize.define("User", {
     pendingDowngradeDate: {
         type: DataTypes.DATE,
         allowNull: true
+    },
+    cancelAtPeriodEnd: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 });
 

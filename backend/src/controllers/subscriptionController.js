@@ -24,6 +24,27 @@ export const createCheckout = async (req, res) => {
     }
 };
 
+// Add this to your subscriptionController.js
+export const createPortalSession = async (req, res) => {
+    try {
+        const user = req.user;
+
+        if (!user.stripeCustomerId) {
+            return res.status(400).json({ error: "No customer found" });
+        }
+
+        const session = await stripe.billingPortal.sessions.create({
+            customer: user.stripeCustomerId,
+            return_url: `${process.env.FRONTEND_URL}/account/profile`,
+        });
+
+        res.json({ url: session.url });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
 export const downgradeSubscription = async (req, res) => {
     try {
         const user = req.user;

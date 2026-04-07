@@ -20,7 +20,7 @@ interface ProfileData {
     subscriptionStatus: 'inactive' | 'active' | 'past_due' | 'canceled' | 'incomplete';
     nextBillingDate: number | null;
     pendingDowngradeTier?: 'free' | 'pro' | 'premium' | null;
-    pendingDowngradeDate?: number | null;
+    pendingDowngradeDate?: string | null;
     cancelAtPeriodEnd?: boolean;
 }
 
@@ -66,6 +66,9 @@ export default function Profile() {
                     subscriptionStatus={profile!.subscriptionStatus}
                     subscriptionTier={profile!.subscriptionTier}
                     nextBillingDate={profile!.nextBillingDate}
+                    pendingDowngradeTier={profile!.pendingDowngradeTier}
+                    pendingDowngradeDate={profile!.pendingDowngradeDate}
+                    cancelAtPeriodEnd={profile!.cancelAtPeriodEnd}
                 />
                 <DeleteAccount />
             </div>

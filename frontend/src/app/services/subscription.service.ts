@@ -4,15 +4,8 @@ interface CreateCheckoutResponse {
     url: string;
 }
 
-interface CanGenerateResponse {
-    canGenerate: boolean;
-}
-
-interface UsageResponse {
-    used: number;
-    limit: number;
-    totalDecksGenerated: number;
-    tier: 'free' | 'pro' | 'premium';
+interface PortalSessionResponse {
+    url: string;
 }
 
 export async function createCheckoutSession(priceId: string): Promise<CreateCheckoutResponse> {
@@ -31,31 +24,16 @@ export async function createCheckoutSession(priceId: string): Promise<CreateChec
     return res.json();
 }
 
-export async function checkCanGenerate(): Promise<CanGenerateResponse> {
-    const res = await fetch(`${API_URL}/subscription/can-generate`, {
-        method: "GET",
+export async function createPortalSession(): Promise<PortalSessionResponse> {
+    const res = await fetch(`${API_URL}/subscription/create-portal-session`, {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
     });
 
     if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error(err.message || "Failed to check generation limit.");
-    }
-
-    return res.json();
-}
-
-export async function getUsage(): Promise<UsageResponse> {
-    const res = await fetch(`${API_URL}/subscription/usage`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-    });
-
-    if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.message || "Failed to fetch usage data.");
+        throw new Error(err.message || "Failed to create portal session.");
     }
 
     return res.json();

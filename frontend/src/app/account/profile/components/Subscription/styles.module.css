@@ -33,6 +33,22 @@
     color: var(--text-secondary);
 }
 
+.btn {
+    font-family: var(--font-regular);
+    font-size: var(--text-xs);
+    color: var(--grey-btn-sm-color);
+    background-color: var(--grey-btn-sm-bg);
+    padding: var(--grey-btn-sm-padding);
+    border-radius: var(--grey-btn-sm-radius);
+    border: none;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    cursor: pointer;
+    margin-top: var(--space-xl);
+}
+
 .linkItem {
     color: var(--text-primary);
 }
