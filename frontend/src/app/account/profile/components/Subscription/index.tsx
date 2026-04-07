@@ -62,7 +62,7 @@ export default function Subscription({
         if (pendingDowngradeTier && pendingDowngradeTier !== 'free' && formattedPendingDate) {
             const downgradeTier = pendingDowngradeTier.charAt(0).toUpperCase() + pendingDowngradeTier.slice(1);
             const currentTier = subscriptionTier.charAt(0).toUpperCase() + subscriptionTier.slice(1);
-            return <>You'll be downgraded to {downgradeTier} on {formattedPendingDate}. You keep {currentTier} features until then.</>;
+            return <>You&#39;ll be downgraded to {downgradeTier} on {formattedPendingDate}. <br/>You keep {currentTier} features until then.</>;
         }
 
         if (nextBillingDate) {
@@ -81,8 +81,7 @@ export default function Subscription({
         <div className={styles.card}>
             <h1 className={styles.title}>Billing & Subscription</h1>
             <h2 className={styles.currentPlan}>
-                {subscriptionTier === 'free' ? 'Free' :
-                    subscriptionTier === 'pro' ? 'Pro' : 'Premium'}
+                {subscriptionTier}
             </h2>
             <p className={styles.description}>
                 {getSubscriptionMessage()}

@@ -12,7 +12,7 @@ export default function DeleteAccount() {
             <h1 className={styles.title}>Security</h1>
             <h4 className={styles.subtitle}>Delete Account</h4>
             <p className={styles.description}>
-                Permanently remove your account and all your decks. This action cannot be undone.
+                Permanently remove your account and all your decks. <br/>This action cannot be undone.
             </p>
             <button className={styles.btn} onClick={() => setShowModal(true)}>
                 Delete account

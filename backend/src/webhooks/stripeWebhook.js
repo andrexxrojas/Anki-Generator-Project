@@ -45,9 +45,50 @@ export const handleStripeWebhook = async (req, res) => {
     console.log('=== END OF FULL EVENT ===');
 
     try {
-        // Handle invoice paid (subscription created/renewed)
-        // Handle invoice paid (subscription created/renewed)
-        if (event.type === 'invoice.paid' || event.type === 'invoice.payment_succeeded') {
+
+        // Handle checkout.session.completed
+        if (event.type === 'checkout.session.completed') {
+            console.log('=== PROCESSING checkout.session.completed ===');
+            const session = event.data.object;
+
+            const userId = session.metadata?.userId;
+            const subscriptionId = session.subscription;
+
+            if (!userId || !subscriptionId) {
+                console.log('Missing userId or subscriptionId in checkout session');
+                return res.json({ received: true });
+            }
+
+            const user = await User.findByPk(parseInt(userId));
+
+            if (!user) {
+                console.log(`User ${userId} not found`);
+                return res.json({ received: true });
+            }
+
+            // Get the price ID from line items to determine tier
+            const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 1 });
+            const priceId = lineItems.data[0]?.price?.id;
+            const tier = getTierFromPriceId(priceId);
+
+            // Update user with subscription info and tier
+            await user.update({
+                stripeCustomerId: session.customer,
+                stripeSubscriptionId: subscriptionId,
+                subscriptionTier: tier,
+                monthlyGenerationLimit: TIER_LIMITS[tier].monthlyLimit,
+                monthlyGenerationsUsed: 0,
+                subscriptionStatus: 'active',
+                cancelAtPeriodEnd: false,
+                pendingDowngradeTier: null,
+                pendingDowngradeDate: null
+            });
+
+            console.log(`✅ Checkout completed - User ${user.email} upgraded to ${tier}`);
+        }
+
+        // Handle invoice.paid and invoice.payment_succeeded
+        else if (event.type === 'invoice.paid' || event.type === 'invoice.payment_succeeded') {
             console.log('Processing invoice.paid event');
             const invoice = event.data.object;
 
@@ -66,7 +107,7 @@ export const handleStripeWebhook = async (req, res) => {
                 }
             }
 
-            // Get userId from metadata (but NOT the tier)
+            // Get userId from metadata
             let userId = null;
 
             if (invoice.parent && invoice.parent.subscription_details && invoice.parent.subscription_details.metadata) {
@@ -83,18 +124,38 @@ export const handleStripeWebhook = async (req, res) => {
                 const user = await User.findByPk(parseInt(userId));
 
                 if (user) {
-                    // ONLY update customer ID and subscription ID
-                    // DO NOT update tier - keep what subscription.updated set
-                    user.stripeCustomerId = invoice.customer;
-                    user.stripeSubscriptionId = subscriptionId;
-                    user.subscriptionStatus = 'active';
-                    user.monthlyGenerationsUsed = 0;
+                    // Only update if these fields are empty (first time)
+                    // Don't overwrite tier if already set by checkout.session.completed
+                    const updates = {
+                        stripeCustomerId: invoice.customer,
+                        stripeSubscriptionId: subscriptionId,
+                        subscriptionStatus: 'active',
+                        monthlyGenerationsUsed: 0
+                    };
 
-                    await user.save();
+                    // Only set tier if user is still on free (first subscription)
+                    if (user.subscriptionTier === 'free') {
+                        // Get tier from line item metadata
+                        let tier = null;
+                        if (invoice.lines && invoice.lines.data && invoice.lines.data[0]) {
+                            const lineMetadata = invoice.lines.data[0].metadata;
+                            tier = lineMetadata.tier;
+                        }
 
-                    console.log(`Invoice.paid - User ${user.email} - Keeping existing tier: ${user.subscriptionTier}`);
+                        if (tier && tier !== 'free') {
+                            updates.subscriptionTier = tier;
+                            updates.monthlyGenerationLimit = TIER_LIMITS[tier].monthlyLimit;
+                            console.log(`Invoice.paid - Setting initial tier for ${user.email} to ${tier}`);
+                        } else {
+                            console.log(`Invoice.paid - User ${user.email} - Keeping existing tier: ${user.subscriptionTier}`);
+                        }
+                    } else {
+                        console.log(`Invoice.paid - User ${user.email} already on tier: ${user.subscriptionTier} - skipping tier update`);
+                    }
 
-                    // ✅ CHECK FOR PENDING DOWNGRADE AFTER SAVING
+                    await user.update(updates);
+
+                    // Check for pending downgrade after saving
                     if (user.pendingDowngradeTier && user.pendingDowngradeDate <= new Date()) {
                         await user.update({
                             subscriptionTier: user.pendingDowngradeTier,
