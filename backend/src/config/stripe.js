@@ -11,7 +11,7 @@ export const PRICE_IDS = {
 };
 
 export const TIER_LIMITS = {
-    free: { monthlyLimit: 15 },
+    free: { monthlyLimit: 4 },
     pro: { monthlyLimit: 75 },
     premium: { monthlyLimit: 300 },
 };

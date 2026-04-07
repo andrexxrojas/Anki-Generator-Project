@@ -26,7 +26,7 @@ const Guest = sequelize.define("Guest", {
     },
     freeGenerations: {
         type: DataTypes.INTEGER,
-        defaultValue: 15
+        defaultValue: 4
     },
     expiresAt: {
         type: DataTypes.DATE,

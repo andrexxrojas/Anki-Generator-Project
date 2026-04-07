@@ -6,6 +6,8 @@ import Step1 from "@/app/generate/components/Step1";
 import Step2 from "@/app/generate/components/Step2";
 import Step3 from "@/app/generate/components/Step3";
 import GenerationsLeft from "@/app/components/GenerationsLeft";
+import {useAuth} from "@/app/context/AuthContext/AuthContext";
+import {getGenerationStats} from "@/app/services/deck.service";
 
 interface Material {
     type: "file" | "text" | null;
@@ -67,6 +69,8 @@ export default function Generate() {
     const [deckOptions, setDeckOptions] = useState<DeckOptions>(defaultDeckOptions);
     const [generatedDeck, setGeneratedDeck] = useState<GeneratedDeck | null>(null);
     const [refreshStats, setRefreshStats] = useState<number>(0);
+    const [stats, setStats] = useState<{ used: number; limit: number; left: number } | null>(null);
+    const { user } = useAuth();
     const isClient = useRef(false);
 
     const steps = [
@@ -78,6 +82,24 @@ export default function Generate() {
     const triggerStatsRefresh = () => {
         setRefreshStats(prev => prev + 1);
     };
+
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                const data = await getGenerationStats();
+                console.log(data);
+                setStats({
+                    used: data.generationsUsed,
+                    limit: data.generationsLimit,
+                    left: data.generationsLeft
+                });
+            } catch (error) {
+                console.log("Failed to fetch generation stats:", error);
+            }
+        };
+
+        void fetchStats();
+    }, [refreshStats, user]);
 
     useEffect(() => {
         isClient.current = true;
@@ -207,7 +229,13 @@ export default function Generate() {
         <div className={styles.generateWrapper}>
             <div className={styles.stepContent}>
                 <GenerationsLeft refreshTrigger={refreshStats} />
-                {renderStep()}
+                {!stats ? (
+                    <p className={styles.description}>Loading</p>
+                ) : stats.used === stats.limit ? (
+                    <p className={styles.description}>No generations remaining. Upgrade or wait until next month.</p>
+                ) : (
+                    renderStep()
+                )}
             </div>
         </div>
     );

@@ -171,10 +171,9 @@ export const guestMiddleware = async (req, res, next) => {
 
         // Create a browser fingerprint (basic version)
         const userAgent = req.headers['user-agent'] || '';
-        const acceptLanguage = req.headers['accept-language'] || '';
         const fingerprint = crypto
-            .createHash('md5')
-            .update(`${ip}|${userAgent}|${acceptLanguage}`)
+            .createHash('sha256') // md5 is fine but sha256 is better practice
+            .update(`${ip}|${userAgent}`)
             .digest('hex');
 
         let guestId = req.cookies.guestId;
@@ -184,11 +183,11 @@ export const guestMiddleware = async (req, res, next) => {
         if (guestId) {
             guest = await Guest.findOne({ where: { guestId } });
 
-            // Verify fingerprint matches to prevent cookie theft
+            // REMOVED: hard fingerprint mismatch rejection.
+            // Fingerprints can legitimately shift (dev tools, browser updates, VPNs).
+            // Instead, just update the stored fingerprint silently.
             if (guest && guest.fingerprint !== fingerprint) {
-                // Possible cookie theft, create new guest
-                guest = null;
-                guestId = null;
+                await guest.update({ fingerprint }); // update to new fingerprint
             }
         }
 
@@ -202,6 +201,13 @@ export const guestMiddleware = async (req, res, next) => {
             });
             if (guest) {
                 guestId = guest.guestId;
+                // FIX: Re-set the cookie so future requests don't fall through here again
+                res.cookie("guestId", guestId, {
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === 'production',
+                    sameSite: 'strict',
+                    maxAge: 30 * 24 * 60 * 60 * 1000
+                });
             }
         }
 
@@ -213,7 +219,6 @@ export const guestMiddleware = async (req, res, next) => {
                 ipAddress: ip,
                 fingerprint: fingerprint,
                 generationsUsed: 0,
-                freeGenerations: parseInt(process.env.GUEST_FREE_GENERATIONS) || 15,
                 expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
             });
 

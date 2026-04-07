@@ -189,12 +189,6 @@ export default function HeaderControls({ title, updateTitle, numItems, generated
                             </button>
                             <button
                                 className={styles.menuItem}
-                                onClick={() => handleAction(handleSave)}
-                            >
-                                Save Deck
-                            </button>
-                            <button
-                                className={styles.menuItem}
                                 onClick={() => handleAction(handleExport)}
                             >
                                 Export .apkg

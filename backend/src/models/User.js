@@ -33,7 +33,7 @@ const User = sequelize.define("User", {
     },
     monthlyGenerationLimit: {
         type: DataTypes.INTEGER,
-        defaultValue: 15  // Free tier gets 15 per month
+        defaultValue: 4
     },
     monthlyGenerationsUsed: {
         type: DataTypes.INTEGER,

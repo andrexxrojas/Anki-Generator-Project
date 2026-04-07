@@ -17,6 +17,7 @@ export default function GenerationsLeft({ refreshTrigger }: GenerationsLeftProps
         const fetchStats = async () => {
             try {
                 const data = await getGenerationStats();
+                console.log(data);
                 setStats({
                     used: data.generationsUsed,
                     limit: data.generationsLimit,

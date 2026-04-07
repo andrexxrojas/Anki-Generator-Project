@@ -6,3 +6,10 @@
 .stepContent {
     margin-top: 4.571rem;
 }
+
+.description {
+    font-family: var(--font-regular);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    text-align: center;
+}
