@@ -3,6 +3,7 @@
 import {JSX, useEffect, useState} from "react";
 import { getGenerationStats } from "@/app/services/deck.service";
 import styles from "./styles.module.css";
+import {useAuth} from "@/app/context/AuthContext/AuthContext";
 
 interface GenerationsLeftProps {
     refreshTrigger?: number;
@@ -10,12 +11,12 @@ interface GenerationsLeftProps {
 
 export default function GenerationsLeft({ refreshTrigger }: GenerationsLeftProps): JSX.Element {
     const [stats, setStats] = useState<{ used: number; limit: number; left: number } | null>(null);
+    const { user } = useAuth();
 
     useEffect(() => {
         const fetchStats = async () => {
             try {
                 const data = await getGenerationStats();
-                console.log("Generation stats:", data);
                 setStats({
                     used: data.generationsUsed,
                     limit: data.generationsLimit,
@@ -27,7 +28,7 @@ export default function GenerationsLeft({ refreshTrigger }: GenerationsLeftProps
         };
 
         void fetchStats();
-    }, [refreshTrigger]);
+    }, [refreshTrigger, user]);
 
     return (
         <div className={styles.wrapper}>

@@ -93,11 +93,27 @@ export const checkCanGenerate = async (req, res) => {
 export const getUsage = async (req, res) => {
     try {
         const user = await User.findByPk(req.user.id);
+
+        let nextBillingDate = null;
+
+        if (user.stripeSubscriptionId && user.subscriptionStatus === 'active') {
+            try {
+                const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
+                nextBillingDate = subscription.current_period_end;
+            } catch (stripeError) {
+                console.error('Error fetching subscription from Stripe:', stripeError);
+            }
+        }
+
         res.json({
             used: user.monthlyGenerationsUsed,
             limit: user.monthlyGenerationLimit,
             totalDecksGenerated: user.totalDecksGenerated,
-            tier: user.subscriptionTier
+            tier: user.subscriptionTier,
+            nextBillingDate: nextBillingDate,
+            subscriptionStatus: user.subscriptionStatus,
+            pendingDowngradeTier: user.pendingDowngradeTier,
+            pendingDowngradeDate: user.pendingDowngradeDate
         });
     } catch (error) {
         res.status(500).json({ error: error.message });

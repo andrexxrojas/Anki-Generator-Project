@@ -18,6 +18,10 @@ interface ProfileData {
     monthlyLimit: number;
     subscriptionTier: 'free' | 'pro' | 'premium';
     subscriptionStatus: 'inactive' | 'active' | 'past_due' | 'canceled' | 'incomplete';
+    nextBillingDate: number | null;
+    pendingDowngradeTier?: 'free' | 'pro' | 'premium' | null;
+    pendingDowngradeDate?: number | null;
+    cancelAtPeriodEnd?: boolean;
 }
 
 
@@ -61,6 +65,7 @@ export default function Profile() {
                 <Subscription
                     subscriptionStatus={profile!.subscriptionStatus}
                     subscriptionTier={profile!.subscriptionTier}
+                    nextBillingDate={profile!.nextBillingDate}
                 />
                 <DeleteAccount />
             </div>

@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import Guest from "../models/Guest.js";
 import {Op} from "sequelize";
+import stripe from "../config/stripe.js";
 import Deck from "../models/Deck.js";
 
 // Register a user
@@ -210,7 +211,7 @@ export const deleteAccount = async (req, res) => {
 // Get user profile information
 export const getProfile = async (req, res) => {
     try {
-        const user = req.user; // From your auth middleware
+        const user = req.user;
 
         if (!user) {
             return res.status(401).json({ error: "User not authenticated" });
@@ -230,6 +231,29 @@ export const getProfile = async (req, res) => {
         // Get generations left this month
         const generationsLeft = Math.max(0, user.monthlyGenerationLimit - user.monthlyGenerationsUsed);
 
+        // Fetch next billing date if user has active subscription
+        let nextBillingDate = null;
+        let nextBillingDateFormatted = null;
+
+        if (user.stripeSubscriptionId && user.subscriptionStatus === 'active') {
+            try {
+                const subscription = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
+
+                if (subscription.items && subscription.items.data && subscription.items.data.length > 0) {
+                    const timestamp = subscription.items.data[0].current_period_end;
+                    nextBillingDate = timestamp;
+                    // Create formatted date
+                    nextBillingDateFormatted = new Date(timestamp * 1000).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                }
+            } catch (stripeError) {
+                console.error('Error fetching subscription from Stripe:', stripeError.message);
+            }
+        }
+
         res.json({
             username: user.username,
             email: user.email,
@@ -238,7 +262,10 @@ export const getProfile = async (req, res) => {
             generationsLeft: generationsLeft,
             monthlyLimit: user.monthlyGenerationLimit,
             subscriptionTier: user.subscriptionTier,
-            subscriptionStatus: user.subscriptionStatus
+            subscriptionStatus: user.subscriptionStatus,
+            nextBillingDate: nextBillingDateFormatted,
+            pendingDowngradeTier: user.pendingDowngradeTier,
+            pendingDowngradeDate: user.pendingDowngradeDate
         });
     } catch (err) {
         console.error(err);
