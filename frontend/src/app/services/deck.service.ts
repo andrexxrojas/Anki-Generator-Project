@@ -85,6 +85,7 @@ interface GenerationStats {
     generationsUsed: number;
     generationsLimit: number;
     generationsLeft: number;
+    subscriptionTier: 'guest' | 'free' | 'pro' | 'premium';
 }
 
 export async function getGenerationStats(): Promise<GenerationStats> {
@@ -116,6 +117,30 @@ export async function getTotalGenerations(): Promise<TotalGenerations> {
     if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         throw new Error(err.message || "Failed to fetch generation stats");
+    }
+
+    return res.json();
+}
+
+interface ValidateTextResponse {
+    message: string;
+    text: string;
+    characterCount: number;
+    characterLimit: number;
+    tier: 'guest' | 'free' | 'pro' | 'premium';
+}
+
+export async function validateText(text: string): Promise<ValidateTextResponse> {
+    const res = await fetch(`${API_URL}/file/validate-text`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ text }),
+    });
+
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || "Failed to validate text");
     }
 
     return res.json();
