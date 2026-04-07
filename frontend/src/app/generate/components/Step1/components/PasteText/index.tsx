@@ -60,11 +60,13 @@ export default function PasteText({ onComplete, setCanContinue, textValue, reset
 
     return (
         <div className={styles.textUploadContainer}>
-            <small className={styles.charCount}>{text.length} / {characterLimit}</small>
+            <small className={styles.charCount}>
+                {characterLimit === null ? "" : `${text.length} / ${characterLimit}`}
+            </small>
             <textarea
                 value={text}
                 onChange={handleChange}
-                maxLength={characterLimit}
+                maxLength={characterLimit ?? undefined}
                 placeholder="Drop your notes in and we'll do the rest..."
                 className={styles.textArea}
             />
