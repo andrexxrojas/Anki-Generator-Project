@@ -13,7 +13,7 @@ interface PasteTextProps {
 
 export default function PasteText({ onComplete, setCanContinue, textValue, resetDeckOptions }: PasteTextProps) {
     const [text, setText] = useState(textValue || "");
-    const [characterLimit, setCharacterLimit] = useState(3000);
+    const [characterLimit, setCharacterLimit] = useState<number | null>(null);
 
     useEffect(() => {
         const fetchCharacterLimit = async () => {
