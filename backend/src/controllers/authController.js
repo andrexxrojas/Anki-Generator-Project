@@ -186,14 +186,27 @@ export const deleteAccount = async (req, res) => {
     try {
         const user = req.user;
 
+        console.log(`Attempting to delete account for user: ${user.email}`);
+
         // Check if user has an active subscription
         if (user.stripeSubscriptionId && user.subscriptionStatus === 'active') {
-            // Cancel the Stripe subscription first
-            await stripe.subscriptions.cancel(user.stripeSubscriptionId);
+            console.log(`Cancelling Stripe subscription: ${user.stripeSubscriptionId}`);
+            try {
+                await stripe.subscriptions.update(user.stripeSubscriptionId, {
+                    cancel_at_period_end: true
+                });
+            } catch (stripeError) {
+                console.error('Stripe cancellation error:', stripeError.message);
+            }
         }
 
-        // Delete user's decks and cards first (cascade will handle if set)
-        await Deck.destroy({ where: { userId: user.id } });
+        // Delete user's decks - use ownerType and ownerId
+        await Deck.destroy({
+            where: {
+                ownerType: 'user',
+                ownerId: user.id.toString()  // ownerId is a string
+            }
+        });
 
         // Delete the user
         await user.destroy();
@@ -201,10 +214,11 @@ export const deleteAccount = async (req, res) => {
         // Clear cookies
         res.clearCookie('token');
 
+        console.log(`Account deleted successfully for: ${user.email}`);
         res.json({ message: "Account deleted successfully" });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Error deleting account" });
+        console.error('Error in deleteAccount:', error);
+        res.status(500).json({ message: "Error deleting account", error: error.message });
     }
 };
 

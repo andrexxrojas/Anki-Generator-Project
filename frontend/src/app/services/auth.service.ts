@@ -20,6 +20,22 @@ export async function Login(identifier: string, password: string) {
     return res.json();
 }
 
+export async function DeleteAccount() {
+    const res = await fetch(`${API_URL}/auth/delete-account`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    });
+
+    if (!res.ok) {
+        throw new Error("Failed to delete account.");
+    }
+
+    return res.json();
+}
+
 export async function Register(username: string, email: string, password: string) {
     const res = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
