@@ -8,8 +8,8 @@ export const createCheckout = async (req, res) => {
         const userId = req.user.id;  // ← Changed from req.body
         const { priceId } = req.body; // Only priceId comes from request body
 
-        const successUrl = `${process.env.FRONTEND_URL}/subscription/success`;
-        const cancelUrl = `${process.env.FRONTEND_URL}/subscription/cancel`;
+        const successUrl = `${process.env.FRONTEND_URL}/account/profile`;
+        const cancelUrl = `${process.env.FRONTEND_URL}/account/profile`;
 
         const session = await subscriptionService.createCheckoutSession(
             userId,
