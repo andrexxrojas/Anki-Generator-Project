@@ -5,7 +5,7 @@ import PriceBox from "@/app/sections/Pricing/components/PriceBox";
 
 export default function Pricing() {
     return (
-        <div className={styles.sectionWrapper}>
+        <div id="pricing-section" className={styles.sectionWrapper}>
             <section className={`${styles.sectionContainer} ${styles.grid}`}>
                 <SectionHeader
                     microlabel="Pricing"

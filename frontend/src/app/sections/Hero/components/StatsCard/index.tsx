@@ -12,6 +12,16 @@ export default function StatsCard() {
         revalidateOnFocus: true,
     });
 
+    const handleViewPlans = () => {
+        const pricingSection = document.getElementById('pricing-section');
+        if (pricingSection) {
+            pricingSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    };
+
     return (
         <div className={styles.boxContainer}>
             <span className={styles.microlabel}>Real-time</span>
@@ -23,7 +33,9 @@ export default function StatsCard() {
                     Real-time count of flashcard decks created using AI.
                     Every click turns notes into study-ready cards.
                 </p>
-                <button className={styles.cta}>Learn more</button>
+                <button className={styles.cta} onClick={handleViewPlans}>
+                    View plans
+                </button>
             </div>
         </div>
     );

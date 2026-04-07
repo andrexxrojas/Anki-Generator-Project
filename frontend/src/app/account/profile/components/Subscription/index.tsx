@@ -52,7 +52,7 @@ export default function Subscription({
 
     const getSubscriptionMessage = () => {
         if (subscriptionTier === 'free') {
-            return <>No active subscription. <Link href="/pricing" className={styles.linkItem}>View plans</Link> to get started.</>;
+            return <>No active subscription. <Link href="/" className={styles.linkItem}>View plans</Link> to get started.</>;
         }
 
         if (pendingDowngradeTier === 'free' && formattedPendingDate) {
