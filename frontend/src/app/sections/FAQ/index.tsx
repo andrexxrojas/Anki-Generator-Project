@@ -5,11 +5,11 @@ import Accordion from "@/app/components/Accordion";
 const faqItems = [
     {
         question: "How do I create my first set of flashcards",
-        answer: "Simply paste your text, notes, or upload a document (PDF, Word, or text file) into the generator. Our AI will automatically extract key concepts and create professional flashcards in seconds."
+        answer: "Simply paste your text, notes, or upload a document (.pdf or .docx) into the generator. Our AI will automatically extract key concepts and create professional flashcards in seconds."
     },
     {
         question: "Do I need an account to use AnkiGen",
-        answer: "No account is required for the Basic (Free) plan! You can generate and download flashcards immediately. However, creating an account allows you to save your decks, access them across devices"
+        answer: "No account is required for the Basic (Free) plan! You can generate and download flashcards immediately."
     },
     {
         question: "Can I export my flashcards to PDF or other formats?",
@@ -21,7 +21,7 @@ const faqItems = [
     },
     {
         question: "How do I upgrade or downgrade my plan?",
-        answer: "Go to your Account Settings -> Subscription tab. From there, you can select your desired plan."
+        answer: "Go to your Account Settings -> Subscription card. From there, you can select your desired plan by pressing on the manage subscription button."
     },
 ];
 
